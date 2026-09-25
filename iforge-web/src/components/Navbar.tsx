@@ -16,8 +16,6 @@ import {
   Server, 
   ShieldCheck, 
   Code2, 
-  TrendingUp, 
-  Users,
   Compass,
   Sparkles
 } from "lucide-react";
@@ -28,8 +26,6 @@ const iconMap: Record<string, React.ReactNode> = {
   Server: <Server className="w-4 h-4 text-[#0A3C6E]" />,
   ShieldCheck: <ShieldCheck className="w-4 h-4 text-emerald-600" />,
   Code2: <Code2 className="w-4 h-4 text-indigo-600" />,
-  TrendingUp: <TrendingUp className="w-4 h-4 text-amber-600" />,
-  Users: <Users className="w-4 h-4 text-rose-600" />,
 };
 
 export default function Navbar() {
@@ -124,26 +120,43 @@ export default function Navbar() {
                 {servicesOpen && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50">
                     <div className="w-[620px] bg-white border border-slate-200/90 rounded-2xl shadow-xl shadow-slate-900/10 p-4 grid grid-cols-2 gap-2 animate-in fade-in slide-in-from-top-1 duration-150">
-                      {servicesData.map((s) => (
-                        <Link
-                          key={s.id}
-                          href={`/services/${s.slug}`}
-                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-slate-50 transition-colors group"
-                          onClick={() => setServicesOpen(false)}
-                        >
-                          <div className="p-2 rounded-lg bg-slate-100 group-hover:bg-[#E8F4FC] transition-colors shrink-0">
-                            {iconMap[s.iconName] || <Server className="w-4 h-4 text-[#1783C1]" />}
-                          </div>
-                          <div>
-                            <div className="text-sm font-semibold text-[#333333] group-hover:text-[#1783C1] transition-colors">
-                              {s.title}
+                      {servicesData.map((s) => {
+                        const isAppDev = s.id === "application-development";
+                        return (
+                          <Link
+                            key={s.id}
+                            href={`/services/${s.slug}`}
+                            className={`flex items-start gap-3 rounded-xl transition-all group ${
+                              isAppDev
+                                ? "col-span-2 bg-[#F8FAFC] border border-slate-200/80 hover:border-[#1783C1]/50 hover:bg-[#E8F4FC]/40 p-3"
+                                : "hover:bg-slate-50 p-2.5"
+                            }`}
+                            onClick={() => setServicesOpen(false)}
+                          >
+                            <div className="p-2 rounded-lg bg-slate-100 group-hover:bg-[#E8F4FC] transition-colors shrink-0">
+                              {iconMap[s.iconName] || <Server className="w-4 h-4 text-[#1783C1]" />}
                             </div>
-                            <div className="text-xs text-slate-500 line-clamp-1 mt-0.5">
-                              {s.shortDesc}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold text-[#333333] group-hover:text-[#1783C1] transition-colors">
+                                  {s.title}
+                                </span>
+                                {isAppDev && (
+                                  <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#E8F4FC] text-[#1783C1]">
+                                    Web • Dashboards • SaaS • Mobile
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-xs text-slate-500 line-clamp-1 mt-0.5">
+                                {s.shortDesc}
+                              </div>
                             </div>
-                          </div>
-                        </Link>
-                      ))}
+                            {isAppDev && (
+                              <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-[#1783C1] transition-transform group-hover:translate-x-1 shrink-0 self-center" />
+                            )}
+                          </Link>
+                        );
+                      })}
 
                       {/* Mega-menu footer strip */}
                       <div className="col-span-2 mt-2 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 px-2">

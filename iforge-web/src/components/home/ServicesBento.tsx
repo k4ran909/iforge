@@ -33,9 +33,9 @@ export default function ServicesBento() {
     ? servicesData 
     : servicesData.filter((s) => {
         if (filter === "cloud") return s.slug === "cloud-services" || s.slug === "it-infrastructure";
-        if (filter === "ai") return s.slug === "data-ai" || s.slug === "web-development";
+        if (filter === "ai") return s.slug === "ai-ml";
+        if (filter === "apps") return s.slug === "application-development";
         if (filter === "security") return s.slug === "cybersecurity-services";
-        if (filter === "growth") return s.slug === "digital-marketing" || s.slug === "staffing-solutions";
         return true;
       });
 
@@ -52,17 +52,17 @@ export default function ServicesBento() {
             Engineered For Uncompromising Scale
           </h2>
           <p className="text-base sm:text-lg text-[#666666] leading-relaxed">
-            Seven specialized practice groups delivering full-lifecycle cloud architecture, intelligent automation, proactive cybersecurity, and high-velocity engineering.
+            Five core enterprise practice groups delivering full-lifecycle cloud architecture, machine learning systems, proactive cybersecurity, and high-velocity application engineering.
           </p>
 
           {/* Interactive Category Filter Pills */}
           <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
             {[
-              { id: "all", label: "All 7 Practices" },
+              { id: "all", label: "All 5 Practices" },
+              { id: "ai", label: "AI & ML" },
               { id: "cloud", label: "Cloud & Infrastructure" },
-              { id: "ai", label: "Data, AI & Engineering" },
-              { id: "security", label: "Cybersecurity & Risk" },
-              { id: "growth", label: "Growth & Staffing" },
+              { id: "apps", label: "Application Development" },
+              { id: "security", label: "Cybersecurity" },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -82,13 +82,13 @@ export default function ServicesBento() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {filteredServices.map((service, index) => {
-            const isFeatured = index === 0 || index === 1;
+          {filteredServices.map((service) => {
+            const isAppDev = service.slug === "application-development";
             return (
               <div
                 key={service.id}
                 className={`group relative bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:border-[#1783C1] hover:shadow-xl hover:shadow-slate-900/5 hover:-translate-y-1 ${
-                  isFeatured && filter === "all" ? "lg:col-span-1 bg-gradient-to-b from-[#F4F7FB]/40 to-white" : ""
+                  isAppDev && filter === "all" ? "lg:col-span-2 bg-gradient-to-br from-[#F4F7FB]/40 via-white to-[#E8F4FC]/30 border-[#1783C1]/30" : ""
                 }`}
               >
                 <div>

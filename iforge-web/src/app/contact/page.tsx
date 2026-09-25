@@ -40,7 +40,7 @@ export default function ContactPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-[#666666] leading-relaxed">
-              Whether you need to scale cloud infrastructure, conduct a vulnerability assessment, or hire a dedicated development squad — our team responds within 2 business hours.
+              Whether you need to scale cloud infrastructure, conduct a cybersecurity audit, deploy AI & ML models, or build custom enterprise applications — our team responds within 2 business hours.
             </p>
           </div>
         </div>

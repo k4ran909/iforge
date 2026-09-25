@@ -59,12 +59,12 @@ export const clientLogos = [
 
 export const servicesData: ServiceItem[] = [
   {
-    id: "data-ai",
-    slug: "data-ai",
-    title: "Data & AI",
-    subtitle: "Reimagine enterprise intelligence with customized AI solutions",
+    id: "ai-ml",
+    slug: "ai-ml",
+    title: "AI & ML",
+    subtitle: "Reimagine enterprise intelligence with customized AI & Machine Learning solutions",
     shortDesc: "Enterprise AI consulting, LLM adoption, predictive analytics, and automated decision engineering.",
-    longDesc: "iForge AI Advisory is an enterprise AI consulting service that helps organizations move from AI strategy to production reality. From strategy through to implementation and operations, we help organizations accelerate and sustain trusted outcomes through responsible application of AI.",
+    longDesc: "iForge AI & ML Advisory helps organizations transition from experimental AI to scalable, production-grade intelligence. From strategic roadmap design to deploying custom LLMs, RAG architectures, predictive models, and automated MLOps pipelines, we help enterprises accelerate outcomes with robust governance and security.",
     iconName: "BrainCircuit",
     features: [
       "AI Strategy & Readiness Assessment",
@@ -307,185 +307,67 @@ export const servicesData: ServiceItem[] = [
     ]
   },
   {
-    id: "web-development",
-    slug: "web-development",
-    title: "Web Development",
-    subtitle: "Optimize your software portfolio with our technically driven digital engineering",
-    shortDesc: "Custom web applications, enterprise portals, responsive platforms, and API engineering.",
-    longDesc: "Whether you're a startup launching a transformative product or an established enterprise modernizing legacy portals, iForge delivers technically superior, high-performing, and secure web solutions that scale seamlessly.",
+    id: "application-development",
+    slug: "application-development",
+    title: "Application Development",
+    subtitle: "End-to-end digital engineering: web platforms, enterprise dashboards, mobile & SaaS solutions",
+    shortDesc: "Full-lifecycle custom applications, web platforms, real-time enterprise dashboards, and scalable APIs.",
+    longDesc: "iForge delivers end-to-end Application Development for high-growth enterprises and modern startups. Whether you need custom web applications, executive dashboards with real-time analytics, scalable SaaS architectures, cross-platform mobile apps, or high-throughput microservice APIs, our engineering teams build scalable, secure, and intuitive digital products designed for peak performance.",
     iconName: "Code2",
     features: [
-      "Modern React / Next.js Full-Stack Web Applications",
-      "Custom Enterprise Portals & High-Throughput Dashboards",
-      "RESTful & GraphQL Scalable API Architectures",
-      "High-Performance Database Design (SQL & NoSQL)",
-      "Core Web Vitals & Technical SEO Perfection"
+      "Full-Stack Web & Enterprise Application Engineering",
+      "Real-Time Executive Dashboards & Analytics Portals",
+      "Custom SaaS Platforms & Multi-Tenant Cloud Architecture",
+      "Cross-Platform Mobile Apps & Progressive Web Applications (PWA)",
+      "High-Throughput RESTful & GraphQL Microservice APIs"
     ],
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Prisma", "Redis"],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "Python", "Go", "PostgreSQL", "Redis", "Docker", "GraphQL"],
     deliverables: [
-      "Fully responsive, production-ready web application",
-      "Comprehensive TypeScript codebase with CI/CD pipeline",
-      "API documentation with OpenAPI / Swagger specifications",
-      "100/100 Google Lighthouse Core Web Vitals optimization"
+      "Production-grade enterprise web & application platform",
+      "Interactive real-time analytics & telemetry dashboard",
+      "Modular TypeScript/Node/Go codebase with automated CI/CD",
+      "Comprehensive OpenAPI / Swagger API architecture"
     ],
     metrics: [
-      { value: "<0.8s", label: "Average Page Load Time" },
-      { value: "98+", label: "Lighthouse Performance Score" },
-      { value: "100%", label: "Mobile-First Responsive" }
+      { value: "<0.8s", label: "Average App & Dashboard Load" },
+      { value: "99.9%", label: "Availability SLA Guarantee" },
+      { value: "100%", label: "Cross-Platform Responsive" }
     ],
     offerings: [
       {
-        title: "Custom Full-Stack Web Applications",
-        description: "Tailored frontend interfaces paired with resilient backends designed for performance, reliability, and security.",
-        points: ["Server-Side Rendering (SSR)", "Role-based user authentication", "Real-time WebSockets & events"]
+        title: "Custom Web & Enterprise Applications",
+        description: "Tailored full-stack platforms with modern frontends and resilient backends designed for enterprise reliability.",
+        points: ["Server-Side Rendering (SSR) & high interactivity", "Role-based access control (RBAC)", "Real-time WebSockets & event streaming"]
       },
       {
-        title: "Enterprise Corporate Platforms",
-        description: "Brand-defining web experiences engineered to convert visitors, showcase services, and integrate with CRM systems.",
-        points: ["Custom headless CMS integrations", "Multi-language localization", "Analytics & conversion attribution"]
+        title: "Executive Dashboards & BI Portals",
+        description: "High-throughput data visualization portals delivering real-time telemetry, operational metrics, and decision intelligence.",
+        points: ["Custom interactive charting & KPI monitors", "Multi-source data aggregation", "Granular export and drill-down reporting"]
       },
       {
-        title: "API Engineering & Systems Integration",
-        description: "Secure, documented, and high-concurrency APIs connecting disparate enterprise software and third-party gateways.",
-        points: ["Payment gateways & webhooks", "OAuth2 & JWT authentication", "Rate limiting & Redis caching"]
+        title: "SaaS & Mobile Application Engineering",
+        description: "Multi-tenant SaaS foundations, progressive web apps (PWAs), and cross-platform mobile experiences.",
+        points: ["Multi-tenant data isolation & billing", "Offline-first sync & mobile readiness", "Scalable REST & GraphQL microservice backends"]
       }
     ],
     benefits: [
-      "Sub-second load times and flawless mobile responsiveness",
-      "Intuitive UX designed to maximize conversion rates and user engagement",
-      "Clean, modular codebase ready for long-term scale and easy maintainability",
-      "Built-in accessibility (WCAG AA) and technical SEO dominance"
+      "Unified digital engineering across web, mobile, dashboards, and internal tooling",
+      "Sub-second load times and intuitive, high-productivity user interfaces",
+      "Clean, maintainable, modular codebase with zero vendor lock-in",
+      "Strict enterprise security, data encryption, and role-based permissions"
     ],
     faqs: [
       {
-        question: "What technology stack do you recommend for modern web applications?",
-        answer: "We primarily build with Next.js, React 19, TypeScript, and Tailwind CSS on the frontend, paired with Node.js/Go and PostgreSQL/Redis for lightning-fast serverless or containerized backends."
+        question: "What types of applications does iForge build?",
+        answer: "We engineer the full spectrum of modern digital products: custom enterprise web applications, real-time data dashboards, SaaS platforms, internal operations tools, customer portals, cross-platform mobile apps, and scalable API ecosystems."
       },
       {
-        question: "Do we retain full ownership of the source code?",
-        answer: "Yes, 100% of the code, intellectual property, repositories, and deployment configurations are transferred directly to your organization upon project completion."
-      }
-    ]
-  },
-  {
-    id: "digital-marketing",
-    slug: "digital-marketing",
-    title: "Digital Marketing",
-    subtitle: "Launch, grow, and reinvent your brand with targeted data-driven campaigns",
-    shortDesc: "Organic SEO, performance paid marketing, conversion rate optimization, and brand scaling.",
-    longDesc: "iForge is an agile digital growth partner that excels in launching, growing, and reinventing brands. We blend data-driven audience targeting with compelling creative execution to consistently drive qualified leads and revenue.",
-    iconName: "TrendingUp",
-    features: [
-      "Search Engine Optimization (Technical, Content & On-Page)",
-      "Performance Marketing (Google Ads, Meta, LinkedIn Campaigns)",
-      "Content Strategy & High-Authority Copywriting",
-      "Conversion Rate Optimization (CRO & A/B Testing)",
-      "Full-Funnel Analytics, Attribution & Growth Tracking"
-    ],
-    technologies: ["Google Analytics 4", "Search Console", "Google Tag Manager", "Semrush", "Ahrefs", "Meta Ads", "LinkedIn Campaign Manager"],
-    deliverables: [
-      "Comprehensive Technical SEO Audit & Action Plan",
-      "Paid acquisition campaigns with negative keyword protection",
-      "Conversion-optimized landing page templates",
-      "Real-time Looker Studio executive ROI dashboard"
-    ],
-    metrics: [
-      { value: "4.2x", label: "Average Return on Ad Spend (ROAS)" },
-      { value: "+180%", label: "Organic Search Growth" },
-      { value: "-35%", label: "Customer Acquisition Cost" }
-    ],
-    offerings: [
-      {
-        title: "Organic Technical SEO Growth",
-        description: "Comprehensive keyword dominance, technical site health optimization, and authority-building content that ranks.",
-        points: ["Backlink acquisition", "Schema structured data markup", "Search intent topic clusters"]
+        question: "Can you build real-time dashboards connected to our databases and cloud telemetry?",
+        answer: "Yes. We specialize in building responsive, low-latency executive dashboards that connect directly to PostgreSQL, Snowflake, BigQuery, Kafka streams, and REST/GraphQL APIs with instant live updating."
       },
       {
-        title: "High-ROI Performance Marketing",
-        description: "Data-driven PPC and social ad campaigns optimized for customer acquisition cost (CAC) and customer lifetime value.",
-        points: ["Audience segmentation & lookalikes", "Ad creative iteration & testing", "Bid strategy algorithm tuning"]
-      },
-      {
-        title: "Conversion Rate Optimization (CRO)",
-        description: "Scientific user journey analysis, heatmap telemetry, and multivariate testing to turn traffic into qualified leads.",
-        points: ["Heatmap & scroll recording analysis", "Frictionless form redesigns", "High-urgency copy adjustments"]
-      }
-    ],
-    benefits: [
-      "Predictable pipeline of qualified, high-intent enterprise inbound leads",
-      "Measurable return on ad spend with transparent revenue attribution",
-      "Sustainable organic search traffic growth that outlasts ad budgets",
-      "Omnichannel consistency across search, social, and email"
-    ],
-    faqs: [
-      {
-        question: "How long does it take to see results from SEO?",
-        answer: "Technical fixes often generate indexation improvements within 2 to 4 weeks, while substantial organic rankings and high-intent inbound lead growth typically accelerate within 3 to 6 months."
-      },
-      {
-        question: "Do you handle both B2B and B2C digital campaigns?",
-        answer: "Yes, our strategies are customized—specializing in high-ticket B2B enterprise lead generation via LinkedIn and Google Search, as well as high-volume consumer growth campaigns."
-      }
-    ]
-  },
-  {
-    id: "staffing-solutions",
-    slug: "staffing-solutions",
-    title: "Staffing Solutions",
-    subtitle: "Empower your business with smart, scalable tech staffing solutions in India",
-    shortDesc: "Permanent IT recruitment, contract talent, executive search, and staff augmentation in India.",
-    longDesc: "Create a passionate, high-impact team with iForge Staffing Solutions. We connect visionary organizations with India's finest technical talent across software engineering, cloud architecture, cybersecurity, and data science.",
-    iconName: "Users",
-    features: [
-      "Permanent IT Recruitment & Technical Executive Search",
-      "Contract & Project-Based Talent Augmentation",
-      "Technical Screening & Rigorous Coding Evaluations",
-      "Rapid Turnaround Hiring Cycles (Candidates in 48 Hours)",
-      "Complete Payroll, Benefits & Compliance Management"
-    ],
-    technologies: ["Full-Stack Engineers", "Cloud Architects", "DevOps & SRE", "Data Scientists", "Cybersecurity Analysts", "QA Automation"],
-    deliverables: [
-      "Curated shortlist of pre-screened technical candidates",
-      "Standardized coding assessment & cultural fit scorecard",
-      "SLA-backed replacement guarantee contract",
-      "Seamless onboarding & compliant Indian payroll handling"
-    ],
-    metrics: [
-      { value: "48 hrs", label: "Candidate Shortlist Turnaround" },
-      { value: "94%", label: "Offer Acceptance Rate" },
-      { value: "90 Days", label: "Replacement Warranty" }
-    ],
-    offerings: [
-      {
-        title: "Permanent Placement & Executive Search",
-        description: "Finding long-term cultural fits and technical leaders who align with your company's core mission.",
-        points: ["CTO & VP Engineering sourcing", "Deep background verification", "Salary benchmarking & offer negotiation"]
-      },
-      {
-        title: "Contract Staffing & Agile Augmentation",
-        description: "Scale your engineering velocity quickly with vetted specialists for crunch periods and project milestones.",
-        points: ["Immediate availability developers", "Flexible month-to-month contracts", "Direct Slack/Git team integration"]
-      },
-      {
-        title: "Specialized Tech Recruitment",
-        description: "Targeted sourcing in hard-to-hire niches: AI/ML engineers, Cloud architects, DevOps, and SecOps experts.",
-        points: ["Live coding interview screenings", "Architecture design challenges", "Soft skills and communication vetting"]
-      }
-    ],
-    benefits: [
-      "Reduced time-to-hire from months down to a few business days",
-      "Rigorous technical vetting by experienced engineers, minimizing hiring risk",
-      "Flexible engagement models that adapt to your financial cycles and project sprints",
-      "Zero compliance, taxation, or cross-border overhead for international clients"
-    ],
-    faqs: [
-      {
-        question: "How does iForge vet technical candidates?",
-        answer: "Candidates undergo a 3-stage vetting process: 1) Background and portfolio audit, 2) Live coding and problem-solving assessment with a Senior Tech Lead, and 3) Communication and culture alignment interview."
-      },
-      {
-        question: "What happens if a placed candidate does not meet expectations?",
-        answer: "We provide an unconditional 90-day replacement guarantee—if a candidate does not work out, we provide a replacement candidate immediately at zero extra cost."
+        question: "Do we retain 100% full ownership of the source code and IP?",
+        answer: "Yes, 100% of the source code, design systems, architectural schemas, repositories, and deployment configurations are transferred directly to your organization upon project delivery."
       }
     ]
   }
@@ -527,7 +409,7 @@ export const techCapabilities = [
     items: ["Amazon Web Services (AWS)", "Google Cloud Platform", "Kubernetes & Docker", "Terraform & OpenTofu", "CI/CD GitOps", "FinOps Architecture"]
   },
   {
-    category: "Data & Enterprise AI",
+    category: "AI & Machine Learning",
     items: ["PyTorch & TensorFlow", "Large Language Models (LLMs)", "LangChain & RAG Systems", "Snowflake & Databricks", "Apache Spark & Kafka", "Predictive Analytics"]
   },
   {
@@ -535,8 +417,8 @@ export const techCapabilities = [
     items: ["Palo Alto Networks", "Trend Micro Cloud One", "VAPT & Pen Testing", "ISO 27001 Audits", "SOC 2 Type II Prep", "Zero Trust IAM"]
   },
   {
-    category: "Modern Web & Mobile",
-    items: ["Next.js (App Router)", "React 19 & TypeScript", "Tailwind CSS v4", "Node.js & Go Backends", "PostgreSQL & Redis", "High-Throughput APIs"]
+    category: "Application & Dashboard Engineering",
+    items: ["Next.js & React 19", "TypeScript & Node.js", "Executive Real-Time Dashboards", "Cross-Platform Mobile & PWA", "PostgreSQL & Redis", "High-Throughput APIs"]
   }
 ];
 
@@ -554,7 +436,7 @@ export const testimonials = [
     rating: 5
   },
   {
-    quote: "Their staffing solutions helped us rapidly scale our engineering team with top-tier developers in India. High quality code and rapid turnaround.",
+    quote: "iForge delivered high-performance enterprise dashboards and modern application architecture with flawless execution and rapid turnaround. Truly elite engineering.",
     client: "VP of Engineering",
     company: "EazyDiner",
     rating: 5
@@ -579,7 +461,7 @@ export const companyTimeline = [
   },
   {
     year: "2024+",
-    title: "Generative AI Advisory & Global Scale",
-    description: "Pioneering enterprise LLM adoption, specialized tech staffing in India, and building a 12,000+ member Builders Community."
+    title: "AI & ML Advisory and Next-Gen Engineering",
+    description: "Pioneering enterprise AI & ML adoption, next-gen application development and real-time dashboards, and scaling our 12,000+ member Builders Community."
   }
 ];

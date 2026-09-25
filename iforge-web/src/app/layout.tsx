@@ -33,9 +33,11 @@ export const metadata: Metadata = {
     "Google Cloud Partner",
     "Cybersecurity Services",
     "VAPT",
-    "Enterprise AI Advisory",
-    "Web Development",
-    "IT Staffing India"
+    "AI & ML Consulting",
+    "Application Development",
+    "Enterprise Dashboards",
+    "Custom Web Applications",
+    "Cloud Migration"
   ],
   authors: [{ name: "iForge Technologies" }],
   creator: "iForge Technologies",

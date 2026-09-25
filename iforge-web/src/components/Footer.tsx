@@ -56,7 +56,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-sm text-slate-300 max-w-sm leading-relaxed">
-              iForge Technologies delivers end-to-end enterprise IT consultancy, multi-cloud architecture, generative AI adoption, robust cybersecurity, and scalable tech staffing.
+              iForge Technologies delivers end-to-end enterprise IT consultancy, multi-cloud architecture, AI & ML engineering, robust cybersecurity, and bespoke application development.
             </p>
 
             <div className="pt-2">
@@ -80,10 +80,10 @@ export default function Footer() {
           {/* Core Services Links */}
           <div>
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Core Services
+              Core Practices
             </h4>
             <ul className="space-y-2.5 text-sm">
-              {servicesData.slice(0, 4).map((s) => (
+              {servicesData.map((s) => (
                 <li key={s.id}>
                   <Link 
                     href={`/services/${s.slug}`} 
@@ -96,29 +96,51 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Solutions & Community */}
+          {/* Solutions & Platform */}
           <div>
             <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
-              Solutions & Talent
+              Platform & Community
             </h4>
             <ul className="space-y-2.5 text-sm">
-              {servicesData.slice(4).map((s) => (
-                <li key={s.id}>
-                  <Link 
-                    href={`/services/${s.slug}`} 
-                    className="text-slate-300 hover:text-[#38bdf8] transition-colors"
-                  >
-                    {s.title}
-                  </Link>
-                </li>
-              ))}
               <li>
                 <Link 
                   href="/community" 
                   className="text-[#38bdf8] hover:text-white font-medium inline-flex items-center gap-1 transition-colors"
                 >
                   <span>Builders Community</span>
-                  <span className="px-1.5 py-0.2 text-[10px] rounded bg-[#1783C1] text-white">12k+</span>
+                  <span className="px-1.5 py-0.5 text-[10px] rounded bg-[#1783C1] text-white">12k+</span>
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/quote" 
+                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                >
+                  Project Cost Calculator
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/cloud-services" 
+                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                >
+                  Cloud Migration Blueprint
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/application-development" 
+                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                >
+                  Enterprise Dashboards & Apps
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/services/cybersecurity-services" 
+                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                >
+                  VAPT & SOC 2 Audits
                 </Link>
               </li>
             </ul>

@@ -162,7 +162,7 @@ export default function AboutPage() {
             Partner With Certified Enterprise Architects
           </h2>
           <p className="text-base text-slate-200 max-w-2xl mx-auto">
-            Whether you require a comprehensive cloud audit, zero-trust cybersecurity assessment, or specialized tech talent, we are ready to assist.
+            Whether you require a comprehensive cloud audit, AI & ML implementation, zero-trust cybersecurity assessment, or custom application engineering, we are ready to assist.
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
             <Link
