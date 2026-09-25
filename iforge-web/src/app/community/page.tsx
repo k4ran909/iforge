@@ -2,48 +2,103 @@ import React from 'react';
 import type { Metadata } from 'next';
 import CommunityOrbitDemo from '@/components/ui/demo';
 import Link from 'next/link';
-import { ArrowRight, Users } from 'lucide-react';
+import { ArrowRight, Users, Sparkles, Terminal, MessageSquare, Code, ShieldCheck, Zap } from 'lucide-react';
+import { siteConfig } from '@/data/siteData';
 
 export const metadata: Metadata = {
-  title: 'Builders Community | iForge Technologies',
-  description: 'Where builders, engineers, and creators ship cutting-edge technology together.',
+  title: `Builders Community | ${siteConfig.name}`,
+  description: 'Where 12,000+ engineers, architects, and creators ship cutting-edge technology and share production architectures.',
 };
 
 export default function CommunityPage() {
   return (
-    <main className="min-h-screen bg-white pt-24 pb-16 dark:bg-[#0a0a0a]">
+    <div className="w-full bg-white pb-20">
       {/* Top Banner Badge */}
-      <div className="mx-auto max-w-[1200px] px-4 pt-6 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-sky-100 bg-sky-50/80 px-3.5 py-1 text-xs font-semibold text-sky-700 shadow-sm dark:border-sky-950 dark:bg-sky-950/40 dark:text-sky-300">
-          <Users className="h-3.5 w-3.5" />
-          <span>Global Ecosystem & Talent Network</span>
+      <div className="mx-auto max-w-[1200px] px-4 pt-10 text-center">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#1783C1]/20 bg-[#E8F4FC] px-4 py-1.5 text-xs font-semibold text-[#0A3C6E] shadow-xs">
+          <Users className="h-3.5 w-3.5 text-[#1783C1]" />
+          <span>Global Developer Ecosystem & Talent Network</span>
         </div>
       </div>
 
       {/* Orbit Hero Component */}
       <CommunityOrbitDemo />
 
-      {/* CTA Button Section ("add this button") */}
-      <div className="mx-auto mt-8 max-w-[600px] px-4 text-center">
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+      {/* CTA Button Section */}
+      <div className="mx-auto mt-6 max-w-[650px] px-4 text-center">
+        <div className="flex flex-col items-center justify-center gap-3.5 sm:flex-row">
           <Link
             href="/quote"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#0284c7] px-6 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#0369a1] hover:shadow-lg active:scale-[0.98]"
+            className="w-full sm:w-auto inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-[#1783C1] px-7 text-sm font-semibold text-white shadow-md shadow-[#1783C1]/20 transition-all hover:bg-[#136FA5] hover:scale-105 active:scale-95"
           >
             <span>Join Builders Community</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
           <Link
             href="/contact"
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-6 text-sm font-semibold text-slate-700 transition-all hover:bg-slate-100 hover:text-slate-900"
+            className="w-full sm:w-auto inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-7 text-sm font-semibold text-[#0A3C6E] hover:bg-slate-50 transition-colors"
           >
-            <span>Contact Organizers</span>
+            <span>Partner With Organizers</span>
           </Link>
         </div>
-        <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-          Over 12,000+ engineers, founders, and creators shipping daily.
+        <p className="mt-3 text-xs text-slate-500 font-medium">
+          Over 12,000+ engineers, founders, and creators shipping daily worldwide.
         </p>
       </div>
-    </main>
+
+      {/* Community Tracks Grid */}
+      <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
+          <span className="text-xs font-bold uppercase tracking-wider text-[#1783C1]">Community Tracks</span>
+          <h2 className="text-3xl font-extrabold text-[#0A3C6E]">Collaborative Learning & Hackathons</h2>
+          <p className="text-sm text-[#666666]">
+            Deep-dive technical channels curated by Principal Architects at iForge.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "Generative AI & LLMs",
+              desc: "RAG architectures, local model inference, LangChain pipelines, and vector database optimization.",
+              icon: <Zap className="w-5 h-5 text-[#1783C1]" />,
+              members: "4.2k Builders",
+            },
+            {
+              title: "Cloud & DevOps",
+              desc: "Multi-region Kubernetes, Terraform IaC modules, FinOps cost cutting, and continuous delivery.",
+              icon: <Terminal className="w-5 h-5 text-[#0A3C6E]" />,
+              members: "3.8k Builders",
+            },
+            {
+              title: "Modern Web Engineering",
+              desc: "Next.js App Router, React 19 server components, Tailwind styling, and performance benchmarking.",
+              icon: <Code className="w-5 h-5 text-indigo-600" />,
+              members: "2.9k Builders",
+            },
+            {
+              title: "Cybersecurity & Zero Trust",
+              desc: "VAPT challenges, ethical hacking walkthroughs, cloud security audits, and SOC 2 frameworks.",
+              icon: <ShieldCheck className="w-5 h-5 text-emerald-600" />,
+              members: "2.1k Builders",
+            },
+          ].map((track, idx) => (
+            <div
+              key={idx}
+              className="p-6 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 hover:border-[#1783C1] hover:bg-white hover:shadow-md transition-all"
+            >
+              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center mb-4">
+                {track.icon}
+              </div>
+              <h3 className="text-base font-bold text-[#0A3C6E] mb-2">{track.title}</h3>
+              <p className="text-xs text-[#666666] leading-relaxed mb-4">{track.desc}</p>
+              <span className="text-[11px] font-bold text-[#1783C1] bg-[#E8F4FC] px-2.5 py-1 rounded-md">
+                {track.members}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }
