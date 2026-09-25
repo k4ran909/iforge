@@ -1,0 +1,352 @@
+/* ==========================================================================
+   Fixed Header with Smooth Scroll Animation & Glassmorphism
+   ========================================================================== */
+
+/* Header Fixed Outer Container */
+.iforge-header-fixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 9999 !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Header Inner Wrap - Resting Full-Width State */
+.iforge-header-inner {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 70px !important;
+  margin: 0 auto !important;
+  padding: 0 36px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.9) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  position: relative !important;
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.3s ease,
+              border 0.3s ease,
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Floating Card State on Scroll */
+.iforge-header-fixed.is-scrolled {
+  top: 10px !important;
+  padding: 0 24px !important;
+}
+
+.iforge-header-fixed.is-scrolled .iforge-header-inner {
+  max-width: 1240px !important;
+  height: 60px !important;
+  padding: 0 28px !important;
+  border-radius: 14px !important;
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border: 1px solid rgba(226, 232, 240, 0.9) !important;
+  box-shadow: 0 12px 32px -8px rgba(15, 23, 42, 0.12),
+              0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+}
+
+/* Logo */
+.iforge-header-logo {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  flex-shrink: 0 !important;
+  transition: transform 0.25s ease !important;
+}
+
+.iforge-header-logo img {
+  height: 36px !important;
+  width: auto !important;
+  max-width: none !important;
+  display: block !important;
+  transition: height 0.25s ease !important;
+}
+
+.iforge-header-fixed.is-scrolled .iforge-header-logo img {
+  height: 31px !important;
+}
+
+/* Desktop Nav */
+.iforge-header-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 4px !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.iforge-nav-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 8px 12px !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  text-decoration: none !important;
+  border-radius: 6px !important;
+  transition: color 0.18s ease !important;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer !important;
+  line-height: 1.4 !important;
+}
+
+.iforge-header-fixed.is-scrolled .iforge-nav-link {
+  padding: 6px 10px !important;
+  font-size: 13.5px !important;
+}
+
+.iforge-nav-link:hover,
+.iforge-dropdown-wrapper:hover .iforge-nav-link,
+.iforge-nav-link.is-open {
+  color: #0284c7 !important;
+  background: transparent !important;
+}
+
+.iforge-nav-link.active {
+  color: #0284c7 !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+}
+
+/* Services Dropdown */
+.iforge-dropdown-wrapper {
+  position: relative !important;
+}
+
+.iforge-dropdown-menu {
+  position: absolute !important;
+  top: calc(100% + 8px) !important;
+  left: -20px !important;
+  width: 580px !important;
+  background: #ffffff !important;
+  border-radius: 14px !important;
+  padding: 16px !important;
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(15, 23, 42, 0.06) !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  z-index: 10000 !important;
+  animation: iforgeFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Invisible bridge so mouse moving from button to dropdown never triggers onMouseLeave */
+.iforge-dropdown-menu::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -12px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 12px !important;
+  background: transparent !important;
+}
+
+@keyframes iforgeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.iforge-dropdown-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 10px 12px !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.iforge-dropdown-item:hover {
+  background-color: #f0f9ff !important;
+}
+
+.iforge-dropdown-item:hover .iforge-dropdown-title {
+  color: #0284c7 !important;
+}
+
+.iforge-dropdown-icon {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.iforge-dropdown-title {
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  line-height: 1.3 !important;
+  transition: color 0.15s ease !important;
+}
+
+.iforge-dropdown-desc {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  margin-top: 2px !important;
+  line-height: 1.35 !important;
+}
+
+/* Header Right Actions */
+.iforge-header-actions {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 16px !important;
+  flex-shrink: 0 !important;
+}
+
+.iforge-header-phone {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #475569 !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease, background-color 0.2s ease !important;
+  white-space: nowrap !important;
+  padding: 6px 10px !important;
+  border-radius: 6px !important;
+}
+
+.iforge-header-phone:hover {
+  color: #0284c7 !important;
+  background-color: #f1f5f9 !important;
+}
+
+.iforge-header-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  height: 38px !important;
+  padding: 0 18px !important;
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25) !important;
+  transition: all 0.2s ease !important;
+  border: none !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+}
+
+.iforge-header-fixed.is-scrolled .iforge-header-btn {
+  height: 35px !important;
+  padding: 0 16px !important;
+  font-size: 13px !important;
+}
+
+.iforge-header-btn:hover {
+  background: #0369a1 !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Mobile Toggle */
+.iforge-mobile-toggle {
+  display: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  background: transparent !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  color: #334155 !important;
+  cursor: pointer !important;
+}
+
+/* Mobile Drawer */
+.iforge-mobile-drawer {
+  display: none;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  margin-top: 8px !important;
+  padding: 16px 20px 24px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  max-height: calc(100vh - 80px) !important;
+  overflow-y: auto !important;
+}
+
+.iforge-mobile-drawer.open {
+  display: block !important;
+}
+
+.iforge-mobile-drawer a {
+  display: block !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #0f172a !important;
+  text-decoration: none !important;
+  border-radius: 8px !important;
+}
+
+.iforge-mobile-drawer a:hover {
+  background: #f1f5f9 !important;
+}
+
+/* Responsive Rules */
+@media (max-width: 991px) {
+  .iforge-header-nav,
+  .iforge-header-actions {
+    display: none !important;
+  }
+  .iforge-mobile-toggle {
+    display: flex !important;
+  }
+  .iforge-header-fixed.is-scrolled {
+    top: 8px !important;
+    padding: 0 12px !important;
+  }
+  .iforge-header-fixed.is-scrolled .iforge-header-inner {
+    height: 56px !important;
+    border-radius: 12px !important;
+    padding: 0 16px !important;
+  }
+}
+
+/* Header Spacer to avoid layout jumps */
+.iforge-header-spacer {
+  height: 70px !important;
+  width: 100% !important;
+  display: block !important;
+}

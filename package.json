@@ -1,0 +1,11 @@
+{
+  "name": "iforge",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix iforge-web",
+    "build": "npm run build --prefix iforge-web",
+    "start": "npm run start --prefix iforge-web",
+    "lint": "npm run lint --prefix iforge-web"
+  }
+}

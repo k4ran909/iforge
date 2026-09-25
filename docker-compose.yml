@@ -1,0 +1,12 @@
+services:
+  web:
+    build:
+      context: ./iforge-web
+      dockerfile: Dockerfile
+    container_name: iforge_web_app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
