@@ -145,6 +145,7 @@ export default function AboutPage() {
                     src={partner.src}
                     alt={partner.name}
                     fill
+                    sizes="128px"
                     className="object-contain"
                   />
                 </div>

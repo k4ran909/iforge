@@ -78,6 +78,7 @@ export default function Navbar() {
                   src="/images/iforge-logo1.png" 
                   alt={siteConfig.name} 
                   fill 
+                  sizes="(max-width: 640px) 128px, 144px"
                   className="object-contain object-left transition-transform group-hover:scale-105" 
                   priority
                 />

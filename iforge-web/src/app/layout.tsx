@@ -75,8 +75,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-white text-[#333333] font-sans antialiased flex flex-col justify-between selection:bg-[#1783C1] selection:text-white">
+    <html 
+      lang="en" 
+      suppressHydrationWarning 
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${plusJakartaSans.variable} scroll-smooth`}
+    >
+      <body 
+        suppressHydrationWarning 
+        className="min-h-screen bg-white text-[#333333] font-sans antialiased flex flex-col justify-between selection:bg-[#1783C1] selection:text-white"
+      >
         <Navbar />
         <main className="flex-1 w-full">
           {children}

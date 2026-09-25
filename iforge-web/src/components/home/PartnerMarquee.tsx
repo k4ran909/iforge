@@ -34,6 +34,7 @@ export default function PartnerMarquee() {
                   src={item.src}
                   alt={item.name}
                   fill
+                  sizes="(max-width: 640px) 112px, 128px"
                   className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
                 />
               </div>

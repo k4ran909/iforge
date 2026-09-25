@@ -64,6 +64,7 @@ export default function TestimonialsSection() {
                         src={clientLogo.src}
                         alt={t.company}
                         fill
+                        sizes="80px"
                         className="object-contain object-right"
                       />
                     </div>

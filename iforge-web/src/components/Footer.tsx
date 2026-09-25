@@ -52,6 +52,7 @@ export default function Footer() {
                 src="/images/iforge-logo1.png"
                 alt={siteConfig.name}
                 fill
+                sizes="160px"
                 className="object-contain object-left brightness-0 invert"
               />
             </Link>
