@@ -64,7 +64,7 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled 
             ? "py-2.5 px-4 sm:px-6" 
-            : "py-4 px-4 sm:px-8 bg-white/90 backdrop-blur-md border-b border-slate-100"
+            : "py-4 px-4 sm:px-8"
         }`}
       >
         <div 
