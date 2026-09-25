@@ -1,92 +1,105 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from 'react';
-import { Briefcase, GraduationCap, Presentation, Code2, MessageSquareText } from 'lucide-react';
-import CommunityOrbit, { type OrbitItem, type OrbitStat, type OrbitTag } from '@/components/ui/builders-community-hero';
+import { ArrowRight } from "lucide-react"
+import { motion, useReducedMotion } from "motion/react"
+// Relative import on purpose: the 21st CLI rewrites it to the published path (`@/components/ui/<slug>`)
+// and to a temporary path during `21st render`. An absolute "@/…" import breaks the render build.
+import { SonarGrid } from "@/components/ui/sonar-grid"
 
-const memoji = (n: number) => `https://raw.githubusercontent.com/alohe/memojis/main/png/memo_${n}.png`;
-
-// High-reliability Unsplash stock avatars as fallbacks
-const unsplashAvatars = [
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&h=150&q=80",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&h=150&q=80"
-];
-
-function ThreadAvatar() {
-  return (
-    <span className="flex h-[22px] w-[22px] items-center justify-center overflow-hidden rounded-full bg-[#dfe6f5]">
-      <img
-        src={memoji(33)}
-        onError={(e) => {
-          (e.target as HTMLImageElement).src = unsplashAvatars[0];
-        }}
-        alt=""
-        draggable={false}
-        className="h-full w-full translate-y-[8%] scale-[1.1] object-cover object-top"
-      />
-    </span>
-  );
+// Module-level `settings` + a default export that accepts them as props gives this
+// demo a live controls panel on 21st.dev. Signature knobs first, then look, then copy.
+const settings = {
+  ringWidth: 90,
+  speed: 260,
+  amplitude: 2.2,
+  pingEvery: 2.4,
+  interactive: true,
+  spacing: 26,
+  baseOpacity: 0.28,
+  useThemeColor: true,
+  color: "#6366f1",
+  eyebrow: "Now in public beta",
+  headline: "Signals, not noise.",
+  subline: "Every ping is a real event from your infrastructure. Tap anywhere to send one.",
 }
 
-const items: OrbitItem[] = [
-  // Anneau extérieur, de gauche à droite.
-  { kind: 'status', ring: 'outer', angle: 132, label: 'Release shipped' },
-  { kind: 'card', ring: 'outer', angle: 112.6, emoji: '🚀', badge: 12 },
-  { kind: 'pill', ring: 'outer', angle: 90, icon: <ThreadAvatar />, label: '8 New Threads' },
-  { kind: 'pill', ring: 'outer', angle: 67.6, icon: '⭐', label: '240' },
-  { kind: 'avatar', ring: 'outer', angle: 50.9, src: memoji(9), alt: 'Community member', color: '#c4bceb' },
-  { kind: 'pill', ring: 'outer', angle: 35.2, icon: <MessageSquareText size={13} strokeWidth={2} />, label: '36' },
-  // Anneau intérieur, de gauche à droite.
-  { kind: 'avatar', ring: 'inner', angle: 137.2, src: memoji(19), alt: 'Community member', color: '#ffdcb6' },
-  { kind: 'pill', ring: 'inner', angle: 116.6, icon: '🔥', label: '18' },
-  { kind: 'avatar', ring: 'inner', angle: 90, src: memoji(35), alt: 'Community member', color: '#c0cef3', size: 48 },
-  { kind: 'card', ring: 'inner', angle: 63.3, emoji: '📦' },
-  { kind: 'check', ring: 'inner', angle: 41.8 },
-];
-
-const stats: OrbitStat[] = [
-  { value: '12K+', label: 'Members' },
-  { value: '340+', label: 'Projects' },
-  { value: '2.5M+', label: 'Downloads' },
-];
-
-const tags: OrbitTag[] = [
-  { icon: <Code2 strokeWidth={2} />, label: 'Open source', href: '#' },
-  { icon: <Presentation strokeWidth={2} />, label: 'Weekly demos', href: '#' },
-  { icon: <GraduationCap strokeWidth={2} />, label: 'Mentorship', href: '#' },
-  { icon: <Briefcase strokeWidth={2} />, label: 'Job board', href: '#' },
-];
-
-export default function CommunityOrbitDemo() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="flex h-[490px] w-full items-center justify-center">
-        <div className="h-7 w-7 animate-spin rounded-full border-2 border-[#0284c7] border-t-transparent" />
-      </div>
-    );
-  }
+export default function Demo(props: Partial<typeof settings>) {
+  const s = { ...settings, ...props }
+  const reduce = useReducedMotion()
+  const enter = (delay: number) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 14, filter: "blur(6px)" },
+          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+          transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
+        }
 
   return (
-    <div className="w-full">
-      <CommunityOrbit
-        items={items}
-        stats={stats}
-        headline={
-          <>
-            Where Builders Ship
-            <br className="hidden sm:block" /> Together
-          </>
-        }
-        tags={tags}
+    <SonarGrid
+      id="sonar-grid-demo"
+      ringWidth={s.ringWidth}
+      speed={s.speed}
+      amplitude={s.amplitude}
+      pingEvery={s.pingEvery}
+      interactive={s.interactive}
+      spacing={s.spacing}
+      baseOpacity={s.baseOpacity}
+      color={s.useThemeColor ? undefined : s.color}
+      pingArea={[0.22, 0.18, 0.78, 0.82]}
+      className="bg-background flex min-h-[max(560px,100svh)] w-full flex-col"
+    >
+      {/* A soft wash behind the copy keeps it legible while rings pass underneath. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_34%_30%_at_50%_50%,var(--color-background)_0%,transparent_100%)]"
       />
-    </div>
-  );
+      {/*
+        Centered on purpose. 21st captures covers at 1280×960 and applies a content-aware crop that
+        follows dark pixels: a left-aligned headline with rings on the right got cropped. A balanced
+        composition keeps headline and rings together in every capture.
+      */}
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center px-8 py-24 text-center">
+        <div className="flex max-w-2xl flex-col items-center">
+          <motion.p
+            {...enter(0)}
+            className="text-muted-foreground border-border mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium"
+          >
+            <span aria-hidden="true" className="bg-primary size-1.5 rounded-full" />
+            {s.eyebrow}
+          </motion.p>
+          <motion.h1
+            {...enter(0.08)}
+            className="text-foreground text-5xl font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
+          >
+            {s.headline}
+          </motion.h1>
+          <motion.p {...enter(0.16)} className="text-muted-foreground mt-6 max-w-xl text-base text-pretty sm:text-lg">
+            {s.subline}
+          </motion.p>
+          <motion.div {...enter(0.24)} className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <a
+              href="/quote"
+              id="cta-primary"
+              data-slot="cta-primary"
+              className="group bg-primary text-primary-foreground focus-visible:ring-ring/50 inline-flex h-11 cursor-pointer items-center gap-2 rounded-full px-6 text-sm font-medium shadow-sm transition-[transform,box-shadow] duration-200 outline-none hover:shadow-md focus-visible:ring-[3px] active:scale-[0.98]"
+            >
+              Start listening
+              <ArrowRight
+                aria-hidden="true"
+                className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+              />
+            </a>
+            <a
+              href="#services"
+              data-slot="cta-secondary"
+              className="bg-background/70 text-foreground border-border hover:bg-accent focus-visible:ring-ring/50 inline-flex h-11 cursor-pointer items-center rounded-full border px-6 text-sm font-medium backdrop-blur transition-[background-color,transform] duration-200 outline-none focus-visible:ring-[3px] active:scale-[0.98]"
+            >
+              Read the docs
+            </a>
+          </motion.div>
+        </div>
+      </div>
+    </SonarGrid>
+  )
 }

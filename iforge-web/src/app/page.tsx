@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import HomeHero from "@/components/home/HomeHero";
+import Demo from "@/components/ui/demo";
 import PartnerMarquee from "@/components/home/PartnerMarquee";
 import ServicesBento from "@/components/home/ServicesBento";
 import WhyUsSection from "@/components/home/WhyUsSection";
@@ -19,7 +19,10 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="w-full overflow-hidden">
-      <HomeHero />
+      {/* First Page Interactive SonarGrid Hero */}
+      <Demo />
+
+      {/* Enterprise Platform Sections */}
       <PartnerMarquee />
       <ServicesBento />
       <WhyUsSection />

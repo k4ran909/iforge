@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import CommunityOrbitDemo from '@/components/ui/demo';
+import CommunityOrbitDemo from '@/components/ui/builders-orbit-demo';
 import Link from 'next/link';
 import { ArrowRight, Users, Sparkles, Terminal, MessageSquare, Code, ShieldCheck, Zap } from 'lucide-react';
 import { siteConfig } from '@/data/siteData';

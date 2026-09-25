@@ -19,6 +19,17 @@
   --color-brand-canvas: #F8FAFC;
   --color-brand-border: #E2E8F0;
 
+  /* Standard shadcn semantic tokens mapped to approved brand palette */
+  --color-background: #FFFFFF;
+  --color-foreground: #0A3C6E;
+  --color-primary: #1783C1;
+  --color-primary-foreground: #FFFFFF;
+  --color-muted: #F8FAFC;
+  --color-muted-foreground: #666666;
+  --color-border: #E2E8F0;
+  --color-accent: #F4F7FB;
+  --color-ring: #1783C1;
+
   --font-heading: var(--font-heading), "Plus Jakarta Sans", sans-serif;
   --font-sans: var(--font-sans), "Inter", sans-serif;
 }
