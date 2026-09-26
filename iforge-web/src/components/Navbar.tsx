@@ -62,17 +62,20 @@ export default function Navbar() {
         >
           <div className="flex items-center justify-between">
             {/* Brand Logo */}
-            <Link href="/" className="flex items-center gap-2 group shrink-0">
-              <div className="relative h-9 w-32 sm:h-10 sm:w-36">
+            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+              <div className="relative h-8 w-8 sm:h-9 sm:w-9">
                 <Image 
-                  src="/images/iforge-logo1.png" 
+                  src="/images/iforge-logo2.png" 
                   alt={siteConfig.name} 
                   fill 
-                  sizes="(max-width: 640px) 128px, 144px"
-                  className="object-contain object-left transition-transform group-hover:scale-105 dark:brightness-110" 
+                  sizes="36px"
+                  className="object-contain transition-transform group-hover:scale-105" 
                   priority
                 />
               </div>
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-black dark:text-white transition-colors">
+                iforge
+              </span>
             </Link>
 
             {/* Desktop Navigation Links */}

@@ -46,14 +46,19 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand Info & Alliances */}
           <div className="lg:col-span-2 space-y-5">
-            <Link href="/" className="inline-block relative h-10 w-40">
-              <Image
-                src="/images/iforge-logo1.png"
-                alt={siteConfig.name}
-                fill
-                sizes="160px"
-                className="object-contain object-left brightness-0 invert"
-              />
+            <Link href="/" className="inline-flex items-center gap-2.5 group">
+              <div className="relative h-9 w-9">
+                <Image
+                  src="/images/iforge-logo2.png"
+                  alt={siteConfig.name}
+                  fill
+                  sizes="36px"
+                  className="object-contain transition-transform group-hover:scale-105"
+                />
+              </div>
+              <span className="text-2xl font-black tracking-tight text-white">
+                iforge
+              </span>
             </Link>
             <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
               iForge Technologies delivers end-to-end enterprise IT consultancy, multi-cloud architecture, AI & ML engineering, robust cybersecurity, and bespoke application development.

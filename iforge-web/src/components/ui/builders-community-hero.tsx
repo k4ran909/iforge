@@ -23,13 +23,13 @@ export interface OrbitAvatarItem extends OrbitBase {
 export interface OrbitPillItem extends OrbitBase {
   kind: 'pill';
   /** Icône ou emoji devant le texte. */
-  icon: ReactNode;
+  icon?: ReactNode;
   label: string;
 }
 
 export interface OrbitCardItem extends OrbitBase {
   kind: 'card';
-  emoji: string;
+  emoji: ReactNode | string;
   badge?: string | number;
 }
 
@@ -107,7 +107,7 @@ function OrbitAvatar({ src, alt, color, size = 72 }: OrbitAvatarItem) {
           src={src}
           alt={alt ?? ''}
           draggable={false}
-          className="h-full w-full translate-y-[8%] scale-[1.08] select-none object-cover object-top"
+          className="h-full w-full select-none object-cover object-center"
         />
       </div>
     </div>
@@ -116,8 +116,8 @@ function OrbitAvatar({ src, alt, color, size = 72 }: OrbitAvatarItem) {
 
 function OrbitPill({ icon, label }: OrbitPillItem) {
   return (
-    <div className="flex min-h-[27px] items-center gap-2 whitespace-nowrap rounded-full border border-black/[0.08] bg-white py-[5px] px-2.5 text-[12.5px] font-medium text-[#6c6c78] shadow-[0_2px_6px_rgba(0,0,0,0.05)] dark:border-white/10 dark:bg-[#161616] dark:text-white/60">
-      <span className="flex shrink-0 items-center text-[13px] leading-none">{icon}</span>
+    <div className="flex min-h-[27px] items-center gap-1.5 whitespace-nowrap rounded-full border border-black/[0.08] bg-white py-[5px] px-3 text-[12.5px] font-medium text-[#4a4a52] shadow-[0_2px_6px_rgba(0,0,0,0.05)] dark:border-white/10 dark:bg-[#161616] dark:text-white/80">
+      {icon && <span className="flex shrink-0 items-center text-[13px] leading-none">{icon}</span>}
       <span className="leading-none">{label}</span>
     </div>
   );
@@ -125,7 +125,7 @@ function OrbitPill({ icon, label }: OrbitPillItem) {
 
 function OrbitCard({ emoji, badge }: OrbitCardItem) {
   return (
-    <div className="relative flex h-[52px] w-[52px] items-center justify-center rounded-xl border border-black/[0.08] bg-[#f7f7f8] text-[22px] leading-none shadow-[0_2px_8px_rgba(0,0,0,0.05)] dark:border-white/10 dark:bg-[#1c1c1c]">
+    <div className="relative flex h-[52px] w-[52px] items-center justify-center rounded-xl border border-black/[0.08] bg-white text-xs font-mono font-bold leading-none shadow-[0_2px_8px_rgba(0,0,0,0.05)] dark:border-white/10 dark:bg-[#1c1c1c] text-black dark:text-white">
       <span className="select-none">{emoji}</span>
       {badge !== undefined && (
         <span className="absolute -bottom-[5px] -right-2 flex h-[18px] items-center gap-0.5 rounded-[5px] border border-black/[0.08] bg-white px-1.5 text-[10px] font-medium leading-none text-[#7a7a7a] shadow-[0_1px_3px_rgba(0,0,0,0.06)] dark:border-white/10 dark:bg-[#222] dark:text-white/60">
@@ -239,7 +239,7 @@ export default function CommunityOrbit({
 
   return (
     <section
-      className={`w-full bg-white px-4 pb-14 text-[#1f1f1f] dark:bg-[#0a0a0a] dark:text-white ${className ?? ''}`}
+      className={`w-full bg-white px-4 pb-6 text-[#1f1f1f] dark:bg-black dark:text-white ${className ?? ''}`}
     >
       <div
         ref={frameRef}
@@ -345,7 +345,7 @@ export default function CommunityOrbit({
       </motion.h2>
 
       {tags.length > 0 && (
-        <div className="mx-auto mt-[35px] flex max-w-[760px] flex-wrap justify-center gap-3">
+        <div className="mx-auto mt-5 flex max-w-[760px] flex-wrap justify-center gap-2.5">
           {tags.map((t, i) => {
             const Tag = (t.href ? motion.a : motion.button) as typeof motion.a;
             return (

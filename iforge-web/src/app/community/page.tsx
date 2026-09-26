@@ -14,7 +14,7 @@ export default function CommunityPage() {
   return (
     <div className="w-full bg-white dark:bg-black pb-20 transition-colors duration-250">
       {/* Top Banner Badge */}
-      <div className="mx-auto max-w-[1200px] px-4 pt-10 text-center">
+      <div className="mx-auto max-w-[1200px] px-4 pt-5 sm:pt-6 text-center">
         <div className="inline-flex items-center rounded-full border border-[#E61E32]/20 bg-[#FDE8EA] dark:bg-[#E61E32]/15 px-4 py-1.5 text-xs font-semibold text-black dark:text-white shadow-xs">
           <span>Global Developer Ecosystem & Talent Network</span>
         </div>
@@ -24,7 +24,7 @@ export default function CommunityPage() {
       <CommunityOrbitDemo />
 
       {/* CTA Button Section */}
-      <div className="mx-auto mt-6 max-w-[650px] px-4 text-center">
+      <div className="mx-auto mt-4 sm:mt-5 max-w-[650px] px-4 text-center">
         <div className="flex flex-col items-center justify-center gap-3.5 sm:flex-row">
           <Link
             href="/quote"
@@ -46,7 +46,7 @@ export default function CommunityPage() {
       </div>
 
       {/* Community Tracks Grid */}
-      <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="tracks" className="mt-16 sm:mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Community Tracks</span>
           <h2 className="text-3xl font-extrabold text-black dark:text-white">Collaborative Learning & Hackathons</h2>
