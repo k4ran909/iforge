@@ -18,8 +18,7 @@ export default function CommunitySpotlight() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Left Content */}
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
-                <Users className="w-3.5 h-3.5 text-[#E61E32]" />
+              <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
                 Global Developer Ecosystem
               </div>
 

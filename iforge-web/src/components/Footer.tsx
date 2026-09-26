@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { servicesData, siteConfig } from "@/data/siteData";
-import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -12,8 +12,7 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="max-w-2xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
+              <div className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold mb-3">
                 <span>Accelerate Your Digital Evolution</span>
               </div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
@@ -68,9 +67,8 @@ export default function Footer() {
                 {["Zero-Trust Security", "Multi-Cloud Resiliency", "SOC 2 Type II", "24/7 Rapid SLA", "ISO 27001"].map((item) => (
                   <span
                     key={item}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-medium text-neutral-300"
+                    className="inline-flex items-center px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-medium text-neutral-300"
                   >
-                    <ShieldCheck className="w-3 h-3 text-[#E61E32]" />
                     {item}
                   </span>
                 ))}

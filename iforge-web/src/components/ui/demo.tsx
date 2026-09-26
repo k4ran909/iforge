@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, ShieldCheck, Cloud, BrainCircuit } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 import Link from "next/link"
 import { SonarGrid } from "@/components/ui/sonar-grid"
@@ -113,20 +113,17 @@ export default function Demo(props: Partial<typeof settings>) {
           {/* Trust Badges */}
           <motion.div
             {...enter(0.32)}
-            className="mt-8 flex flex-wrap items-center justify-center gap-5 text-xs text-muted-foreground"
+            className="mt-8 flex flex-wrap items-center justify-center gap-5 text-xs text-muted-foreground font-medium"
           >
-            <span className="inline-flex items-center gap-1.5">
-              <Cloud className="size-3.5 text-[#E61E32]" />
+            <span className="inline-flex items-center">
               AWS & GCP Certified
             </span>
             <span className="hidden sm:inline text-border">|</span>
-            <span className="inline-flex items-center gap-1.5">
-              <ShieldCheck className="size-3.5 text-[#E61E32]" />
+            <span className="inline-flex items-center">
               SOC 2 Compliant
             </span>
             <span className="hidden sm:inline text-border">|</span>
-            <span className="inline-flex items-center gap-1.5">
-              <BrainCircuit className="size-3.5 text-[#E61E32]" />
+            <span className="inline-flex items-center">
               AI-Powered Solutions
             </span>
           </motion.div>

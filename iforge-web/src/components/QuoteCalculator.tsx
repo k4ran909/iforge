@@ -9,7 +9,6 @@ import {
   CheckCircle2, 
   Check, 
   ShieldCheck, 
-  Sparkles,
   Layers,
   Clock,
   Send

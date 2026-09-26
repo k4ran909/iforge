@@ -24,8 +24,7 @@ export default function HomeQuoteTeaser() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Context */}
           <div className="lg:col-span-6 space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
-              <Calculator className="w-3.5 h-3.5 text-[#E61E32]" />
+            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
               Transparent Estimation
             </div>
 

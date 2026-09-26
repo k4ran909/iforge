@@ -10,8 +10,7 @@ import {
   Server, 
   ShieldCheck, 
   Code2, 
-  CheckCircle2,
-  Sparkles
+  CheckCircle2
 } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -40,8 +39,7 @@ export default function ServicesBento() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
+          <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
             Enterprise Service Portfolio
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black dark:text-white tracking-tight">

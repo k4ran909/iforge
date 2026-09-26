@@ -11,7 +11,6 @@ import {
   ArrowRight, 
   Phone, 
   Mail, 
-  Sparkles,
   Cloud,
   Server,
   ShieldCheck,
@@ -152,8 +151,7 @@ export default function Navbar() {
 
                       {/* Mega-menu footer strip */}
                       <div className="col-span-2 mt-2 pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-xs text-neutral-500 dark:text-neutral-400 px-2">
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
+                        <span className="font-medium">
                           Need tailored enterprise IT solutions?
                         </span>
                         <Link

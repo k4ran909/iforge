@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Sparkles, CheckCircle2, ChevronRight, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronRight, Users } from "lucide-react";
 
 export default function HomeHero() {
   return (

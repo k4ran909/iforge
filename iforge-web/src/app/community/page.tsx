@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import CommunityOrbitDemo from '@/components/ui/builders-orbit-demo';
 import Link from 'next/link';
-import { ArrowRight, Users, Sparkles, Terminal, MessageSquare, Code, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Terminal, Code, ShieldCheck, Zap } from 'lucide-react';
 import { siteConfig } from '@/data/siteData';
 
 export const metadata: Metadata = {
@@ -15,8 +15,7 @@ export default function CommunityPage() {
     <div className="w-full bg-white dark:bg-black pb-20 transition-colors duration-250">
       {/* Top Banner Badge */}
       <div className="mx-auto max-w-[1200px] px-4 pt-10 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#E61E32]/20 bg-[#FDE8EA] dark:bg-[#E61E32]/15 px-4 py-1.5 text-xs font-semibold text-black dark:text-white shadow-xs">
-          <Users className="h-3.5 w-3.5 text-[#E61E32]" />
+        <div className="inline-flex items-center rounded-full border border-[#E61E32]/20 bg-[#FDE8EA] dark:bg-[#E61E32]/15 px-4 py-1.5 text-xs font-semibold text-black dark:text-white shadow-xs">
           <span>Global Developer Ecosystem & Talent Network</span>
         </div>
       </div>

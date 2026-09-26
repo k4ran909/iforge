@@ -8,8 +8,6 @@ import {
   MapPin, 
   Clock, 
   ShieldCheck, 
-  MessageSquare, 
-  Sparkles,
   HelpCircle
 } from "lucide-react";
 
@@ -30,8 +28,7 @@ export default function ContactPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
-              <MessageSquare className="w-3.5 h-3.5 text-[#E61E32]" />
+            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
               Direct Engineering Inquiry
             </div>
 

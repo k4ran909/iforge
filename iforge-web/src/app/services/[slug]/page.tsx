@@ -15,11 +15,9 @@ import {
   Users, 
   CheckCircle2, 
   ChevronRight,
-  Sparkles,
   Shield,
   Layers,
-  Zap,
-  HelpCircle
+  Zap
 } from "lucide-react";
 
 interface Props {
@@ -86,8 +84,7 @@ export default async function ServicePage({ params }: Props) {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-8 space-y-5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
+              <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
                 Enterprise Practice Area
               </div>
 
@@ -270,8 +267,7 @@ export default async function ServicePage({ params }: Props) {
       <section className="py-16 bg-neutral-50 dark:bg-black/90 border-t border-neutral-200 dark:border-neutral-800 transition-colors duration-250">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold">
-              <HelpCircle className="w-3.5 h-3.5 text-[#E61E32]" />
+            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold">
               Common Questions
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white">

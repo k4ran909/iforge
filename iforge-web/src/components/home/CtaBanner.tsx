@@ -17,8 +17,7 @@ export default function CtaBanner() {
           />
 
           <div className="relative max-w-3xl space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#E61E32]" />
+            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-white/10 text-white text-xs font-semibold">
               <span>Dedicated Enterprise IT & Cloud Engineering</span>
             </div>
 
