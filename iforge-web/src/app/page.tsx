@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import Demo from "@/components/ui/demo";
-import PartnerMarquee from "@/components/home/PartnerMarquee";
 import ServicesBento from "@/components/home/ServicesBento";
 import WhyUsSection from "@/components/home/WhyUsSection";
 import TechStackSection from "@/components/home/TechStackSection";
@@ -23,7 +22,6 @@ export default function HomePage() {
       <Demo />
 
       {/* Enterprise Platform Sections */}
-      <PartnerMarquee />
       <ServicesBento />
       <WhyUsSection />
       <TechStackSection />

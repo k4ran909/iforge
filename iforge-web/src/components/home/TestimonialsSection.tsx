@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import { testimonials, clientLogos } from "@/data/siteData";
+import { testimonials } from "@/data/siteData";
 import { Star, Quote } from "lucide-react";
 
 export default function TestimonialsSection() {
@@ -24,7 +23,6 @@ export default function TestimonialsSection() {
         {/* 3 Testimonials Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((t, index) => {
-            const clientLogo = clientLogos.find((c) => c.name.toLowerCase().includes(t.company.toLowerCase()));
             return (
               <div
                 key={index}
@@ -47,7 +45,7 @@ export default function TestimonialsSection() {
                   </p>
                 </div>
 
-                {/* Client Info & Logo */}
+                {/* Client Info */}
                 <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
                   <div>
                     <div className="text-sm font-bold text-black dark:text-white">
@@ -57,18 +55,6 @@ export default function TestimonialsSection() {
                       {t.company}
                     </div>
                   </div>
-
-                  {clientLogo && (
-                    <div className="relative h-7 w-20 opacity-80 group-hover:opacity-100 transition-opacity dark:brightness-125">
-                      <Image
-                        src={clientLogo.src}
-                        alt={t.company}
-                        fill
-                        sizes="80px"
-                        className="object-contain object-right"
-                      />
-                    </div>
-                  )}
                 </div>
               </div>
             );

@@ -62,16 +62,16 @@ export default function Footer() {
 
             <div className="pt-2">
               <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
-                Certified Partner Ecosystem
+                Enterprise Standards & Assurances
               </div>
               <div className="flex flex-wrap items-center gap-2.5">
-                {["AWS", "Google Cloud", "VMware", "Palo Alto", "Trend Micro"].map((partner) => (
+                {["Zero-Trust Security", "Multi-Cloud Resiliency", "SOC 2 Type II", "24/7 Rapid SLA", "ISO 27001"].map((item) => (
                   <span
-                    key={partner}
+                    key={item}
                     className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-medium text-neutral-300"
                   >
                     <ShieldCheck className="w-3 h-3 text-[#E61E32]" />
-                    {partner}
+                    {item}
                   </span>
                 ))}
               </div>

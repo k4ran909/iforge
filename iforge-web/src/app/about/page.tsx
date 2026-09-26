@@ -1,8 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { siteConfig, companyStats, valueProps, companyTimeline, partnerLogos } from "@/data/siteData";
+import { siteConfig, companyStats, valueProps, companyTimeline } from "@/data/siteData";
 import { 
   ShieldCheck, 
   ArrowRight, 
@@ -127,38 +126,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Strategic Certified Alliances */}
-      <section className="py-20 bg-white dark:bg-black transition-colors duration-250">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Alliance Ecosystem</span>
-            <h2 className="text-3xl font-extrabold text-black dark:text-white">Certified Industry Partnerships</h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              Our certified engineering credentials grant our clients direct access to priority tier-1 support, credits, and beta APIs.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-            {partnerLogos.map((partner, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col items-center justify-center p-6 bg-neutral-50 dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl hover:border-[#E61E32] dark:hover:border-[#E61E32] transition-all"
-              >
-                <div className="relative h-12 w-32 mb-3">
-                  <Image
-                    src={partner.src}
-                    alt={partner.name}
-                    fill
-                    sizes="128px"
-                    className="object-contain dark:brightness-125"
-                  />
-                </div>
-                <span className="text-xs font-semibold text-black dark:text-white text-center">{partner.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Call to Action */}
       <section className="py-16 bg-black text-white relative overflow-hidden">
