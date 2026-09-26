@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 
 export default function CommunityPage() {
   return (
-    <div className="w-full bg-white pb-20">
+    <div className="w-full bg-white dark:bg-black pb-20 transition-colors duration-250">
       {/* Top Banner Badge */}
       <div className="mx-auto max-w-[1200px] px-4 pt-10 text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#E61E32]/20 bg-[#FDE8EA] px-4 py-1.5 text-xs font-semibold text-black shadow-xs">
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#E61E32]/20 bg-[#FDE8EA] dark:bg-[#E61E32]/15 px-4 py-1.5 text-xs font-semibold text-black dark:text-white shadow-xs">
           <Users className="h-3.5 w-3.5 text-[#E61E32]" />
           <span>Global Developer Ecosystem & Talent Network</span>
         </div>
@@ -36,12 +36,12 @@ export default function CommunityPage() {
           </Link>
           <Link
             href="/contact"
-            className="w-full sm:w-auto inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white px-7 text-sm font-semibold text-black hover:bg-neutral-50 hover:border-[#E61E32] transition-colors cursor-pointer"
+            className="w-full sm:w-auto inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#0D0D0D] px-7 text-sm font-semibold text-black dark:text-white hover:bg-neutral-50 dark:hover:bg-neutral-800 hover:border-[#E61E32] transition-colors cursor-pointer"
           >
             <span>Partner With Organizers</span>
           </Link>
         </div>
-        <p className="mt-3 text-xs text-neutral-500 font-medium">
+        <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400 font-medium">
           Over 12,000+ engineers, founders, and creators shipping daily worldwide.
         </p>
       </div>
@@ -50,8 +50,8 @@ export default function CommunityPage() {
       <section className="mt-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
           <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Community Tracks</span>
-          <h2 className="text-3xl font-extrabold text-black">Collaborative Learning & Hackathons</h2>
-          <p className="text-sm text-neutral-600">
+          <h2 className="text-3xl font-extrabold text-black dark:text-white">Collaborative Learning & Hackathons</h2>
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
             Deep-dive technical channels curated by Principal Architects at iForge.
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function CommunityPage() {
             {
               title: "Cloud & DevOps",
               desc: "Multi-region Kubernetes, Terraform IaC modules, FinOps cost cutting, and continuous delivery.",
-              icon: <Terminal className="w-5 h-5 text-black" />,
+              icon: <Terminal className="w-5 h-5 text-black dark:text-white" />,
               members: "3.8k Builders",
             },
             {
@@ -85,14 +85,14 @@ export default function CommunityPage() {
           ].map((track, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl bg-neutral-50 border border-neutral-200 hover:border-[#E61E32] hover:bg-white hover:shadow-md transition-all"
+              className="p-6 rounded-2xl bg-neutral-50 dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 hover:border-[#E61E32] dark:hover:border-[#E61E32] hover:bg-white dark:hover:bg-[#141414] hover:shadow-md transition-all"
             >
-              <div className="w-10 h-10 rounded-xl bg-white border border-neutral-200 flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center mb-4">
                 {track.icon}
               </div>
-              <h3 className="text-base font-bold text-black mb-2">{track.title}</h3>
-              <p className="text-xs text-neutral-600 leading-relaxed mb-4">{track.desc}</p>
-              <span className="text-[11px] font-bold text-[#E61E32] bg-[#FDE8EA] px-2.5 py-1 rounded-md">
+              <h3 className="text-base font-bold text-black dark:text-white mb-2">{track.title}</h3>
+              <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">{track.desc}</p>
+              <span className="text-[11px] font-bold text-[#E61E32] bg-[#FDE8EA] dark:bg-[#E61E32]/15 px-2.5 py-1 rounded-md">
                 {track.members}
               </span>
             </div>

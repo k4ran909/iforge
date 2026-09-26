@@ -29,17 +29,17 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white border border-emerald-500/40 rounded-3xl p-8 sm:p-12 text-center shadow-lg animate-in fade-in duration-300">
-        <div className="w-16 h-16 bg-emerald-50 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-5">
+      <div className="bg-white dark:bg-[#0D0D0D] border border-emerald-500/40 rounded-3xl p-8 sm:p-12 text-center shadow-lg animate-in fade-in duration-300 transition-colors duration-250">
+        <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-full flex items-center justify-center mx-auto mb-5">
           <CheckCircle2 className="w-8 h-8 text-emerald-600" />
         </div>
-        <h3 className="text-2xl sm:text-3xl font-extrabold text-black mb-3">
+        <h3 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white mb-3">
           Inquiry Successfully Received
         </h3>
-        <p className="text-neutral-600 text-sm sm:text-base max-w-lg mx-auto mb-6 leading-relaxed">
-          Thank you, <span className="font-bold text-black">{formData.name}</span>. An iForge Principal Architect will review your technical requirements and contact you within 2 business hours.
+        <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base max-w-lg mx-auto mb-6 leading-relaxed">
+          Thank you, <span className="font-bold text-black dark:text-white">{formData.name}</span>. An iForge Principal Architect will review your technical requirements and contact you within 2 business hours.
         </p>
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 text-xs font-semibold text-neutral-800 mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-6">
           <Clock className="w-3.5 h-3.5 text-[#E61E32]" />
           <span>Priority Dispatch Ticket #IF-{Math.floor(1000 + Math.random() * 9000)}</span>
         </div>
@@ -50,7 +50,7 @@ export default function ContactForm() {
               setSubmitted(false);
               setFormData({ name: "", email: "", phone: "", company: "", service: "cloud-services", budget: "$10k - $25k", message: "" });
             }}
-            className="px-6 py-3 rounded-xl text-xs font-semibold text-black bg-neutral-100 hover:bg-neutral-200 transition-colors cursor-pointer"
+            className="px-6 py-3 rounded-xl text-xs font-semibold text-black dark:text-white bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors cursor-pointer"
           >
             Submit Another Request
           </button>
@@ -60,10 +60,10 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white border border-neutral-200 rounded-3xl p-6 sm:p-10 space-y-6 shadow-sm">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-10 space-y-6 shadow-sm transition-colors duration-250">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
             Full Name *
           </label>
           <input
@@ -72,12 +72,12 @@ export default function ContactForm() {
             placeholder="Sarah Jenkins"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black placeholder-neutral-400 focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all"
+            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
             Work Email *
           </label>
           <input
@@ -86,14 +86,14 @@ export default function ContactForm() {
             placeholder="sarah@enterprise.com"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black placeholder-neutral-400 focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all"
+            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
             Phone / WhatsApp
           </label>
           <input
@@ -101,12 +101,12 @@ export default function ContactForm() {
             placeholder="+91 99718 66720"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black placeholder-neutral-400 focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all"
+            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
             Company / Organization
           </label>
           <input
@@ -114,49 +114,49 @@ export default function ContactForm() {
             placeholder="Acme Corporation"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black placeholder-neutral-400 focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all"
+            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
             Practice Interest *
           </label>
           <select
             value={formData.service}
             onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all"
+            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
           >
             {servicesData.map((s) => (
-              <option key={s.id} value={s.slug}>
+              <option key={s.id} value={s.slug} className="bg-white dark:bg-[#141414] text-black dark:text-white">
                 {s.title}
               </option>
             ))}
-            <option value="custom">Custom Enterprise Architecture</option>
+            <option value="custom" className="bg-white dark:bg-[#141414] text-black dark:text-white">Custom Enterprise Architecture</option>
           </select>
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
             Anticipated Investment
           </label>
           <select
             value={formData.budget}
             onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-            className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all"
+            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
           >
-            <option value="< $10k">&lt; $10,000 (Sprint Audit)</option>
-            <option value="$10k - $25k">$10,000 – $25,000 (Core Module)</option>
-            <option value="$25k - $50k">$25,000 – $50,000 (Full Architecture)</option>
-            <option value="$50k+">$50,000+ (Multi-Cloud / Large Enterprise)</option>
+            <option value="< $10k" className="bg-white dark:bg-[#141414] text-black dark:text-white">&lt; $10,000 (Sprint Audit)</option>
+            <option value="$10k - $25k" className="bg-white dark:bg-[#141414] text-black dark:text-white">$10,000 – $25,000 (Core Module)</option>
+            <option value="$25k - $50k" className="bg-white dark:bg-[#141414] text-black dark:text-white">$25,000 – $50,000 (Full Architecture)</option>
+            <option value="$50k+" className="bg-white dark:bg-[#141414] text-black dark:text-white">$50,000+ (Multi-Cloud / Large Enterprise)</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-bold text-black uppercase tracking-wider mb-2">
+        <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
           Project Goals & Scope Details *
         </label>
         <textarea
@@ -165,7 +165,7 @@ export default function ContactForm() {
           placeholder="Outline your current infrastructure stack, timelines, key challenges, or specific deliverables required..."
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-3 text-sm text-black placeholder-neutral-400 focus:outline-none focus:border-[#E61E32] focus:bg-white transition-all resize-y"
+          className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all resize-y"
         />
       </div>
 
@@ -184,7 +184,7 @@ export default function ContactForm() {
         )}
       </button>
 
-      <div className="flex items-center justify-center gap-2 text-xs text-neutral-500 pt-1">
+      <div className="flex items-center justify-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 pt-1">
         <ShieldCheck className="w-4 h-4 text-emerald-600" />
         <span>Strict Non-Disclosure Protocol • 100% IP Protection</span>
       </div>

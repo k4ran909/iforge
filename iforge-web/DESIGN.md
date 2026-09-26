@@ -1,6 +1,6 @@
 # iForge Technologies Design System (DESIGN.md)
 
-This document establishes the official visual design language, color palette, typography, component guidelines, and interaction rules for the rebuilt **iForge Technologies** web platform.
+This document establishes the official visual design language, dual Light/Dark color palette, typography, component guidelines, and interaction rules for the rebuilt **iForge Technologies** web platform.
 
 ---
 
@@ -13,53 +13,78 @@ iForge Technologies is a premier enterprise IT services, cloud architecture, AI 
 
 ---
 
-## 2. Core Color Palette
+## 2. Core Color Palette (Light & Dark Theme Specification)
 
-The official color system is derived directly from the approved brand palette:
+The official color system is derived directly from the approved brand palette across both light and dark display modes:
 
-| Swatch | Color Name | Hex Code | RGB | Role & Usage |
+| Swatch | Color Name | Hex Code | Light Theme Usage | Dark Theme Usage |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | **Black** | `#000000` | `rgb(0, 0, 0)` | **Primary Structural & Typography**: High-contrast headings, dark mode hero containers, why-us grid background, deep footer, primary badges, high-impact structural borders. |
-| **2** | **Crimson Red** | `#E61E32` | `rgb(230, 30, 50)` | **Vibrant Accent & Action**: Primary CTAs, active links, SonarGrid wavefront illumination, KPI highlights, focus rings, progress indicators, interactive hover states. |
-| **3** | **Pure White** | `#FFFFFF` | `rgb(255, 255, 255)` | **Surface & Light Canvas**: Light mode card backgrounds, high-contrast text on dark surfaces, badges, clean spacious canvas. |
-| **4** | **Silver / Steel** | `#B3B3B3` | `rgb(179, 179, 179)` | **Neutral & Divider Accents**: Subtle borders, scrollbar thumbs, secondary metadata, inactive dots, structural delimiters. |
+| **1** | **Black** | `#000000` | Primary headings, dark accent containers, high-contrast badges | **Default Canvas & Background**: Deep pure black background, header backdrop, why-us grid |
+| **2** | **Crimson Red** | `#E61E32` | Primary CTAs, active links, SonarGrid wavefront, active tabs | **Accent & Illumination**: Wavefront pulses, glow shadows, primary buttons, KPI callouts |
+| **3** | **Pure White** | `#FFFFFF` | Default canvas background, card surfaces, clean spacing | **Primary Headings & High Contrast Text**: Display headings, active icon glyphs |
+| **4** | **Silver / Steel** | `#B3B3B3` | Secondary text, borders, scrollbar thumb | **Secondary Typography & Dividers**: Subtext, muted metadata, subtle container borders |
 
-### Extended Neutral Palette (Functional Shades)
+### Extended Theme Tokens
 
-To ensure depth, micro-interactions, and accessibility, the four core colors are paired with clean harmonic tints:
-
-- **Canvas Background (Soft Light)**: `#FFFFFF` / `#FAFAFA`
-- **Subtle Surface**: `#F8FAFC` / `#F5F5F5` (Clean alternating section background)
-- **Muted Text / Secondary**: `#666666` (Subtitles, metadata, form labels)
-- **Subtle Border**: `#E5E7EB` / `#E2E8F0` with `#B3B3B3` accents
-- **Deep Carbon / Dark Container**: `#0A0A0A` / `#000000` (Dark hero and why-us container background)
+- **Light Canvas**: `#FFFFFF` / `#FAFAFA`
+- **Dark Canvas**: `#000000` / `#0A0A0A`
+- **Light Cards / Surfaces**: `#FFFFFF` with `#E5E7EB` border
+- **Dark Cards / Surfaces**: `#0D0D0D` / `#141414` with `#262626` border
+- **Light Pill / Glow**: `#FDE8EA`
+- **Dark Pill / Glow**: `rgba(230, 30, 50, 0.15)`
 - **Crimson Hover Tint**: `#C81426` (Darkened Crimson for button hover)
-- **Crimson Light Pill / Glow**: `#FDE8EA` / `rgba(230, 30, 50, 0.12)` (Ambient glow for cards and badges)
 
 ---
 
 ## 3. Tailwind CSS Token Mapping (Tailwind v4 `@theme`)
 
 ```css
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #000000;
+  --muted: #F8F9FA;
+  --muted-foreground: #666666;
+  --border: #E5E7EB;
+  --accent: #FDE8EA;
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --muted: #111111;
+  --muted-foreground: #B3B3B3;
+  --border: #262626;
+  --accent: rgba(230, 30, 50, 0.15);
+  --card: #0A0A0A;
+  --card-foreground: #FFFFFF;
+}
+
 @theme {
   /* Brand Approved Core Colors */
   --color-primary: #E61E32;
   --color-primary-foreground: #FFFFFF;
 
-  --color-foreground: #000000;
-  --color-background: #FFFFFF;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-ring: #E61E32;
 
   --color-brand-black: #000000;
   --color-brand-crimson: #E61E32;
   --color-brand-crimson-hover: #C81426;
   --color-brand-crimson-light: #FDE8EA;
-  --color-brand-crimson-glow: rgba(230, 30, 50, 0.15);
-
+  --color-brand-crimson-glow: rgba(230, 30, 50, 0.2);
   --color-brand-white: #FFFFFF;
   --color-brand-silver: #B3B3B3;
-
-  --color-brand-canvas: #FAFAFA;
-  --color-brand-border: #E5E7EB;
 }
 ```
 
@@ -68,9 +93,7 @@ To ensure depth, micro-interactions, and accessibility, the four core colors are
 ## 4. Typography Scale & Font System
 
 - **Display & Headings Font**: `Plus Jakarta Sans`, sans-serif (Weights: `600`, `700`, `800`)
-  - Modern geometric letterforms, clean contemporary curves, polished enterprise tech presence.
 - **Body & UI Font**: `Inter`, sans-serif (Weights: `400`, `500`, `600`)
-  - Industry gold-standard for readability, forms, navigation, and dense data presentation.
 - **Code & Tech Metrics**: `ui-monospace`, `SFMono-Regular`, `Menlo`, `monospace`
 
 | Level | Size | Weight | Tracking | Usage |
@@ -98,25 +121,22 @@ To ensure depth, micro-interactions, and accessibility, the four core colors are
 
 ## 6. UI Elements & Component Specifications
 
-### 6.1 Primary Buttons (Call to Action)
+### 6.1 Theme Toggle
+- Integrated directly into the top global `Navbar` (accessible on desktop and mobile).
+- Stores user preference in `localStorage("iforge-theme")` with automated fallback to system preference.
+- Anti-flicker script embedded in `<head>` guarantees instantaneous, flicker-free rendering.
+
+### 6.2 Primary Buttons (Call to Action)
 - **Background**: `#E61E32` (Crimson Red)
 - **Text Color**: `#FFFFFF`
 - **Hover State**: Background shifts to `#C81426`, scale `1.02`, shadow `0 8px 20px -4px rgba(230, 30, 50, 0.35)`.
-- **Padding**: `12px 24px` (Desktop), `10px 20px` (Mobile)
 - **Border Radius**: `12px` (`rounded-xl`)
-- **Font**: `14px`, `font-semibold`
-
-### 6.2 Secondary / Ghost Buttons
-- **Background**: `#FFFFFF` or `bg-white/10`
-- **Border**: `border border-neutral-200`
-- **Text Color**: `#000000` (or `#FFFFFF` on dark backgrounds)
-- **Hover State**: Border shifts to `#E61E32` or `#FFFFFF`
 
 ### 6.3 Bento Grid & Cards
-- **Background**: Light surfaces use `#FFFFFF` on `#FAFAFA`, dark highlights use `#000000`.
-- **Border**: `border border-neutral-200` with subtle `#B3B3B3` accents.
-- **Hover**: Subtle lift (`translate-y-[-2px]`), border shifts to `#E61E32/50`.
+- **Light Theme**: `#FFFFFF` surface with `#E5E7EB` border.
+- **Dark Theme**: `#0D0D0D` deep carbon surface with `#262626` border.
+- **Hover**: Subtle lift (`translate-y-[-2px]`), border illuminates in `#E61E32`.
 
 ### 6.4 SonarGrid Hero Visualizer
-- **Wavefront Pulse Color**: `#E61E32`
-- **Canvas Dot Grid**: Adaptive primary dot radius with resting opacity `0.15` and wavefront peak `1.0`.
+- **Pulse Wavefront**: `#E61E32` (Crimson Red).
+- Dynamically adapts canvas background to `var(--color-background)`.

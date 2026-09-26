@@ -14,9 +14,9 @@ export default function PartnerMarquee() {
   const marqueeItems = [...allPartners, ...allPartners];
 
   return (
-    <section className="py-10 border-y border-neutral-200 bg-[#FBFBFB] overflow-hidden">
+    <section className="py-10 border-y border-neutral-200 dark:border-neutral-800 bg-[#FBFBFB] dark:bg-black overflow-hidden transition-colors duration-250">
       <div className="max-w-7xl mx-auto px-4 mb-6 text-center">
-        <p className="text-xs font-bold uppercase tracking-widest text-neutral-500">
+        <p className="text-xs font-bold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
           Trusted By Industry Pioneers & Certified By Cloud Titans
         </p>
       </div>
@@ -26,7 +26,7 @@ export default function PartnerMarquee() {
           {marqueeItems.map((item, index) => (
             <div
               key={`${item.name}-${index}`}
-              className="flex items-center justify-center shrink-0 h-14 w-36 sm:w-44 px-4 py-2 bg-white rounded-xl border border-neutral-200/80 shadow-xs hover:border-[#E61E32]/60 transition-all hover:scale-105"
+              className="flex items-center justify-center shrink-0 h-14 w-36 sm:w-44 px-4 py-2 bg-white dark:bg-[#0D0D0D] rounded-xl border border-neutral-200/80 dark:border-neutral-800 shadow-xs hover:border-[#E61E32]/60 dark:hover:border-[#E61E32]/60 transition-all hover:scale-105"
               title={`${item.name} (${item.type})`}
             >
               <div className="relative h-8 w-28 sm:w-32">
@@ -35,7 +35,7 @@ export default function PartnerMarquee() {
                   alt={item.name}
                   fill
                   sizes="(max-width: 640px) 112px, 128px"
-                  className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100"
+                  className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 dark:brightness-125"
                 />
               </div>
             </div>

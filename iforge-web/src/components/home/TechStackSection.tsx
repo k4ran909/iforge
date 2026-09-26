@@ -15,16 +15,16 @@ export default function TechStackSection() {
   ];
 
   return (
-    <section className="py-20 lg:py-24 bg-[#FBFBFB] border-t border-neutral-200">
+    <section className="py-20 lg:py-24 bg-[#FBFBFB] dark:bg-black border-t border-neutral-200 dark:border-neutral-800 transition-colors duration-250">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] text-[#E61E32] text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
             Enterprise Architecture & Tooling
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-black tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-black dark:text-white tracking-tight">
             Battle-Tested Technology Stacks
           </h2>
-          <p className="text-sm sm:text-base text-neutral-600">
+          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
             We build and maintain enterprise software with industry-standard, vendor-independent frameworks optimized for high concurrency, security, and low latency.
           </p>
 
@@ -37,8 +37,8 @@ export default function TechStackSection() {
                 onClick={() => setActiveTab(idx)}
                 className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   activeTab === idx
-                    ? "bg-black text-white shadow-md shadow-black/15"
-                    : "bg-white text-neutral-700 border border-neutral-200 hover:border-[#E61E32]"
+                    ? "bg-black text-white dark:bg-white dark:text-black shadow-md shadow-black/15"
+                    : "bg-white dark:bg-[#0D0D0D] text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-neutral-800 hover:border-[#E61E32]"
                 }`}
               >
                 {tabIcons[idx]}
@@ -49,17 +49,17 @@ export default function TechStackSection() {
         </div>
 
         {/* Selected Category Capabilities Box */}
-        <div className="max-w-4xl mx-auto bg-white border border-neutral-200/90 rounded-2xl p-6 sm:p-10 shadow-sm">
-          <div className="flex items-center justify-between mb-6 pb-4 border-b border-neutral-100">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-[#0D0D0D] border border-neutral-200/90 dark:border-neutral-800 rounded-2xl p-6 sm:p-10 shadow-sm transition-colors duration-250">
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-neutral-100 dark:border-neutral-800">
             <div>
-              <h3 className="text-xl font-bold text-black">
+              <h3 className="text-xl font-bold text-black dark:text-white">
                 {techCapabilities[activeTab].category}
               </h3>
-              <p className="text-xs text-neutral-500 mt-0.5">
+              <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
                 Production-grade frameworks & toolchains deployed by our certified specialists
               </p>
             </div>
-            <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#FDE8EA] text-[#E61E32] text-xs font-bold">
+            <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold">
               {techCapabilities[activeTab].items.length} Core Frameworks
             </span>
           </div>
@@ -68,10 +68,10 @@ export default function TechStackSection() {
             {techCapabilities[activeTab].items.map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 p-3.5 rounded-xl bg-[#FBFBFB] border border-neutral-200/80 hover:border-[#E61E32] transition-all"
+                className="flex items-center gap-3 p-3.5 rounded-xl bg-[#FBFBFB] dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 hover:border-[#E61E32] dark:hover:border-[#E61E32] transition-all"
               >
                 <CheckCircle2 className="w-4 h-4 text-[#E61E32] shrink-0" />
-                <span className="text-xs sm:text-sm font-semibold text-[#262626]">
+                <span className="text-xs sm:text-sm font-semibold text-[#262626] dark:text-neutral-200">
                   {item}
                 </span>
               </div>

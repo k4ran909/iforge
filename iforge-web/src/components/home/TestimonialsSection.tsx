@@ -7,16 +7,16 @@ import { Star, Quote } from "lucide-react";
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-20 lg:py-24 bg-[#FBFBFB] border-t border-neutral-200">
+    <section className="py-20 lg:py-24 bg-[#FBFBFB] dark:bg-black border-t border-neutral-200 dark:border-neutral-800 transition-colors duration-250">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] text-[#E61E32] text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
             Client Success & Validation
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-black tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-black dark:text-white tracking-tight">
             Trusted By Engineering Leaders
           </h2>
-          <p className="text-base text-neutral-600 leading-relaxed">
+          <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
             Discover how visionary enterprises modernise legacy infrastructure, safeguard critical data, and accelerate developer velocity with iForge.
           </p>
         </div>
@@ -28,7 +28,7 @@ export default function TestimonialsSection() {
             return (
               <div
                 key={index}
-                className="bg-white border border-neutral-200/90 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs hover:shadow-md transition-all hover:border-[#E61E32]/50 group"
+                className="bg-white dark:bg-[#0D0D0D] border border-neutral-200/90 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-xs hover:shadow-md transition-all hover:border-[#E61E32]/50 group"
               >
                 <div>
                   {/* Rating Stars & Quote Icon */}
@@ -38,28 +38,28 @@ export default function TestimonialsSection() {
                         <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-                    <Quote className="w-6 h-6 text-neutral-200 group-hover:text-[#E61E32]/25 transition-colors" />
+                    <Quote className="w-6 h-6 text-neutral-200 dark:text-neutral-800 group-hover:text-[#E61E32]/25 transition-colors" />
                   </div>
 
                   {/* Quote Body */}
-                  <p className="text-sm text-[#262626] leading-relaxed italic mb-6">
+                  <p className="text-sm text-[#262626] dark:text-neutral-300 leading-relaxed italic mb-6">
                     &ldquo;{t.quote}&rdquo;
                   </p>
                 </div>
 
                 {/* Client Info & Logo */}
-                <div className="pt-4 border-t border-neutral-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
                   <div>
-                    <div className="text-sm font-bold text-black">
+                    <div className="text-sm font-bold text-black dark:text-white">
                       {t.client}
                     </div>
-                    <div className="text-xs text-neutral-500 font-medium">
+                    <div className="text-xs text-neutral-500 dark:text-neutral-400 font-medium">
                       {t.company}
                     </div>
                   </div>
 
                   {clientLogo && (
-                    <div className="relative h-7 w-20 opacity-80 group-hover:opacity-100 transition-opacity">
+                    <div className="relative h-7 w-20 opacity-80 group-hover:opacity-100 transition-opacity dark:brightness-125">
                       <Image
                         src={clientLogo.src}
                         alt={t.company}

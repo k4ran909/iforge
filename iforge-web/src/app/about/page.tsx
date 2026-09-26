@@ -24,26 +24,26 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white dark:bg-black transition-colors duration-250">
       {/* About Hero Header */}
-      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-18 lg:pb-24 bg-gradient-to-b from-neutral-50 via-white to-white border-b border-neutral-100">
+      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-18 lg:pb-24 bg-gradient-to-b from-neutral-50 via-white to-white dark:from-neutral-950 dark:via-black dark:to-black border-b border-neutral-100 dark:border-neutral-800 transition-colors duration-250">
         <div 
           aria-hidden="true" 
-          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#E61E32]/8 blur-3xl rounded-full" 
+          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#E61E32]/8 dark:bg-[#E61E32]/12 blur-3xl rounded-full" 
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-3xl mx-auto space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] text-black text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
               Enterprise IT Consultancy & Engineering
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black dark:text-white tracking-tight leading-tight">
               Engineering Digital Foundations For Tomorrow&apos;s Market Leaders
             </h1>
 
-            <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
               Founded on principles of unyielding technical precision, iForge Technologies transforms legacy complexity into high-velocity, secure, and resilient cloud architectures.
             </p>
           </div>
@@ -51,9 +51,9 @@ export default function AboutPage() {
           {/* Stats Bar */}
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {companyStats.map((stat, i) => (
-              <div key={i} className="text-center p-6 bg-white border border-neutral-200 rounded-2xl shadow-xs">
-                <div className="text-3xl sm:text-4xl font-extrabold text-black">{stat.value}</div>
-                <div className="text-xs font-semibold text-neutral-500 mt-1">{stat.label}</div>
+              <div key={i} className="text-center p-6 bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xs transition-colors duration-250">
+                <div className="text-3xl sm:text-4xl font-extrabold text-black dark:text-white">{stat.value}</div>
+                <div className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -61,22 +61,22 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision Cards */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-black transition-colors duration-250">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 sm:p-12 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-[#FDE8EA] flex items-center justify-center text-[#E61E32]">
+            <div className="bg-neutral-50 dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-12 space-y-4 transition-colors duration-250">
+              <div className="w-12 h-12 rounded-xl bg-[#FDE8EA] dark:bg-[#E61E32]/15 flex items-center justify-center text-[#E61E32]">
                 <Target className="w-6 h-6" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-black">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white">
                 Our Mission
               </h2>
-              <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
+              <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 To empower forward-thinking organizations with architectural clarity, multi-cloud mastery, and intelligent automation. We eliminate technical friction so enterprises can build, deploy, and scale without compromise.
               </p>
             </div>
 
-            <div className="bg-black text-white border border-neutral-800 rounded-3xl p-8 sm:p-12 space-y-4 relative overflow-hidden">
+            <div className="bg-black dark:bg-[#080808] text-white border border-neutral-800 rounded-3xl p-8 sm:p-12 space-y-4 relative overflow-hidden transition-colors duration-250">
               <div 
                 aria-hidden="true" 
                 className="pointer-events-none absolute -bottom-10 -right-10 w-48 h-48 bg-[#E61E32]/15 blur-2xl rounded-full" 
@@ -96,28 +96,28 @@ export default function AboutPage() {
       </section>
 
       {/* Decade of Excellence Timeline */}
-      <section className="py-20 bg-neutral-50 border-y border-neutral-200">
+      <section className="py-20 bg-neutral-50 dark:bg-black/90 border-y border-neutral-200 dark:border-neutral-800 transition-colors duration-250">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
             <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Our Evolution</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-black">A Decade of Technical Delivery</h2>
-            <p className="text-sm text-neutral-600">Milestones charting our growth from infrastructure advisory to global cloud architecture.</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-black dark:text-white">A Decade of Technical Delivery</h2>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">Milestones charting our growth from infrastructure advisory to global cloud architecture.</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">
             {companyTimeline.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6 shadow-xs hover:border-[#E61E32] transition-all"
+                className="bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6 shadow-xs hover:border-[#E61E32] dark:hover:border-[#E61E32] transition-all"
               >
-                <div className="shrink-0 px-4 py-2 rounded-xl bg-[#FDE8EA] text-black font-extrabold text-lg">
+                <div className="shrink-0 px-4 py-2 rounded-xl bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white font-extrabold text-lg">
                   {item.year}
                 </div>
                 <div className="space-y-1.5">
-                  <h3 className="text-lg font-bold text-black">
+                  <h3 className="text-lg font-bold text-black dark:text-white">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed">
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -128,12 +128,12 @@ export default function AboutPage() {
       </section>
 
       {/* Strategic Certified Alliances */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-black transition-colors duration-250">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Alliance Ecosystem</span>
-            <h2 className="text-3xl font-extrabold text-black">Certified Industry Partnerships</h2>
-            <p className="text-sm text-neutral-600">
+            <h2 className="text-3xl font-extrabold text-black dark:text-white">Certified Industry Partnerships</h2>
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
               Our certified engineering credentials grant our clients direct access to priority tier-1 support, credits, and beta APIs.
             </p>
           </div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
             {partnerLogos.map((partner, idx) => (
               <div
                 key={idx}
-                className="flex flex-col items-center justify-center p-6 bg-neutral-50 border border-neutral-200 rounded-2xl hover:border-[#E61E32] transition-all"
+                className="flex flex-col items-center justify-center p-6 bg-neutral-50 dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl hover:border-[#E61E32] dark:hover:border-[#E61E32] transition-all"
               >
                 <div className="relative h-12 w-32 mb-3">
                   <Image
@@ -150,10 +150,10 @@ export default function AboutPage() {
                     alt={partner.name}
                     fill
                     sizes="128px"
-                    className="object-contain"
+                    className="object-contain dark:brightness-125"
                   />
                 </div>
-                <span className="text-xs font-semibold text-black text-center">{partner.name}</span>
+                <span className="text-xs font-semibold text-black dark:text-white text-center">{partner.name}</span>
               </div>
             ))}
           </div>

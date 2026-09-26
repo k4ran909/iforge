@@ -17,7 +17,7 @@ import {
 const iconMap: Record<string, React.ReactNode> = {
   BrainCircuit: <BrainCircuit className="w-6 h-6 text-[#E61E32]" />,
   Cloud: <Cloud className="w-6 h-6 text-[#E61E32]" />,
-  Server: <Server className="w-6 h-6 text-black" />,
+  Server: <Server className="w-6 h-6 text-black dark:text-white" />,
   ShieldCheck: <ShieldCheck className="w-6 h-6 text-[#E61E32]" />,
   Code2: <Code2 className="w-6 h-6 text-[#E61E32]" />,
 };
@@ -36,18 +36,18 @@ export default function ServicesBento() {
       });
 
   return (
-    <section id="services" className="py-20 lg:py-28 bg-white relative">
+    <section id="services" className="py-20 lg:py-28 bg-white dark:bg-black relative transition-colors duration-250">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] text-[#E61E32] text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-[#E61E32] text-xs font-bold uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
             Enterprise Service Portfolio
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black dark:text-white tracking-tight">
             Engineered For Uncompromising Scale
           </h2>
-          <p className="text-base sm:text-lg text-neutral-600 leading-relaxed">
+          <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
             Five core enterprise practice groups delivering full-lifecycle cloud architecture, machine learning systems, proactive cybersecurity, and high-velocity application engineering.
           </p>
 
@@ -66,8 +66,8 @@ export default function ServicesBento() {
                 onClick={() => setFilter(tab.id)}
                 className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                   filter === tab.id
-                    ? "bg-black text-white shadow-sm"
-                    : "bg-[#FBFBFB] text-neutral-700 hover:bg-neutral-200/70 border border-neutral-200"
+                    ? "bg-black text-white dark:bg-white dark:text-black shadow-sm"
+                    : "bg-[#FBFBFB] dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200/70 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-neutral-800"
                 }`}
               >
                 {tab.label}
@@ -83,14 +83,16 @@ export default function ServicesBento() {
             return (
               <div
                 key={service.id}
-                className={`group relative bg-white border border-neutral-200/90 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:border-[#E61E32] hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 ${
-                  isAppDev && filter === "all" ? "lg:col-span-2 bg-gradient-to-br from-[#FBFBFB] via-white to-[#FDE8EA]/20 border-neutral-200" : ""
+                className={`group relative bg-white dark:bg-[#0D0D0D] border border-neutral-200/90 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:border-[#E61E32] dark:hover:border-[#E61E32] hover:shadow-xl hover:shadow-black/5 dark:hover:shadow-black/40 hover:-translate-y-1 ${
+                  isAppDev && filter === "all" 
+                    ? "lg:col-span-2 bg-gradient-to-br from-[#FBFBFB] via-white to-[#FDE8EA]/20 dark:from-[#0D0D0D] dark:via-[#111111] dark:to-[#E61E32]/10 border-neutral-200 dark:border-neutral-800" 
+                    : ""
                 }`}
               >
                 <div>
                   {/* Card Header: Icon & Category Tag */}
                   <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-xl bg-[#FDE8EA] border border-[#E61E32]/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-[#FDE8EA] dark:bg-[#E61E32]/15 border border-[#E61E32]/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       {iconMap[service.iconName] || <Server className="w-6 h-6 text-[#E61E32]" />}
                     </div>
                     <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 group-hover:text-[#E61E32] transition-colors">
@@ -99,17 +101,17 @@ export default function ServicesBento() {
                   </div>
 
                   {/* Title & Short Description */}
-                  <h3 className="text-xl font-bold text-black group-hover:text-[#E61E32] transition-colors mb-2">
+                  <h3 className="text-xl font-bold text-black dark:text-white group-hover:text-[#E61E32] transition-colors mb-2">
                     {service.title}
                   </h3>
-                  <p className="text-sm text-neutral-600 leading-relaxed mb-6">
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed mb-6">
                     {service.shortDesc}
                   </p>
 
                   {/* Core Features List */}
                   <div className="space-y-2.5 mb-6">
                     {service.features.slice(0, 3).map((feat, fIdx) => (
-                      <div key={fIdx} className="flex items-start gap-2 text-xs text-[#262626]">
+                      <div key={fIdx} className="flex items-start gap-2 text-xs text-[#262626] dark:text-neutral-300">
                         <CheckCircle2 className="w-4 h-4 text-[#E61E32] shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </div>
@@ -121,7 +123,7 @@ export default function ServicesBento() {
                     {service.technologies.slice(0, 4).map((tech, tIdx) => (
                       <span
                         key={tIdx}
-                        className="px-2 py-0.5 rounded-md bg-neutral-100 text-[11px] font-medium text-neutral-700"
+                        className="px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-[11px] font-medium text-neutral-700 dark:text-neutral-300"
                       >
                         {tech}
                       </span>
@@ -130,7 +132,7 @@ export default function ServicesBento() {
                 </div>
 
                 {/* Bottom Action Link */}
-                <div className="pt-4 border-t border-neutral-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between">
                   <Link
                     href={`/services/${service.slug}`}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E61E32] group-hover:text-[#C81426] transition-colors"
@@ -141,7 +143,7 @@ export default function ServicesBento() {
 
                   <Link
                     href={`/quote?service=${service.slug}`}
-                    className="text-[11px] font-semibold text-neutral-500 hover:text-black transition-colors"
+                    className="text-[11px] font-semibold text-neutral-500 hover:text-black dark:hover:text-white transition-colors"
                   >
                     Quote →
                   </Link>
@@ -153,7 +155,7 @@ export default function ServicesBento() {
 
         {/* Bottom Banner */}
         <div className="mt-12 text-center">
-          <p className="text-sm text-neutral-600">
+          <p className="text-sm text-neutral-600 dark:text-neutral-400">
             Looking for a hybrid or bespoke infrastructure engagement?{" "}
             <Link href="/quote" className="font-semibold text-[#E61E32] hover:underline">
               Request an architectural audit & consultation →

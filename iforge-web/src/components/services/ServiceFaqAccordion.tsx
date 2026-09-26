@@ -22,12 +22,12 @@ export default function ServiceFaqAccordion({ faqs }: Props) {
         return (
           <div
             key={idx}
-            className="bg-white border border-neutral-200 rounded-2xl overflow-hidden transition-all duration-200"
+            className="bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden transition-all duration-200"
           >
             <button
               type="button"
               onClick={() => toggle(idx)}
-              className="w-full flex items-center justify-between p-5 text-left font-semibold text-black hover:text-[#E61E32] transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between p-5 text-left font-semibold text-black dark:text-white hover:text-[#E61E32] dark:hover:text-[#E61E32] transition-colors cursor-pointer"
             >
               <span className="text-sm sm:text-base pr-4">{faq.question}</span>
               <ChevronDown
@@ -37,7 +37,7 @@ export default function ServiceFaqAccordion({ faqs }: Props) {
               />
             </button>
             {isOpen && (
-              <div className="px-5 pb-5 pt-1 text-sm text-neutral-600 leading-relaxed border-t border-neutral-100 bg-neutral-50/50">
+              <div className="px-5 pb-5 pt-1 text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/40">
                 {faq.answer}
               </div>
             )}
