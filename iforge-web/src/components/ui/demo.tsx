@@ -14,7 +14,7 @@ const settings = {
   spacing: 26,
   baseOpacity: 0.28,
   useThemeColor: true,
-  color: "#1783C1",
+  color: "#E61E32",
   eyebrow: "Certified AWS & Google Cloud Partner",
   headline: "Accelerating Success With IT Services",
   subline:
@@ -93,7 +93,7 @@ export default function Demo(props: Partial<typeof settings>) {
               href="/quote"
               id="cta-primary"
               data-slot="cta-primary"
-              className="group bg-primary text-primary-foreground focus-visible:ring-ring/50 inline-flex h-12 cursor-pointer items-center gap-2.5 rounded-full px-7 text-sm font-semibold shadow-lg shadow-[#1783C1]/20 transition-[transform,box-shadow] duration-200 outline-none hover:shadow-xl hover:shadow-[#1783C1]/30 focus-visible:ring-[3px] active:scale-[0.98]"
+              className="group bg-primary text-primary-foreground focus-visible:ring-ring/50 inline-flex h-12 cursor-pointer items-center gap-2.5 rounded-full px-7 text-sm font-semibold shadow-lg shadow-[#E61E32]/25 transition-[transform,box-shadow] duration-200 outline-none hover:shadow-xl hover:shadow-[#E61E32]/35 focus-visible:ring-[3px] active:scale-[0.98]"
             >
               Get a Quote
               <ArrowRight
@@ -116,17 +116,17 @@ export default function Demo(props: Partial<typeof settings>) {
             className="mt-8 flex flex-wrap items-center justify-center gap-5 text-xs text-muted-foreground"
           >
             <span className="inline-flex items-center gap-1.5">
-              <Cloud className="size-3.5 text-[#1783C1]" />
+              <Cloud className="size-3.5 text-[#E61E32]" />
               AWS & GCP Certified
             </span>
             <span className="hidden sm:inline text-border">|</span>
             <span className="inline-flex items-center gap-1.5">
-              <ShieldCheck className="size-3.5 text-[#1783C1]" />
+              <ShieldCheck className="size-3.5 text-[#E61E32]" />
               SOC 2 Compliant
             </span>
             <span className="hidden sm:inline text-border">|</span>
             <span className="inline-flex items-center gap-1.5">
-              <BrainCircuit className="size-3.5 text-[#1783C1]" />
+              <BrainCircuit className="size-3.5 text-[#E61E32]" />
               AI-Powered Solutions
             </span>
           </motion.div>

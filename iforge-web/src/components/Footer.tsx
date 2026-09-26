@@ -1,32 +1,32 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { servicesData, siteConfig, partnerLogos } from "@/data/siteData";
+import { servicesData, siteConfig } from "@/data/siteData";
 import { Mail, Phone, MapPin, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#072648] text-slate-300 border-t border-slate-800">
-      {/* Top Pre-Footer CTA Banner in Deep Navy */}
-      <div className="bg-gradient-to-r from-[#0A3C6E] via-[#0D4B8A] to-[#0A3C6E] border-b border-white/10">
+    <footer className="bg-black text-slate-300 border-t border-neutral-900">
+      {/* Top Pre-Footer CTA Banner */}
+      <div className="bg-gradient-to-r from-black via-neutral-950 to-black border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="max-w-2xl text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-semibold mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-[#38bdf8]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
                 <span>Accelerate Your Digital Evolution</span>
               </div>
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
                 Ready to engineer resilient enterprise systems?
               </h3>
-              <p className="mt-2 text-slate-200 text-sm sm:text-base leading-relaxed">
-                Partner with certified IT consultants for cloud modernization, enterprise AI advisory, zero-trust cybersecurity, or dedicated tech talent.
+              <p className="mt-2 text-neutral-300 text-sm sm:text-base leading-relaxed">
+                Partner with certified IT consultants for cloud modernization, AI & ML deployment, zero-trust cybersecurity, or custom enterprise applications.
               </p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-3.5 shrink-0">
               <Link
                 href="/quote"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#1783C1] hover:bg-[#136FA5] shadow-lg shadow-[#1783C1]/30 transition-all hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#E61E32] hover:bg-[#C81426] shadow-lg shadow-[#E61E32]/30 transition-all hover:scale-105 active:scale-95"
               >
                 <span>Calculate Project Scope</span>
                 <ArrowRight className="w-4 h-4" />
@@ -56,21 +56,21 @@ export default function Footer() {
                 className="object-contain object-left brightness-0 invert"
               />
             </Link>
-            <p className="text-sm text-slate-300 max-w-sm leading-relaxed">
+            <p className="text-sm text-neutral-400 max-w-sm leading-relaxed">
               iForge Technologies delivers end-to-end enterprise IT consultancy, multi-cloud architecture, AI & ML engineering, robust cybersecurity, and bespoke application development.
             </p>
 
             <div className="pt-2">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+              <div className="text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-3">
                 Certified Partner Ecosystem
               </div>
               <div className="flex flex-wrap items-center gap-2.5">
                 {["AWS", "Google Cloud", "VMware", "Palo Alto", "Trend Micro"].map((partner) => (
                   <span
                     key={partner}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-medium text-slate-200"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-xs font-medium text-neutral-300"
                   >
-                    <ShieldCheck className="w-3 h-3 text-[#38bdf8]" />
+                    <ShieldCheck className="w-3 h-3 text-[#E61E32]" />
                     {partner}
                   </span>
                 ))}
@@ -88,7 +88,7 @@ export default function Footer() {
                 <li key={s.id}>
                   <Link 
                     href={`/services/${s.slug}`} 
-                    className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                    className="text-neutral-400 hover:text-[#E61E32] transition-colors"
                   >
                     {s.title}
                   </Link>
@@ -106,16 +106,16 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/community" 
-                  className="text-[#38bdf8] hover:text-white font-medium inline-flex items-center gap-1 transition-colors"
+                  className="text-white hover:text-[#E61E32] font-medium inline-flex items-center gap-1.5 transition-colors"
                 >
                   <span>Builders Community</span>
-                  <span className="px-1.5 py-0.5 text-[10px] rounded bg-[#1783C1] text-white">12k+</span>
+                  <span className="px-1.5 py-0.5 text-[10px] rounded bg-[#E61E32] text-white font-bold">12k+</span>
                 </Link>
               </li>
               <li>
                 <Link 
                   href="/quote" 
-                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                  className="text-neutral-400 hover:text-[#E61E32] transition-colors"
                 >
                   Project Cost Calculator
                 </Link>
@@ -123,7 +123,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/services/cloud-services" 
-                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                  className="text-neutral-400 hover:text-[#E61E32] transition-colors"
                 >
                   Cloud Migration Blueprint
                 </Link>
@@ -131,7 +131,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/services/application-development" 
-                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                  className="text-neutral-400 hover:text-[#E61E32] transition-colors"
                 >
                   Enterprise Dashboards & Apps
                 </Link>
@@ -139,7 +139,7 @@ export default function Footer() {
               <li>
                 <Link 
                   href="/services/cybersecurity-services" 
-                  className="text-slate-300 hover:text-[#38bdf8] transition-colors"
+                  className="text-neutral-400 hover:text-[#E61E32] transition-colors"
                 >
                   VAPT & SOC 2 Audits
                 </Link>
@@ -154,27 +154,27 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link href="/about" className="text-slate-300 hover:text-[#38bdf8] transition-colors">
+                <Link href="/about" className="text-neutral-400 hover:text-[#E61E32] transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/quote" className="text-slate-300 hover:text-[#38bdf8] transition-colors">
+                <Link href="/quote" className="text-neutral-400 hover:text-[#E61E32] transition-colors">
                   Project Estimator
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-slate-300 hover:text-[#38bdf8] transition-colors">
+                <Link href="/contact" className="text-neutral-400 hover:text-[#E61E32] transition-colors">
                   Contact Support
                 </Link>
               </li>
               <li>
-                <a href={`tel:${siteConfig.phone.replace(/[^0-9+]/g, '')}`} className="text-slate-300 hover:text-[#38bdf8] transition-colors">
+                <a href={`tel:${siteConfig.phone.replace(/[^0-9+]/g, '')}`} className="text-neutral-400 hover:text-[#E61E32] transition-colors">
                   Direct Line: {siteConfig.phone}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${siteConfig.contactEmail}`} className="text-slate-300 hover:text-[#38bdf8] transition-colors">
+                <a href={`mailto:${siteConfig.contactEmail}`} className="text-neutral-400 hover:text-[#E61E32] transition-colors">
                   {siteConfig.contactEmail}
                 </a>
               </li>
@@ -183,29 +183,29 @@ export default function Footer() {
         </div>
 
         {/* Contact Location & SLA Strip */}
-        <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-slate-400">
+        <div className="mt-12 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-neutral-400">
           <div className="flex items-center gap-3">
-            <Mail className="w-4 h-4 text-[#38bdf8] shrink-0" />
+            <Mail className="w-4 h-4 text-[#E61E32] shrink-0" />
             <span>Inquiries: <a href={`mailto:${siteConfig.contactEmail}`} className="text-white hover:underline">{siteConfig.contactEmail}</a></span>
           </div>
           <div className="flex items-center gap-3">
-            <MapPin className="w-4 h-4 text-[#38bdf8] shrink-0" />
+            <MapPin className="w-4 h-4 text-[#E61E32] shrink-0" />
             <span>Engineering Hub: Noida, India (Serving Global Clients)</span>
           </div>
           <div className="flex items-center gap-3">
-            <Phone className="w-4 h-4 text-[#38bdf8] shrink-0" />
+            <Phone className="w-4 h-4 text-[#E61E32] shrink-0" />
             <span>24/7 Operations: NOC & SOC Support Commitment</span>
           </div>
         </div>
 
         {/* Bottom Legal & Copyright */}
-        <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="mt-8 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
           <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="/contact" className="hover:text-slate-200 transition-colors">Privacy Policy</Link>
-            <Link href="/contact" className="hover:text-slate-200 transition-colors">Terms of Service</Link>
-            <Link href="/contact" className="hover:text-slate-200 transition-colors">Security Standards</Link>
-            <Link href="/contact" className="hover:text-slate-200 transition-colors">SLA Commitments</Link>
+            <Link href="/contact" className="hover:text-neutral-300 transition-colors">Privacy Policy</Link>
+            <Link href="/contact" className="hover:text-neutral-300 transition-colors">Terms of Service</Link>
+            <Link href="/contact" className="hover:text-neutral-300 transition-colors">Security Standards</Link>
+            <Link href="/contact" className="hover:text-neutral-300 transition-colors">SLA Commitments</Link>
           </div>
         </div>
       </div>

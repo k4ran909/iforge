@@ -26,24 +26,24 @@ export default function AboutPage() {
   return (
     <div className="w-full bg-white">
       {/* About Hero Header */}
-      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-18 lg:pb-24 bg-gradient-to-b from-[#F4F7FB] via-white to-white border-b border-slate-100">
+      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-18 lg:pb-24 bg-gradient-to-b from-neutral-50 via-white to-white border-b border-neutral-100">
         <div 
           aria-hidden="true" 
-          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#1783C1]/10 blur-3xl rounded-full" 
+          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#E61E32]/8 blur-3xl rounded-full" 
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-3xl mx-auto space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F4FC] text-[#0A3C6E] text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-[#1783C1]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FDE8EA] text-black text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-[#E61E32]" />
               Enterprise IT Consultancy & Engineering
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0A3C6E] tracking-tight leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black tracking-tight leading-tight">
               Engineering Digital Foundations For Tomorrow&apos;s Market Leaders
             </h1>
 
-            <p className="text-base sm:text-lg text-[#666666] leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-neutral-600 leading-relaxed font-normal">
               Founded on principles of unyielding technical precision, iForge Technologies transforms legacy complexity into high-velocity, secure, and resilient cloud architectures.
             </p>
           </div>
@@ -51,9 +51,9 @@ export default function AboutPage() {
           {/* Stats Bar */}
           <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
             {companyStats.map((stat, i) => (
-              <div key={i} className="text-center p-6 bg-white border border-slate-200/90 rounded-2xl shadow-xs">
-                <div className="text-3xl sm:text-4xl font-extrabold text-[#0A3C6E]">{stat.value}</div>
-                <div className="text-xs font-semibold text-slate-500 mt-1">{stat.label}</div>
+              <div key={i} className="text-center p-6 bg-white border border-neutral-200 rounded-2xl shadow-xs">
+                <div className="text-3xl sm:text-4xl font-extrabold text-black">{stat.value}</div>
+                <div className="text-xs font-semibold text-neutral-500 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -64,26 +64,30 @@ export default function AboutPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-[#F8FAFC] border border-slate-200/90 rounded-3xl p-8 sm:p-12 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-[#E8F4FC] flex items-center justify-center text-[#1783C1]">
+            <div className="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 sm:p-12 space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#FDE8EA] flex items-center justify-center text-[#E61E32]">
                 <Target className="w-6 h-6" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0A3C6E]">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-black">
                 Our Mission
               </h2>
-              <p className="text-sm sm:text-base text-[#666666] leading-relaxed">
+              <p className="text-sm sm:text-base text-neutral-600 leading-relaxed">
                 To empower forward-thinking organizations with architectural clarity, multi-cloud mastery, and intelligent automation. We eliminate technical friction so enterprises can build, deploy, and scale without compromise.
               </p>
             </div>
 
-            <div className="bg-[#0A3C6E] text-white border border-slate-800 rounded-3xl p-8 sm:p-12 space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-[#38bdf8]">
+            <div className="bg-black text-white border border-neutral-800 rounded-3xl p-8 sm:p-12 space-y-4 relative overflow-hidden">
+              <div 
+                aria-hidden="true" 
+                className="pointer-events-none absolute -bottom-10 -right-10 w-48 h-48 bg-[#E61E32]/15 blur-2xl rounded-full" 
+              />
+              <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[#E61E32]">
                 <Globe2 className="w-6 h-6" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
                 Our Vision
               </h2>
-              <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
+              <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
                 To become the world&apos;s most dependable engineering partner for mission-critical IT transformations, where cutting-edge technology directly translates into verifiable client market capitalization.
               </p>
             </div>
@@ -92,28 +96,28 @@ export default function AboutPage() {
       </section>
 
       {/* Decade of Excellence Timeline */}
-      <section className="py-20 bg-[#F8FAFC] border-y border-slate-200/80">
+      <section className="py-20 bg-neutral-50 border-y border-neutral-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1783C1]">Our Evolution</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0A3C6E]">A Decade of Technical Delivery</h2>
-            <p className="text-sm text-[#666666]">Milestones charting our growth from infrastructure advisory to global cloud architecture.</p>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Our Evolution</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-black">A Decade of Technical Delivery</h2>
+            <p className="text-sm text-neutral-600">Milestones charting our growth from infrastructure advisory to global cloud architecture.</p>
           </div>
 
           <div className="max-w-4xl mx-auto space-y-6">
             {companyTimeline.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6 shadow-xs hover:border-[#1783C1] transition-all"
+                className="bg-white border border-neutral-200 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6 shadow-xs hover:border-[#E61E32] transition-all"
               >
-                <div className="shrink-0 px-4 py-2 rounded-xl bg-[#E8F4FC] text-[#0A3C6E] font-extrabold text-lg">
+                <div className="shrink-0 px-4 py-2 rounded-xl bg-[#FDE8EA] text-black font-extrabold text-lg">
                   {item.year}
                 </div>
                 <div className="space-y-1.5">
-                  <h3 className="text-lg font-bold text-[#0A3C6E]">
+                  <h3 className="text-lg font-bold text-black">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-[#666666] leading-relaxed">
+                  <p className="text-sm text-neutral-600 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -127,9 +131,9 @@ export default function AboutPage() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#1783C1]">Alliance Ecosystem</span>
-            <h2 className="text-3xl font-extrabold text-[#0A3C6E]">Certified Industry Partnerships</h2>
-            <p className="text-sm text-[#666666]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Alliance Ecosystem</span>
+            <h2 className="text-3xl font-extrabold text-black">Certified Industry Partnerships</h2>
+            <p className="text-sm text-neutral-600">
               Our certified engineering credentials grant our clients direct access to priority tier-1 support, credits, and beta APIs.
             </p>
           </div>
@@ -138,7 +142,7 @@ export default function AboutPage() {
             {partnerLogos.map((partner, idx) => (
               <div
                 key={idx}
-                className="flex flex-col items-center justify-center p-6 bg-[#F8FAFC] border border-slate-200/80 rounded-2xl hover:border-[#1783C1] transition-all"
+                className="flex flex-col items-center justify-center p-6 bg-neutral-50 border border-neutral-200 rounded-2xl hover:border-[#E61E32] transition-all"
               >
                 <div className="relative h-12 w-32 mb-3">
                   <Image
@@ -149,7 +153,7 @@ export default function AboutPage() {
                     className="object-contain"
                   />
                 </div>
-                <span className="text-xs font-semibold text-[#0A3C6E] text-center">{partner.name}</span>
+                <span className="text-xs font-semibold text-black text-center">{partner.name}</span>
               </div>
             ))}
           </div>
@@ -157,25 +161,29 @@ export default function AboutPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="py-16 bg-[#0A3C6E] text-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+      <section className="py-16 bg-black text-white relative overflow-hidden">
+        <div 
+          aria-hidden="true" 
+          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#E61E32]/15 blur-3xl rounded-full" 
+        />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative">
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             Partner With Certified Enterprise Architects
           </h2>
-          <p className="text-base text-slate-200 max-w-2xl mx-auto">
+          <p className="text-base text-neutral-300 max-w-2xl mx-auto">
             Whether you require a comprehensive cloud audit, AI & ML implementation, zero-trust cybersecurity assessment, or custom application engineering, we are ready to assist.
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/quote"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#1783C1] hover:bg-[#136FA5] shadow-lg transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#E61E32] hover:bg-[#C81426] shadow-lg shadow-[#E61E32]/25 transition-all cursor-pointer hover:scale-105 active:scale-95"
             >
               <span>Calculate Project Scope</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer"
             >
               <span>Contact Our Team</span>
             </Link>

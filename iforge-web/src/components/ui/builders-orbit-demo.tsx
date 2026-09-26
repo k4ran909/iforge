@@ -67,7 +67,7 @@ export default function CommunityOrbitDemo() {
   if (!mounted) {
     return (
       <div className="flex h-[490px] w-full items-center justify-center">
-        <div className="h-7 w-7 animate-spin rounded-full border-2 border-[#0284c7] border-t-transparent" />
+        <div className="h-7 w-7 animate-spin rounded-full border-2 border-[#E61E32] border-t-transparent" />
       </div>
     );
   }

@@ -64,7 +64,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A3C6E",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
 };
@@ -83,7 +83,7 @@ export default function RootLayout({
     >
       <body 
         suppressHydrationWarning 
-        className="min-h-screen bg-white text-[#333333] font-sans antialiased flex flex-col justify-between selection:bg-[#1783C1] selection:text-white"
+        className="min-h-screen bg-white text-[#262626] font-sans antialiased flex flex-col justify-between selection:bg-[#E61E32] selection:text-white"
       >
         <Navbar />
         <main className="flex-1 w-full">

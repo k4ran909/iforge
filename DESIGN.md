@@ -6,7 +6,7 @@ This document establishes the official visual design language, color palette, ty
 
 ## 1. Brand Identity & Visual Philosophy
 
-iForge Technologies is a premier enterprise IT services, cloud architecture, AI advisory, and engineering consultancy. The visual identity conveys:
+iForge Technologies is a premier enterprise IT services, cloud architecture, AI & ML advisory, and engineering consultancy. The visual identity conveys:
 - **Enterprise Rigor & Authority**: Confident, structural, and dependable.
 - **Modern High-Tech Agility**: Sleek, luminous, fast, and engineered with precision (inspired by Linear, Vercel, and Cloudflare).
 - **Clarity & High Usability**: High contrast, crisp hierarchy, frictionless responsive navigation, and intuitive interactive elements.
@@ -15,28 +15,26 @@ iForge Technologies is a premier enterprise IT services, cloud architecture, AI 
 
 ## 2. Core Color Palette
 
-The color system is derived directly from the approved brand palette:
-
-![Brand Color Palette](file:///C:/Users/k4ran/.gemini/antigravity/brain/31f3a480-c4aa-4f74-8421-4071dd2d0c2f/.user_uploaded/media_1790375162407.png)
+The official color system is derived directly from the approved brand palette:
 
 | Swatch | Color Name | Hex Code | RGB | Role & Usage |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | **Deep Navy** | `#0A3C6E` | `rgb(10, 60, 110)` | **Primary Brand Color**: Header accents, deep hero backgrounds, enterprise badges, card borders, primary structural elements. |
-| **2** | **Pure White** | `#FFFFFF` | `rgb(255, 255, 255)` | **Surface & Light Canvas**: Light mode card backgrounds, high-contrast text on dark surfaces, badges, clean spacious canvas. |
-| **3** | **Cerulean Blue** | `#1783C1` | `rgb(23, 131, 193)` | **Vibrant Accent & Action**: Primary CTAs, active links, glow highlights, focus rings, progress indicators, interactive hover states. |
-| **4** | **Charcoal Gray** | `#333333` | `rgb(51, 51, 51)` | **Deep Contrast Neutral**: Primary headings, sharp body text on light backgrounds, dark footer elements, rich dark mode borders. |
+| **1** | **Black** | `#000000` | `rgb(0, 0, 0)` | **Primary Structural & Typography**: High-contrast headings, dark mode hero containers, why-us grid background, deep footer, primary badges, high-impact structural borders. |
+| **2** | **Crimson Red** | `#E61E32` | `rgb(230, 30, 50)` | **Vibrant Accent & Action**: Primary CTAs, active links, SonarGrid wavefront illumination, KPI highlights, focus rings, progress indicators, interactive hover states. |
+| **3** | **Pure White** | `#FFFFFF` | `rgb(255, 255, 255)` | **Surface & Light Canvas**: Light mode card backgrounds, high-contrast text on dark surfaces, badges, clean spacious canvas. |
+| **4** | **Silver / Steel** | `#B3B3B3` | `rgb(179, 179, 179)` | **Neutral & Divider Accents**: Subtle borders, scrollbar thumbs, secondary metadata, inactive dots, structural delimiters. |
 
 ### Extended Neutral Palette (Functional Shades)
 
-To ensure depth, micro-interactions, and accessibility, the four core colors are paired with clean harmonic neutral tints:
+To ensure depth, micro-interactions, and accessibility, the four core colors are paired with clean harmonic tints:
 
-- **Canvas Background (Soft Light)**: `#F4F7FB` (Subtle off-white with cool blue undertones)
-- **Subtle Surface**: `#F8FAFC` (Clean alternating section background)
+- **Canvas Background (Soft Light)**: `#FFFFFF` / `#FAFAFA`
+- **Subtle Surface**: `#F8FAFC` / `#F5F5F5` (Clean alternating section background)
 - **Muted Text / Secondary**: `#666666` (Subtitles, metadata, form labels)
-- **Subtle Border**: `#E2E8F0` / `#E5E7EB` (Clean container dividers)
-- **Deep Navy Dark Mode / Container**: `#072648` (Dark hero container background)
-- **Accent Blue Hover Tint**: `#136FA5` (Darkened Cerulean for button hover)
-- **Accent Blue Light Glow**: `rgba(23, 131, 193, 0.12)` (Ambient glow for cards and badges)
+- **Subtle Border**: `#E5E7EB` / `#E2E8F0` with `#B3B3B3` accents
+- **Deep Carbon / Dark Container**: `#0A0A0A` / `#000000` (Dark hero and why-us container background)
+- **Crimson Hover Tint**: `#C81426` (Darkened Crimson for button hover)
+- **Crimson Light Pill / Glow**: `#FDE8EA` / `rgba(230, 30, 50, 0.12)` (Ambient glow for cards and badges)
 
 ---
 
@@ -45,23 +43,23 @@ To ensure depth, micro-interactions, and accessibility, the four core colors are
 ```css
 @theme {
   /* Brand Approved Core Colors */
-  --color-brand-navy: #0A3C6E;
-  --color-brand-navy-dark: #072648;
-  --color-brand-navy-light: #0E4F90;
+  --color-primary: #E61E32;
+  --color-primary-foreground: #FFFFFF;
 
-  --color-brand-blue: #1783C1;
-  --color-brand-blue-hover: #136FA5;
-  --color-brand-blue-light: #E8F4FC;
-  --color-brand-blue-glow: rgba(23, 131, 193, 0.15);
+  --color-foreground: #000000;
+  --color-background: #FFFFFF;
+
+  --color-brand-black: #000000;
+  --color-brand-crimson: #E61E32;
+  --color-brand-crimson-hover: #C81426;
+  --color-brand-crimson-light: #FDE8EA;
+  --color-brand-crimson-glow: rgba(230, 30, 50, 0.15);
 
   --color-brand-white: #FFFFFF;
+  --color-brand-silver: #B3B3B3;
 
-  --color-brand-charcoal: #333333;
-  --color-brand-charcoal-muted: #666666;
-  --color-brand-charcoal-dark: #222222;
-
-  --color-brand-canvas: #F8FAFC;
-  --color-brand-border: #E2E8F0;
+  --color-brand-canvas: #FAFAFA;
+  --color-brand-border: #E5E7EB;
 }
 ```
 
@@ -88,67 +86,37 @@ To ensure depth, micro-interactions, and accessibility, the four core colors are
 
 ---
 
-## 5. UI Elements & Component Specifications
+## 5. 5 Core Practice Disciplines
 
-### 5.1 Primary Buttons (Call to Action)
-- **Background**: `#1783C1` (Cerulean Blue)
+1. **AI & ML** (`/services/ai-ml`): Agentic AI architectures, RAG pipelines, LLM fine-tuning, computer vision, predictive analytics, enterprise model governance.
+2. **Cloud Services** (`/services/cloud-services`): Multi-cloud architecture (AWS, GCP, Azure), automated migration pipelines, FinOps cost containment, Kubernetes orchestration.
+3. **IT Infrastructure** (`/services/it-infrastructure`): Zero-downtime virtualization, hyper-converged infrastructure, enterprise storage, SD-WAN, unified systems monitoring.
+4. **Cybersecurity Services** (`/services/cybersecurity`): Zero-trust security frameworks, continuous automated VAPT, SOC 2 / ISO 27001 readiness, real-time threat intelligence.
+5. **Application Development** (`/services/application-development`): High-concurrency enterprise web apps, mission-critical real-time dashboards, SaaS platforms, cross-platform mobile apps (React Native/Flutter), and low-latency API microservices.
+
+---
+
+## 6. UI Elements & Component Specifications
+
+### 6.1 Primary Buttons (Call to Action)
+- **Background**: `#E61E32` (Crimson Red)
 - **Text Color**: `#FFFFFF`
-- **Hover State**: Background shifts to `#136FA5`, scale `1.02`, shadow `0 8px 20px -4px rgba(23, 131, 193, 0.35)`.
+- **Hover State**: Background shifts to `#C81426`, scale `1.02`, shadow `0 8px 20px -4px rgba(230, 30, 50, 0.35)`.
 - **Padding**: `12px 24px` (Desktop), `10px 20px` (Mobile)
-- **Border Radius**: `8px` (`rounded-lg`)
+- **Border Radius**: `12px` (`rounded-xl`)
 - **Font**: `14px`, `font-semibold`
 
-### 5.2 Secondary Buttons
-- **Background**: `#0A3C6E` (Deep Navy)
-- **Text Color**: `#FFFFFF`
-- **Hover State**: Background shifts to `#0E4F90`, shadow `0 6px 16px -3px rgba(10, 60, 110, 0.3)`.
+### 6.2 Secondary / Ghost Buttons
+- **Background**: `#FFFFFF` or `bg-white/10`
+- **Border**: `border border-neutral-200`
+- **Text Color**: `#000000` (or `#FFFFFF` on dark backgrounds)
+- **Hover State**: Border shifts to `#E61E32` or `#FFFFFF`
 
-### 5.3 Ghost / Outline Buttons
-- **Border**: `1px solid #E2E8F0`
-- **Background**: `#FFFFFF`
-- **Text Color**: `#333333`
-- **Hover State**: Background `#F8FAFC`, Border `#1783C1`, Text `#1783C1`.
+### 6.3 Bento Grid & Cards
+- **Background**: Light surfaces use `#FFFFFF` on `#FAFAFA`, dark highlights use `#000000`.
+- **Border**: `border border-neutral-200` with subtle `#B3B3B3` accents.
+- **Hover**: Subtle lift (`translate-y-[-2px]`), border shifts to `#E61E32/50`.
 
-### 5.4 Feature & Bento Cards
-- **Light Theme**:
-  - Background: `#FFFFFF`
-  - Border: `1px solid #E2E8F0`
-  - Box Shadow: `0 1px 3px rgba(10, 60, 110, 0.04), 0 10px 24px -10px rgba(10, 60, 110, 0.08)`
-  - Hover: Border `#1783C1`, translateY `-3px`, Shadow `0 20px 32px -12px rgba(23, 131, 193, 0.16)`
-- **Dark Accent / Hero Theme**:
-  - Background: Gradient from `#0A3C6E` to `#072648`
-  - Border: `1px solid rgba(255, 255, 255, 0.12)`
-  - Text: `#FFFFFF` and `#E2E8F0`
-
-### 5.5 Status Badges & Pills
-- Background: `#E8F4FC` (Light Cerulean tint)
-- Border: `1px solid rgba(23, 131, 193, 0.25)`
-- Text: `#0A3C6E` (Deep Navy) or `#1783C1`
-- Radius: `rounded-full` (`9999px`)
-- Typography: `12px`, `font-semibold`
-
----
-
-## 6. Micro-Interactions & Animation Standards
-
-- **Transitions**: Smooth `cubic-bezier(0.16, 1, 0.3, 1)` (ease-out-expo) for responsive, snappy interactions.
-- **Scroll Reactions**: Fixed navigation morphs from transparent/resting to a floating glass island at scroll depth `> 20px`.
-- **Card Hover**: Subtle `translateY(-3px)` with soft glowing shadow expansion.
-- **Marquee**: Seamless horizontal infinite loop at `40s` duration for client & certified partner logos.
-
----
-
-## 7. Accessibility & Contrast Verification
-
-- `#FFFFFF` text on `#0A3C6E` (Navy): Contrast ratio **8.6:1** (Passes WCAG AAA for all text sizes).
-- `#FFFFFF` text on `#1783C1` (Cerulean): Contrast ratio **4.6:1** (Passes WCAG AA for normal text and AAA for large text).
-- `#333333` text on `#FFFFFF`: Contrast ratio **12.6:1** (Passes WCAG AAA).
-- `#0A3C6E` text on `#F4F7FB`: Contrast ratio **7.8:1** (Passes WCAG AAA).
-
----
-
-## 8. Directory & File Placement
-
-- Root design guide: `c:\Users\k4ran\OneDrive\Desktop\iforge\DESIGN.md`
-- Frontend package reference: `c:\Users\k4ran\OneDrive\Desktop\iforge\iforge-web\DESIGN.md`
-- Applied in Tailwind: `src/app/globals.css`
+### 6.4 SonarGrid Hero Visualizer
+- **Wavefront Pulse Color**: `#E61E32`
+- **Canvas Dot Grid**: Adaptive primary dot radius with resting opacity `0.15` and wavefront peak `1.0`.
