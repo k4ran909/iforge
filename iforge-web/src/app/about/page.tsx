@@ -1,7 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { siteConfig, valueProps, companyTimeline } from "@/data/siteData";
+import { siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 import { ArrowRight } from "lucide-react";
 
@@ -11,7 +12,8 @@ export const metadata: Metadata = {
     "Learn about iForge Technologies — our engineering mission, certified cloud alliances, leadership principles, and a decade of enterprise excellence.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { valueProps, timeline: companyTimeline } = await getContent();
   return (
     <div className="w-full bg-background">
       {/* Hero */}

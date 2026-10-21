@@ -5,6 +5,7 @@ import GithubSkyline from "@/components/community/GithubSkyline";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: `Builders Community | ${siteConfig.name}`,
@@ -12,26 +13,9 @@ export const metadata: Metadata = {
     "Where engineers, architects, and creators ship cutting-edge technology and share production architectures.",
 };
 
-const TRACKS = [
-  {
-    title: "AI & ML Innovation",
-    desc: "RAG architectures, local model inference, LangChain pipelines, and vector database optimization.",
-  },
-  {
-    title: "Cloud & DevOps",
-    desc: "Multi-region Kubernetes, Terraform IaC modules, FinOps cost cutting, and continuous delivery.",
-  },
-  {
-    title: "Application Development",
-    desc: "Next.js App Router, React 19 server components, cross-platform mobile, and real-time dashboards.",
-  },
-  {
-    title: "Cybersecurity & Zero Trust",
-    desc: "VAPT challenges, ethical hacking walkthroughs, cloud security audits, and SOC 2 frameworks.",
-  },
-];
-
-export default function CommunityPage() {
+export default async function CommunityPage() {
+  const { community } = await getContent();
+  const TRACKS = community.tracks;
   return (
     <div className="w-full bg-background">
       {/* Hero */}
@@ -40,11 +24,10 @@ export default function CommunityPage() {
           <Reveal>
             <p className="eyebrow mb-6">Builders community</p>
             <h1 className="max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              Where builders <span className="text-[#E61E32]">ship together</span>
+              {community.headline}
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              A space for engineers, architects, and creators to share production architectures,
-              review each other&apos;s work, and ship in the open.
+              {community.intro}
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Link
@@ -80,7 +63,7 @@ export default function CommunityPage() {
           </Reveal>
           <Reveal delay={0.1}>
             <div className="mt-12">
-              <GithubSkyline />
+              <GithubSkyline username={community.githubUsername || undefined} />
             </div>
           </Reveal>
         </div>

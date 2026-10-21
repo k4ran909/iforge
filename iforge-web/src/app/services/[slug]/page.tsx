@@ -2,6 +2,7 @@ import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { servicesData, siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
 import ServiceFaqAccordion from "@/components/services/ServiceFaqAccordion";
 import ContactForm from "@/components/ContactForm";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
@@ -27,10 +28,11 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params;
-  const service = servicesData.find((s) => s.slug === slug);
+  const { services } = await getContent();
+  const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
-  const related = servicesData.filter((s) => s.slug !== slug).slice(0, 3);
+  const related = services.filter((s) => s.slug !== slug).slice(0, 3);
 
   return (
     <div className="w-full bg-background">

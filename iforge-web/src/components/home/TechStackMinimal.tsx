@@ -2,10 +2,17 @@
 
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { techCapabilities } from "@/data/siteData";
+import { techCapabilities as defaultTech } from "@/data/siteData";
 import { Reveal } from "@/components/ui/reveal";
 
-export default function TechStackMinimal() {
+type Cap = { category: string; items: string[] };
+
+export default function TechStackMinimal({
+  capabilities = defaultTech,
+}: {
+  capabilities?: Cap[];
+}) {
+  const techCapabilities = capabilities;
   const [active, setActive] = useState(0);
   const current = techCapabilities[active];
 

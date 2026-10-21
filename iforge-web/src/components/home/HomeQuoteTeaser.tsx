@@ -3,10 +3,15 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { servicesData } from "@/data/siteData";
+import { servicesData, type ServiceItem } from "@/data/siteData";
 import { Reveal } from "@/components/ui/reveal";
 
-export default function HomeQuoteTeaser() {
+export default function HomeQuoteTeaser({
+  services = servicesData,
+}: {
+  services?: ServiceItem[];
+}) {
+  const servicesList = services;
   const [selectedService, setSelectedService] = useState("cloud-services");
   const [timeline, setTimeline] = useState("medium");
 
@@ -17,7 +22,7 @@ export default function HomeQuoteTeaser() {
   };
 
   const currentEst = estimates[timeline];
-  const serviceObj = servicesData.find((s) => s.slug === selectedService) || servicesData[0];
+  const serviceObj = servicesList.find((s) => s.slug === selectedService) || servicesList[0];
 
   const INPUT =
     "w-full border border-hairline bg-background px-4 py-3 text-sm font-medium text-foreground transition-colors focus:border-[#E61E32] focus:outline-none";
@@ -62,7 +67,7 @@ export default function HomeQuoteTeaser() {
                   onChange={(e) => setSelectedService(e.target.value)}
                   className={INPUT}
                 >
-                  {servicesData.map((s) => (
+                  {servicesList.map((s) => (
                     <option key={s.id} value={s.slug}>
                       {s.title}
                     </option>

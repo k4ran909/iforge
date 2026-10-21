@@ -6,6 +6,7 @@ import ApproachMinimal from "@/components/home/ApproachMinimal";
 import TechStackMinimal from "@/components/home/TechStackMinimal";
 import HomeQuoteTeaser from "@/components/home/HomeQuoteTeaser";
 import { siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} | Enterprise IT Services, Cloud Architecture & AI Consulting`,
@@ -13,14 +14,15 @@ export const metadata: Metadata = {
     "Accelerating enterprise success with certified cloud architecture (AWS & GCP), proactive cybersecurity, generative AI advisory, and bespoke web engineering.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { services, techCapabilities } = await getContent();
   return (
     <div className="w-full overflow-hidden">
       <HeroMinimal />
-      <ServicesMinimal />
+      <ServicesMinimal services={services} />
       <ApproachMinimal />
-      <TechStackMinimal />
-      <HomeQuoteTeaser />
+      <TechStackMinimal capabilities={techCapabilities} />
+      <HomeQuoteTeaser services={services} />
     </div>
   );
 }

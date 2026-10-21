@@ -3,10 +3,10 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { servicesData } from "@/data/siteData";
+import { servicesData, type ServiceItem } from "@/data/siteData";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 
-export default function ServicesMinimal() {
+export default function ServicesMinimal({ services = servicesData }: { services?: ServiceItem[] }) {
   return (
     <section id="services" className="section border-b border-hairline">
       <div className="container-page">
@@ -28,7 +28,7 @@ export default function ServicesMinimal() {
 
         {/* Numbered list of practices — hairline rows, hover slide */}
         <Stagger className="mt-14 border-t border-hairline">
-          {servicesData.map((s, i) => (
+          {services.map((s, i) => (
             <RevealItem key={s.id}>
               <Link
                 href={`/services/${s.slug}`}
