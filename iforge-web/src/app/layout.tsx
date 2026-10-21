@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { PageTransition } from "@/components/ui/page-transition";
 import { siteConfig } from "@/data/siteData";
 
 const inter = Inter({
@@ -107,7 +108,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navbar />
           <main className="flex-1 w-full bg-background text-foreground transition-colors duration-250">
-            {children}
+            <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
         </ThemeProvider>

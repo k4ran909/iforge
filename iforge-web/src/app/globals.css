@@ -4,24 +4,26 @@
 
 :root {
   --background: #FFFFFF;
-  --foreground: #000000;
-  --muted: #F8F9FA;
-  --muted-foreground: #666666;
-  --border: #E5E7EB;
+  --foreground: #0A0A0A;
+  --muted: #FAFAFA;
+  --muted-foreground: #6B6B6B;
+  --border: #ECECEC;
+  --hairline: #E4E4E4;
   --accent: #FDE8EA;
   --card: #FFFFFF;
-  --card-foreground: #000000;
+  --card-foreground: #0A0A0A;
 }
 
 .dark {
-  --background: #000000;
-  --foreground: #FFFFFF;
-  --muted: #111111;
-  --muted-foreground: #B3B3B3;
-  --border: #262626;
-  --accent: rgba(230, 30, 50, 0.15);
+  --background: #050505;
+  --foreground: #FAFAFA;
+  --muted: #0E0E0E;
+  --muted-foreground: #9A9A9A;
+  --border: #1C1C1C;
+  --hairline: #212121;
+  --accent: rgba(230, 30, 50, 0.14);
   --card: #0A0A0A;
-  --card-foreground: #FFFFFF;
+  --card-foreground: #FAFAFA;
 }
 
 @theme {
@@ -54,6 +56,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-hairline: var(--hairline);
   --color-accent: var(--accent);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -166,4 +169,104 @@ html.dark .glass-panel {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================================
+   Editorial / minimal design system — mono canvas, sharp crimson
+   ============================================================ */
+
+/* Tightened display type */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/* Section rhythm: generous, consistent vertical space */
+.section {
+  padding-top: clamp(4rem, 9vw, 7.5rem);
+  padding-bottom: clamp(4rem, 9vw, 7.5rem);
+}
+.section-tight {
+  padding-top: clamp(3rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+/* Page container */
+.container-page {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Eyebrow / kicker label — mono, tracked, crimson tick */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.5rem;
+  height: 1px;
+  background: #E61E32;
+}
+
+/* Hairline rules that read in both themes */
+.hairline {
+  border-color: var(--hairline);
+}
+
+/* Minimal card: hairline border, no shadow at rest, lifts on hover */
+.card-minimal {
+  position: relative;
+  border: 1px solid var(--hairline);
+  background: var(--card);
+  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-minimal:hover {
+  border-color: color-mix(in srgb, #E61E32 55%, transparent);
+  transform: translateY(-3px);
+}
+
+/* Animated underline link — grows from the left on hover */
+.link-underline {
+  position: relative;
+  background-image: linear-gradient(#E61E32, #E61E32);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Arrow that nudges on hover of its parent */
+.group:hover .arrow-nudge {
+  transform: translateX(3px);
+}
+.arrow-nudge {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Subtle grain overlay for hero/feature bands */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card-minimal, .link-underline, .arrow-nudge { transition: none; }
+  .animate-marquee { animation: none; }
 }
