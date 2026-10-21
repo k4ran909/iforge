@@ -3,9 +3,40 @@ import Link from "next/link";
 import Image from "next/image";
 import { servicesData, siteConfig } from "@/data/siteData";
 import { Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import HalftoneWordmarkFooter, {
+  type FooterColumn,
+} from "@/components/ui/halftone-wordmark-footer";
+
+// Columns for the halftone wordmark band, built from the real site navigation
+// and contact details so the giant "iforge" mark sits over usable links.
+const halftoneColumns: FooterColumn[] = [
+  {
+    title: "Practices",
+    links: servicesData.slice(0, 3).map((s) => ({
+      label: s.title,
+      href: `/services/${s.slug}`,
+    })),
+  },
+  {
+    title: "Company",
+    links: [
+      { label: "About", href: "/about" },
+      { label: "Community", href: "/community" },
+      { label: "Get a Quote", href: "/quote" },
+    ],
+  },
+  {
+    title: "Contact",
+    links: [
+      { label: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
+      { label: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}` },
+    ],
+  },
+];
 
 export default function Footer() {
   return (
+    <div className="bg-black">
     <footer className="bg-black text-slate-300 border-t border-neutral-900">
       {/* Top Pre-Footer CTA Banner */}
       <div className="bg-gradient-to-r from-black via-neutral-950 to-black border-b border-white/10">
@@ -213,5 +244,17 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+
+      {/* Giant halftone wordmark sign-off */}
+      <HalftoneWordmarkFooter
+        wordmark="iforge"
+        label={siteConfig.name}
+        meta={`© ${new Date().getFullYear()} · Noida, India`}
+        columns={halftoneColumns}
+        preset="night"
+        palette={{ background: "#000000", ink: "#e9e4da", warm: "#E61E32" }}
+        height="440px"
+      />
+    </div>
   );
 }
