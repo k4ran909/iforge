@@ -2,47 +2,39 @@ import React from "react";
 import type { Metadata } from "next";
 import QuoteCalculator from "@/components/QuoteCalculator";
 import { siteConfig } from "@/data/siteData";
-import { ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = {
   title: `Request a Quote & Project Estimator | ${siteConfig.name}`,
-  description: "Calculate an estimated project scope and request an architectural consultation with iForge Technologies.",
+  description:
+    "Calculate an estimated project scope and request an architectural consultation with iForge Technologies.",
 };
 
 export default function QuotePage() {
   return (
-    <div className="w-full bg-neutral-50 dark:bg-black min-h-[calc(100vh-140px)] py-12 lg:py-18 transition-colors duration-250">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
-            Transparent Scoping
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black dark:text-white tracking-tight">
-            Calculate Your Project Estimate
-          </h1>
-          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
-            Configure your technical discipline, team size, and timeline to receive a preliminary architectural overview.
-          </p>
+    <div className="w-full bg-background">
+      <section className="border-b border-hairline">
+        <div className="container-page pt-20 pb-14 sm:pt-28 sm:pb-16">
+          <Reveal>
+            <p className="eyebrow mb-6">Transparent scoping</p>
+            <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              Calculate your project estimate
+            </h1>
+            <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground">
+              Configure your technical discipline, team size, and timeline to receive a preliminary
+              architectural overview — no commitment required.
+            </p>
+          </Reveal>
         </div>
+      </section>
 
-        <QuoteCalculator />
-
-        {/* Bottom Trust Row */}
-        <div className="max-w-2xl mx-auto flex flex-wrap items-center justify-center gap-6 text-xs text-neutral-500 dark:text-neutral-400 pt-4">
-          <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>Strict NDA Guarantee</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#E61E32]" />
-            <span>Free Architectural Review</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-[#E61E32]" />
-            <span>No Obligation Proposal</span>
-          </div>
+      <section className="section">
+        <div className="container-page">
+          <Reveal>
+            <QuoteCalculator />
+          </Reveal>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
