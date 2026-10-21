@@ -40,9 +40,15 @@ function labelOf(el: HTMLElement, i: number): string {
   return text || `Section ${i + 1}`;
 }
 
-/** Proportional positions, nudged apart so numbers never collide. */
-function place(tops: number[], docH: number, railH: number): number[] {
-  const ys = tops.map((t) => (t / Math.max(docH, 1)) * railH);
+/**
+ * Proportional positions spanning the whole rail — the first section sits at
+ * the top end, the last at the bottom end, so the line never trails past the
+ * numbers — then nudged apart so numbers never collide.
+ */
+function place(tops: number[], railH: number): number[] {
+  const first = tops[0] ?? 0;
+  const span = Math.max((tops[tops.length - 1] ?? 0) - first, 1);
+  const ys = tops.map((t) => ((t - first) / span) * railH);
   for (let i = 1; i < ys.length; i++) ys[i] = Math.max(ys[i], ys[i - 1] + MIN_GAP);
   const last = ys.length - 1;
   if (last >= 0 && ys[last] > railH) {
@@ -98,7 +104,7 @@ export default function ScrollRail() {
     const measure = () => {
       const list = collectSections();
       sections.current = list;
-      const ys = place(list.map(pageTop), document.documentElement.scrollHeight, railHeight());
+      const ys = place(list.map(pageTop), railHeight());
       setMarks(list.map((el, i) => ({ label: labelOf(el, i), y: ys[i] })));
       track();
     };
