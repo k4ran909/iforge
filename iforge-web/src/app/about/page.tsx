@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { siteConfig, companyStats, valueProps, companyTimeline } from "@/data/siteData";
+import { siteConfig, valueProps, companyTimeline } from "@/data/siteData";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 import { ArrowRight } from "lucide-react";
 
@@ -29,21 +29,6 @@ export default function AboutPage() {
               reliability at scale.
             </p>
           </Reveal>
-
-          <Stagger className="mt-16 grid grid-cols-2 gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-4">
-            {companyStats.map((s) => (
-              <RevealItem key={s.label}>
-                <div className="bg-background p-6">
-                  <div className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                    {s.value}
-                  </div>
-                  <div className="mt-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                    {s.label}
-                  </div>
-                </div>
-              </RevealItem>
-            ))}
-          </Stagger>
         </div>
       </section>
 

@@ -41,21 +41,6 @@ export const siteConfig = {
   founded: "2024",
 };
 
-export const partnerLogos = [
-  { name: "Amazon Web Services", src: "/images/png-transparent-aws-60small-1.png", alt: "AWS Partner" },
-  { name: "Google Cloud", src: "/images/logo_google_cloud-1-300x78.png", alt: "Google Cloud Partner" },
-  { name: "VMware", src: "/images/logo_vmware-1-300x90.png", alt: "VMware Partner" },
-  { name: "Palo Alto Networks", src: "/images/PaloAltoNetworks-300x55.png", alt: "Palo Alto Networks" },
-  { name: "Trend Micro", src: "/images/trend-micro-300x103.png", alt: "Trend Micro Partner" },
-];
-
-export const clientLogos = [
-  { name: "Bizrate", src: "/images/bizrate-1.png" },
-  { name: "Enpass", src: "/images/Enpass.png-300x150.webp" },
-  { name: "EazyDiner", src: "/images/eazydiner-client-logo.png" },
-  { name: "Everpure Blaze", src: "/images/everpure-blaze-logo-300x150.png" },
-  { name: "Siddha", src: "/images/logo-siddha.jpg" },
-];
 
 export const servicesData: ServiceItem[] = [
   {
@@ -373,12 +358,6 @@ export const servicesData: ServiceItem[] = [
   }
 ];
 
-export const companyStats = [
-  { value: "10+", label: "Years of Excellence" },
-  { value: "250+", label: "Delivered Solutions" },
-  { value: "98%", label: "Client Satisfaction" },
-  { value: "50+", label: "Enterprise Alliances" },
-];
 
 export const valueProps = [
   {
@@ -419,27 +398,6 @@ export const techCapabilities = [
   {
     category: "Application & Dashboard Engineering",
     items: ["Next.js & React 19", "TypeScript & Node.js", "Executive Real-Time Dashboards", "Cross-Platform Mobile & PWA", "PostgreSQL & Redis", "High-Throughput APIs"]
-  }
-];
-
-export const testimonials = [
-  {
-    quote: "iForge transformed our cloud infrastructure and automated our deployment pipelines with zero downtime. Exceptional technical acumen, clear communication, and responsiveness.",
-    client: "Technology Director",
-    company: "Bizrate",
-    rating: 5
-  },
-  {
-    quote: "The cybersecurity audit and compliance roadmap delivered by iForge gave our enterprise leadership total confidence. A trusted strategic partner.",
-    client: "Head of Information Security",
-    company: "Enpass",
-    rating: 5
-  },
-  {
-    quote: "iForge delivered high-performance enterprise dashboards and modern application architecture with flawless execution and rapid turnaround. Truly elite engineering.",
-    client: "VP of Engineering",
-    company: "EazyDiner",
-    rating: 5
   }
 ];
 

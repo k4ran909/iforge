@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import CommunityOrbitDemo from "@/components/ui/builders-orbit-demo";
 import GithubSkyline from "@/components/community/GithubSkyline";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 import { ArrowRight } from "lucide-react";
@@ -10,63 +9,58 @@ import { siteConfig } from "@/data/siteData";
 export const metadata: Metadata = {
   title: `Builders Community | ${siteConfig.name}`,
   description:
-    "Where 12,000+ engineers, architects, and creators ship cutting-edge technology and share production architectures.",
+    "Where engineers, architects, and creators ship cutting-edge technology and share production architectures.",
 };
 
 const TRACKS = [
   {
     title: "AI & ML Innovation",
     desc: "RAG architectures, local model inference, LangChain pipelines, and vector database optimization.",
-    members: "4.2k",
   },
   {
     title: "Cloud & DevOps",
     desc: "Multi-region Kubernetes, Terraform IaC modules, FinOps cost cutting, and continuous delivery.",
-    members: "3.8k",
   },
   {
     title: "Application Development",
     desc: "Next.js App Router, React 19 server components, cross-platform mobile, and real-time dashboards.",
-    members: "2.9k",
   },
   {
     title: "Cybersecurity & Zero Trust",
     desc: "VAPT challenges, ethical hacking walkthroughs, cloud security audits, and SOC 2 frameworks.",
-    members: "2.1k",
   },
 ];
 
 export default function CommunityPage() {
   return (
     <div className="w-full bg-background">
-      {/* Orbit hero */}
+      {/* Hero */}
       <section className="border-b border-hairline">
-        <div className="container-page pt-14 text-center">
+        <div className="container-page pt-20 pb-16 sm:pt-28 sm:pb-20">
           <Reveal>
-            <p className="eyebrow mx-auto mb-6 w-fit">Global developer ecosystem</p>
-          </Reveal>
-        </div>
-        <CommunityOrbitDemo />
-        <div className="container-page pb-16 text-center">
-          <Reveal>
-            <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <p className="eyebrow mb-6">Builders community</p>
+            <h1 className="max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+              Where builders <span className="text-[#E61E32]">ship together</span>
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              A space for engineers, architects, and creators to share production architectures,
+              review each other&apos;s work, and ship in the open.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-3">
               <Link
-                href="/quote"
+                href="/contact"
                 className="group inline-flex items-center gap-2 bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32]"
               >
-                Join builders community
+                Join the community
                 <ArrowRight className="h-4 w-4 arrow-nudge" />
               </Link>
               <Link
-                href="/contact"
+                href="#tracks"
                 className="inline-flex items-center gap-2 border border-hairline px-6 py-3.5 text-sm font-semibold text-foreground transition-colors hover:border-[#E61E32] hover:text-[#E61E32]"
               >
-                Partner with organizers
+                Explore tracks
               </Link>
             </div>
-            <p className="mt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              12,000+ engineers, founders &amp; creators shipping daily
-            </p>
           </Reveal>
         </div>
       </section>
@@ -80,8 +74,8 @@ export default function CommunityPage() {
               A year of shipping, in real time
             </h2>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-              Our contribution graph, synced live from GitHub — flat heat map or
-              isometric skyline. Toggle the view, hover a day, or drag to orbit.
+              Our contribution graph, synced live from GitHub — flat heat map or isometric skyline.
+              Toggle the view, hover a day, or drag to orbit.
             </p>
           </Reveal>
           <Reveal delay={0.1}>
@@ -106,14 +100,9 @@ export default function CommunityPage() {
             {TRACKS.map((t, i) => (
               <RevealItem key={t.title}>
                 <div className="group h-full bg-background p-8 transition-colors hover:bg-muted sm:p-10">
-                  <div className="flex items-start justify-between">
-                    <span className="font-mono text-sm text-[#E61E32]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="border border-hairline px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                      {t.members} builders
-                    </span>
-                  </div>
+                  <span className="font-mono text-sm text-[#E61E32]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <h3 className="mt-6 text-xl font-semibold tracking-tight text-foreground">
                     {t.title}
                   </h3>

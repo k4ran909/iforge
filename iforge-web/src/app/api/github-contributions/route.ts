@@ -1,7 +1,4 @@
-import {
-  generateSampleContributions,
-  type ContributionDay,
-} from "@/lib/sample-contributions";
+export type ContributionDay = { date: string; count: number };
 
 // Revalidate the cached response every 30 minutes so the skyline stays near-live
 // without hammering GitHub's API on every page view.
@@ -41,29 +38,29 @@ function toDays(weeks: { contributionDays: CalendarDay[] }[]): ContributionDay[]
   return out;
 }
 
+/** An "empty" response — no demo data. The UI shows a connect-GitHub state. */
+function empty(reason: string, login: string | null) {
+  return Response.json(
+    { source: "empty", reason, login, days: [] },
+    { headers: { "Cache-Control": "no-store" } },
+  );
+}
+
 export async function GET(request: Request) {
   const token = process.env.GITHUB_TOKEN;
   const url = new URL(request.url);
   // Username comes from the query (?username=…) or the GITHUB_USERNAME env var.
-  const login = url.searchParams.get("username") || process.env.GITHUB_USERNAME;
+  const login = url.searchParams.get("username") || process.env.GITHUB_USERNAME || null;
+
+  // Without a token or username we can't call the API. Return no data — the
+  // client renders a "connect GitHub" empty state rather than inventing a year.
+  if (!token || !login) {
+    return empty(!token ? "GITHUB_TOKEN not set" : "GITHUB_USERNAME not set", login);
+  }
 
   // Last 371 days (53 weeks) ending today — matches the component's year window.
   const to = new Date();
   const from = new Date(to.getTime() - 371 * 86400000);
-
-  // Without a token or username we can't call the API, so return a believable
-  // sample year. The UI stays populated and nothing breaks in local dev.
-  if (!token || !login) {
-    return Response.json(
-      {
-        source: "sample",
-        reason: !token ? "GITHUB_TOKEN not set" : "GITHUB_USERNAME not set",
-        login: login ?? null,
-        days: generateSampleContributions(Math.floor(to.getTime() / 86400000) * 86400000),
-      },
-      { headers: { "Cache-Control": "no-store" } },
-    );
-  }
 
   try {
     const res = await fetch(GITHUB_GRAPHQL, {
@@ -99,15 +96,7 @@ export async function GET(request: Request) {
       days: toDays(cal.weeks),
     });
   } catch (err) {
-    // On any failure, degrade to sample data rather than a broken chart.
-    return Response.json(
-      {
-        source: "sample",
-        reason: err instanceof Error ? err.message : "GitHub request failed",
-        login,
-        days: generateSampleContributions(Math.floor(to.getTime() / 86400000) * 86400000),
-      },
-      { status: 200, headers: { "Cache-Control": "no-store" } },
-    );
+    // On any failure, return empty — never invented data.
+    return empty(err instanceof Error ? err.message : "GitHub request failed", login);
   }
 }

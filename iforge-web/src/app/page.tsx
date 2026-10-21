@@ -4,7 +4,6 @@ import HeroMinimal from "@/components/home/HeroMinimal";
 import ServicesMinimal from "@/components/home/ServicesMinimal";
 import ApproachMinimal from "@/components/home/ApproachMinimal";
 import TechStackMinimal from "@/components/home/TechStackMinimal";
-import TestimonialsMinimal from "@/components/home/TestimonialsMinimal";
 import HomeQuoteTeaser from "@/components/home/HomeQuoteTeaser";
 import { siteConfig } from "@/data/siteData";
 
@@ -21,7 +20,6 @@ export default function HomePage() {
       <ServicesMinimal />
       <ApproachMinimal />
       <TechStackMinimal />
-      <TestimonialsMinimal />
       <HomeQuoteTeaser />
     </div>
   );

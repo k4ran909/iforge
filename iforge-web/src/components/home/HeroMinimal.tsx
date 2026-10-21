@@ -5,12 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
-const STATS = [
-  { value: "50+", label: "Cloud Architects" },
-  { value: "98%", label: "Client Retention" },
-  { value: "<15m", label: "Response Time" },
-  { value: "99.99%", label: "Uptime SLA" },
-];
+const PRACTICES = ["AI & ML", "Cloud", "Infrastructure", "Cybersecurity", "App Development"];
 
 const WORDS = ["Accelerating", "enterprise", "success", "with", "intelligent", "IT."];
 
@@ -95,26 +90,30 @@ export default function HeroMinimal() {
             href="/community"
             className="link-underline ml-1 inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground"
           >
-            Builders community (12k+) <ArrowUpRight className="h-3.5 w-3.5" />
+            Builders community <ArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </motion.div>
 
-        {/* Stat row with hairline dividers */}
+        {/* Practice strip — real capabilities, not invented numbers */}
         <motion.div
           initial={reduced ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.75 }}
-          className="mt-16 grid grid-cols-2 gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-4"
+          className="mt-16 grid grid-cols-2 gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-5"
         >
-          {STATS.map((s) => (
-            <div key={s.label} className="bg-background p-5 sm:p-6">
-              <div className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-                {s.value}
+          {PRACTICES.map((p) => (
+            <Link
+              key={p}
+              href="/#services"
+              className="group bg-background p-5 transition-colors hover:bg-muted sm:p-6"
+            >
+              <div className="font-mono text-[0.6rem] uppercase tracking-wider text-muted-foreground">
+                Practice
               </div>
-              <div className="mt-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                {s.label}
+              <div className="mt-2 text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-[#E61E32]">
+                {p}
               </div>
-            </div>
+            </Link>
           ))}
         </motion.div>
       </div>
