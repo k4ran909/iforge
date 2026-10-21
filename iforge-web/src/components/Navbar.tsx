@@ -5,9 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X, ArrowUpRight, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, ArrowRight } from "reicon-react";
 import { siteConfig, servicesData } from "@/data/siteData";
 import ThemeToggle from "./ThemeToggle";
+import { getLenis } from "@/lib/lenis";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -34,11 +35,16 @@ export default function Navbar() {
     setServicesOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile drawer is open
+  // Lock body scroll while the mobile drawer is open (and pause Lenis, which
+  // would otherwise keep scrolling the page underneath it)
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
+    const lenis = getLenis();
+    if (isOpen) lenis?.stop();
+    else lenis?.start();
     return () => {
       document.body.style.overflow = "";
+      getLenis()?.start();
     };
   }, [isOpen]);
 

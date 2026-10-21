@@ -4,7 +4,7 @@ import Link from "next/link";
 import { siteConfig } from "@/data/siteData";
 import { getContent } from "@/lib/content";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "reicon-react";
 
 export const metadata: Metadata = {
   title: `About Us | ${siteConfig.name}`,

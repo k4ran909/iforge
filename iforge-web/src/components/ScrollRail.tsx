@@ -2,6 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import { getLenis } from "@/lib/lenis";
 
 /**
  * A numbered section rail that stands in for the scrollbar on desktop.
@@ -135,9 +136,15 @@ export default function ScrollRail() {
   const go = (i: number) => {
     const el = sections.current[i];
     if (!el) return;
-    const top = i === 0 ? 0 : pageTop(el) - HEADER;
+    const top = Math.max(0, i === 0 ? 0 : pageTop(el) - HEADER);
+    // Glide with the same Lenis easing as the wheel when it's running.
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(top, { duration: 1.2 });
+      return;
+    }
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top: Math.max(0, top), behavior: reduce ? "auto" : "smooth" });
+    window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
   };
 
   if (!enabled || marks.length < 2) return null;

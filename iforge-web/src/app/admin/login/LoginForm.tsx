@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "reicon-react";
 
 export default function LoginForm({ configured }: { configured: boolean }) {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { servicesData, siteConfig } from "@/data/siteData";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "reicon-react";
 import HalftoneWordmarkFooter, {
   type FooterColumn,
 } from "@/components/ui/halftone-wordmark-footer";

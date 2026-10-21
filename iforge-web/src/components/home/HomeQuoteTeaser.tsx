@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "reicon-react";
 import { servicesData, type ServiceItem } from "@/data/siteData";
 import { Reveal } from "@/components/ui/reveal";
 

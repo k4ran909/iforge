@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import GithubSkyline from "@/components/community/GithubSkyline";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "reicon-react";
 import { siteConfig } from "@/data/siteData";
 import { getContent } from "@/lib/content";
 

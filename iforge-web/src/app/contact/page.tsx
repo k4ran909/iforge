@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import { siteConfig } from "@/data/siteData";
 import { Reveal } from "@/components/ui/reveal";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "reicon-react";
 
 export const metadata: Metadata = {
   title: `Contact Us | ${siteConfig.name}`,

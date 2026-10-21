@@ -6,7 +6,7 @@ import { getContent } from "@/lib/content";
 import ServiceFaqAccordion from "@/components/services/ServiceFaqAccordion";
 import ContactForm from "@/components/ContactForm";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "reicon-react";
 
 interface Props {
   params: Promise<{ slug: string }>;

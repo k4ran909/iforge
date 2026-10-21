@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "reicon-react";
 import HalftoneNebula, { type NebulaParams } from "@/components/ui/halftone-nebula";
 
 // Tuned toward the iForge brand: crimson #E61E32 as the hot accent, deep

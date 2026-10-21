@@ -6,10 +6,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/ui/page-transition";
 import ScrollRail from "@/components/ScrollRail";
+import SmoothScroll from "@/components/SmoothScroll";
+import SmoothCursor from "@/components/SmoothCursor";
 
 /**
- * Renders the public site chrome (nav + footer + page transitions) around the
- * page, but omits it on /admin routes so the admin panel gets a clean shell.
+ * Renders the public site chrome (nav + footer + page transitions, plus Lenis
+ * scrolling, the smooth cursor and the section rail) around the page, but
+ * omits it on /admin routes so the admin panel gets a clean, native shell.
  */
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -29,6 +32,8 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       </main>
       <Footer />
       <ScrollRail />
+      <SmoothScroll />
+      <SmoothCursor />
     </>
   );
 }

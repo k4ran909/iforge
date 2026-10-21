@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { servicesData } from "@/data/siteData";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check } from "reicon-react";
 
 const INPUT =
   "w-full border border-hairline bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-[#E61E32] focus:outline-none";

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { servicesData } from "@/data/siteData";
-import { ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check } from "reicon-react";
 
 const INPUT =
   "w-full border border-hairline bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-[#E61E32] focus:outline-none";
@@ -113,7 +113,7 @@ export default function QuoteCalculator() {
                               active ? "border-[#E61E32] bg-[#E61E32] text-white" : "border-hairline"
                             }`}
                           >
-                            {active && <Check className="h-2.5 w-2.5 stroke-[3]" />}
+                            {active && <Check className="h-2.5 w-2.5" strokeWidth={2.5} />}
                           </span>
                           <div>
                             <div className="text-sm font-semibold text-foreground">{s.title}</div>
