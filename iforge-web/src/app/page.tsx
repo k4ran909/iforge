@@ -1,6 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
-import HeroMinimal from "@/components/home/HeroMinimal";
+import NebulaHero from "@/components/home/NebulaHero";
 import ServicesMinimal from "@/components/home/ServicesMinimal";
 import ApproachMinimal from "@/components/home/ApproachMinimal";
 import TechStackMinimal from "@/components/home/TechStackMinimal";
@@ -18,7 +18,7 @@ export default async function HomePage() {
   const { services, techCapabilities } = await getContent();
   return (
     <div className="w-full overflow-hidden">
-      <HeroMinimal />
+      <NebulaHero />
       <ServicesMinimal services={services} />
       <ApproachMinimal />
       <TechStackMinimal capabilities={techCapabilities} />
