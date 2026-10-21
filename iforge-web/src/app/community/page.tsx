@@ -2,6 +2,7 @@ import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import CommunityOrbitDemo from "@/components/ui/builders-orbit-demo";
+import GithubSkyline from "@/components/community/GithubSkyline";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 import { ArrowRight } from "lucide-react";
 import { siteConfig } from "@/data/siteData";
@@ -66,6 +67,27 @@ export default function CommunityPage() {
             <p className="mt-4 font-mono text-xs uppercase tracking-wider text-muted-foreground">
               12,000+ engineers, founders &amp; creators shipping daily
             </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Live GitHub contribution skyline */}
+      <section className="section border-b border-hairline bg-muted">
+        <div className="container-page">
+          <Reveal>
+            <p className="eyebrow mb-5">Live activity</p>
+            <h2 className="max-w-2xl text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              A year of shipping, in real time
+            </h2>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
+              Our contribution graph, synced live from GitHub — flat heat map or
+              isometric skyline. Toggle the view, hover a day, or drag to orbit.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mt-12">
+              <GithubSkyline />
+            </div>
           </Reveal>
         </div>
       </section>
