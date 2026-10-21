@@ -13,13 +13,13 @@ import { usePathname } from "next/navigation";
  * it legible over the dark hero, dark sections and the light theme alike.
  */
 
-const MIN_GAP = 22; // px between numbers on the rail
+const MIN_GAP = 16; // px between numbers on the rail
 const HEADER = 64; // fixed navbar height to clear when jumping
 
 type Mark = { label: string; y: number };
 
-/** Rail height — kept in step with the h-[min(52vh,380px)] class below. */
-const railHeight = () => Math.min(window.innerHeight * 0.52, 380);
+/** Rail height — kept in step with the h-[min(32vh,240px)] class below. */
+const railHeight = () => Math.min(window.innerHeight * 0.32, 240);
 
 /** Top-level sections in the page, then the footer as the closing mark. */
 function collectSections(): HTMLElement[] {
@@ -140,16 +140,16 @@ export default function ScrollRail() {
   return (
     <nav
       aria-label="Page sections"
-      className="pointer-events-none fixed right-6 top-1/2 z-40 -translate-y-1/2 mix-blend-difference"
+      className="pointer-events-none fixed right-4 top-1/2 z-40 -translate-y-1/2 mix-blend-difference"
     >
-      <div className="relative h-[min(52vh,380px)] w-12">
+      <div className="relative h-[min(32vh,240px)] w-7">
         {/* the rail */}
-        <span aria-hidden className="absolute left-0 top-0 h-full w-px bg-white/25" />
+        <span aria-hidden className="absolute left-0 top-0 h-full w-px bg-white/15" />
         {/* the active bar */}
         <span
           aria-hidden
-          className="absolute -left-px top-0 h-6 w-[3px] rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.55)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
-          style={{ transform: `translateY(${activeY - 12}px)` }}
+          className="absolute -left-[0.5px] top-0 h-3.5 w-[2px] rounded-full bg-white transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+          style={{ transform: `translateY(${activeY - 7}px)` }}
         />
         {marks.map((m, i) => {
           const num = String(i + 1).padStart(2, "0");
@@ -161,17 +161,17 @@ export default function ScrollRail() {
               onClick={() => go(i)}
               aria-label={`${num} — ${m.label}`}
               aria-current={isActive ? "true" : undefined}
-              className="group pointer-events-auto absolute left-0 flex -translate-y-1/2 items-center py-1 pr-1"
+              className="group pointer-events-auto absolute left-0 flex -translate-y-1/2 items-center py-0.5"
               style={{ top: m.y }}
             >
               <span
-                className={`pl-4 font-mono text-[11px] tabular-nums tracking-wider transition-colors duration-300 ${
-                  isActive ? "font-semibold text-white" : "text-white/40 group-hover:text-white/80"
+                className={`pl-2.5 font-mono text-[9px] tabular-nums tracking-wider transition-colors duration-300 ${
+                  isActive ? "text-white" : "text-white/30 group-hover:text-white/70"
                 }`}
               >
                 {num}
               </span>
-              <span className="pointer-events-none absolute right-full mr-3 max-w-[16rem] translate-x-1 truncate whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.18em] text-white opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              <span className="pointer-events-none absolute right-full mr-2.5 max-w-[12rem] translate-x-1 truncate whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.16em] text-white/80 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
                 {m.label}
               </span>
             </button>
