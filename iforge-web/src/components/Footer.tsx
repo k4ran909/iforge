@@ -163,7 +163,7 @@ export default function Footer() {
         columns={halftoneColumns}
         preset="night"
         palette={{ background: "#050505", ink: "#e9e4da", warm: "#E61E32" }}
-        height="420px"
+        height="clamp(420px, 34vw, 600px)"
       />
     </div>
   );

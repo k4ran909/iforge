@@ -138,6 +138,16 @@ export function hwfWarmth(x: number, y: number, hx: number, hy: number, span: nu
 export function hwfFitSize(measured: number, width: number) {
   return measured > 0 ? (width / measured) * 100 : 0
 }
+
+/**
+ * Largest font size whose visible ink fits in `room` px above the bottom edge.
+ * `ascent` is the word's ink ascent at 100px; `crop` of it hangs below the edge,
+ * so only (1 - crop) of it needs room.
+ */
+export function hwfHeightFit(ascent: number, room: number, crop: number) {
+  if (ascent <= 0 || room <= 0) return 0
+  return (room / Math.max(1 - crop, 0.05) / ascent) * 100
+}
 // #endregion
 
 const HWF_CSS = `
@@ -247,11 +257,18 @@ export default function HalftoneWordmarkFooter({
       const face = o.fontWeight + " 100px " + o.fontFamily
       m.font = face
       const word = o.wordmark || " "
-      const fit = hwfFitSize(m.measureText(word).width, w * 1.02)
+      const c = Math.max(0, Math.min(0.6, o.crop))
+      // Fill the width, but never let the ink climb into the links above: the
+      // word's top must stay below the hairline rule, with a little air.
+      const at100 = m.measureText(word)
+      const rule = root.querySelector(".hwf-rule")
+      const clearTop = rule ? rule.getBoundingClientRect().bottom - rect.top + 24 : 0
+      const byWidth = hwfFitSize(at100.width, w * 1.02)
+      const byHeight = hwfHeightFit(at100.actualBoundingBoxAscent || 72, h - clearTop, c)
+      const fit = byHeight > 0 ? Math.min(byWidth, byHeight) : byWidth
       m.font = o.fontWeight + " " + fit + "px " + o.fontFamily
       const box = m.measureText(word)
       const cap = box.actualBoundingBoxAscent || fit * 0.72
-      const c = Math.max(0, Math.min(0.6, o.crop))
       m.fillStyle = "#000"
       m.textBaseline = "alphabetic"
       m.fillText(word, (w - box.width) / 2, h + cap * c)
