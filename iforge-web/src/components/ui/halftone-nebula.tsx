@@ -196,6 +196,10 @@ uniform vec4 uRipple[${MAX_RIPPLES}];
 uniform vec4 uPlanet;
 ${declare(UNIFORMS)}
 out vec4 frag;
+#ifndef FIELD_PASS
+// The gas field, pre-computed once per pixel cell by the FIELD_PASS build.
+uniform highp sampler2D uField;
+#endif
 
 float hash12(vec2 p){
   vec3 p3 = fract(vec3(p.xyx) * 0.1031);
@@ -281,6 +285,15 @@ vec3 field(vec2 pos, vec2 resCss){
   return vec3(clamp(d, 0.0, 1.0), hz, tone);
 }
 
+#ifdef FIELD_PASS
+// Pass 1 — one fragment per pixel cell. field() is the expensive part (four
+// fbm calls, the spark and ripple loops) and its input is the cell centre, so
+// every pixel in a cell got the same answer; compute it once and store it.
+void main(){
+  float px = max(uPixel, 1.0);
+  frag = vec4(field((floor(gl_FragCoord.xy) + 0.5) * px, uRes / uDpr), 1.0);
+}
+#else
 void main(){
   vec2 resCss = uRes / uDpr;
   vec2 css = gl_FragCoord.xy / uDpr;
@@ -292,7 +305,7 @@ void main(){
   float dith = bayer4(cell);
 
   // ---- the gas, printed as a halftone ---------------------------------------
-  vec3 g = field(cellC, resCss);
+  vec3 g = texelFetch(uField, ivec2(cell), 0).rgb;
   vec3 hazeCol = mix(uHazeColor, uDuskColor, smoothstep(0.38, 0.62, g.z));
   float dq = clamp(floor(g.x * L + dith) / L, 0.0, 1.0);
   float hq = floor(g.y * 3.0 + dith) / 3.0;
@@ -388,7 +401,11 @@ void main(){
   col *= 1.0 - uVignette * smoothstep(0.35, 0.95, length(vu * vec2(uRes.x / uRes.y, 1.0) * 1.1));
   col += (hash12(floor(css) + fract(uTime) * 91.0) - 0.5) * uGrain;
   frag = vec4(max(col, vec3(0.0)), 1.0);
-}`
+}
+#endif`
+
+/** The same source, built for pass 1: the gas field into a cell-sized texture. */
+const FIELD_FRAG = FRAG.replace("#version 300 es\n", "#version 300 es\n#define FIELD_PASS\n")
 
 /**
  * One sparkle star. Position is 0..1 of the box (y up); `reach` and `core` are
@@ -566,34 +583,71 @@ export default function HalftoneNebula({
       }
       return s
     }
-    const vs = compile(gl.VERTEX_SHADER, VERT)
-    const fs = compile(gl.FRAGMENT_SHADER, FRAG)
-    const program = vs && fs ? gl.createProgram() : null
-    if (!program || !vs || !fs) {
-      setFailed(true)
-      return
+    const link = (fragSrc: string) => {
+      const vs = compile(gl.VERTEX_SHADER, VERT)
+      const fs = compile(gl.FRAGMENT_SHADER, fragSrc)
+      const prog = vs && fs ? gl.createProgram() : null
+      if (!prog || !vs || !fs) return null
+      gl.attachShader(prog, vs)
+      gl.attachShader(prog, fs)
+      gl.linkProgram(prog)
+      gl.deleteShader(vs)
+      gl.deleteShader(fs)
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+        console.error("halftone-nebula:", gl.getProgramInfoLog(prog))
+        gl.deleteProgram(prog)
+        return null
+      }
+      return prog
     }
-    gl.attachShader(program, vs)
-    gl.attachShader(program, fs)
-    gl.linkProgram(program)
-    gl.deleteShader(vs)
-    gl.deleteShader(fs)
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error("halftone-nebula:", gl.getProgramInfoLog(program))
-      gl.deleteProgram(program)
+    // Pass 1 writes the gas field per cell; pass 2 prints the halftone per pixel.
+    const fieldProgram = link(FIELD_FRAG)
+    const program = link(FRAG)
+    if (!fieldProgram || !program) {
+      if (fieldProgram) gl.deleteProgram(fieldProgram)
+      if (program) gl.deleteProgram(program)
       setFailed(true)
       return
     }
 
-    const loc = (n: string) => gl.getUniformLocation(program, n)
-    const tuned = UNIFORMS.map(([k, kind]) => [loc(uName(k)), k, kind] as const)
-    const U = {
-      res: loc("uRes"), dpr: loc("uDpr"), time: loc("uTime"),
-      pointer: loc("uPointer"), pointerOn: loc("uPointerOn"), look: loc("uLook"),
-      sparkCount: loc("uSparkCount"), spark: loc("uSpark"), sparkB: loc("uSparkB"),
-      ripple: loc("uRipple"), planet: loc("uPlanet"),
+    const locate = (prog: WebGLProgram) => {
+      const loc = (n: string) => gl.getUniformLocation(prog, n)
+      return {
+        tuned: UNIFORMS.map(([k, kind]) => [loc(uName(k)), k, kind] as const),
+        res: loc("uRes"), dpr: loc("uDpr"), time: loc("uTime"),
+        pointer: loc("uPointer"), pointerOn: loc("uPointerOn"), look: loc("uLook"),
+        sparkCount: loc("uSparkCount"), spark: loc("uSpark"), sparkB: loc("uSparkB"),
+        ripple: loc("uRipple"), planet: loc("uPlanet"), field: loc("uField"),
+      }
     }
+    const fieldU = locate(fieldProgram)
+    const U = locate(program)
     const vao = gl.createVertexArray()
+
+    // The cell-sized field texture pass 1 renders into. RGBA8 is plenty: the
+    // shader quantises density to a handful of levels anyway.
+    const fieldTex = gl.createTexture()
+    const fieldFbo = gl.createFramebuffer()
+    gl.bindTexture(gl.TEXTURE_2D, fieldTex)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+    let cols = 0
+    let rows = 0
+    /** (Re)size the field texture to one texel per pixel cell. */
+    const fitField = (px: number) => {
+      const c = Math.max(1, Math.ceil(cssW / px))
+      const r = Math.max(1, Math.ceil(cssH / px))
+      if (c === cols && r === rows) return
+      cols = c
+      rows = r
+      gl.bindTexture(gl.TEXTURE_2D, fieldTex)
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, cols, rows, 0, gl.RGBA, gl.UNSIGNED_BYTE, null)
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fieldFbo)
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, fieldTex, 0)
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null)
+    }
 
     // ---- sizing, from the element rather than the window --------------------
     let cssW = 1
@@ -731,27 +785,46 @@ export default function HalftoneNebula({
         sparkB.set([s.tint, s.phase, flare[i], Math.max(s.core * minSide, 1.5)], i * 4)
       }
 
-      gl.useProgram(program)
+      // Both passes read the same uniforms; feed whichever program is bound.
+      const feed = (u: typeof U) => {
+        for (const [l, key, kind] of u.tuned) {
+          const v = p[key]
+          if (kind === "c") gl.uniform3fv(l, hexToRgb(v as string))
+          else if (kind === "i" || kind === "b") gl.uniform1i(l, Number(v) | 0)
+          else gl.uniform1f(l, v as number)
+        }
+        gl.uniform2f(u.res, canvas.width, canvas.height)
+        gl.uniform1f(u.dpr, canvas.width / cssW)
+        gl.uniform1f(u.time, t)
+        gl.uniform2f(u.pointer, lampX * cssW, lampY * cssH)
+        gl.uniform1f(u.pointerOn, lampOn)
+        gl.uniform2f(u.look, lookX, lookY)
+        gl.uniform1i(u.sparkCount, n)
+        gl.uniform4fv(u.spark, sparkA)
+        gl.uniform4fv(u.sparkB, sparkB)
+        gl.uniform4fv(u.ripple, ripples)
+        gl.uniform4f(u.planet, p.planetX * cssW, p.planetY * cssH, p.planetRadius * minSide, p.planet ? 1 : 0)
+      }
+
+      fitField(Math.max(p.pixel, 1))
       gl.bindVertexArray(vao)
+
+      // Pass 1: the gas field, one fragment per pixel cell.
+      gl.useProgram(fieldProgram)
+      feed(fieldU)
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fieldFbo)
+      gl.viewport(0, 0, cols, rows)
+      gl.drawArrays(gl.TRIANGLES, 0, 3)
+
+      // Pass 2: print it as a halftone at full resolution, with the stars,
+      // planet and sparkles on top.
+      gl.useProgram(program)
+      feed(U)
       gl.bindFramebuffer(gl.FRAMEBUFFER, null)
       gl.viewport(0, 0, canvas.width, canvas.height)
-      for (const [l, key, kind] of tuned) {
-        const v = p[key]
-        if (kind === "c") gl.uniform3fv(l, hexToRgb(v as string))
-        else if (kind === "i" || kind === "b") gl.uniform1i(l, Number(v) | 0)
-        else gl.uniform1f(l, v as number)
-      }
-      gl.uniform2f(U.res, canvas.width, canvas.height)
-      gl.uniform1f(U.dpr, canvas.width / cssW)
-      gl.uniform1f(U.time, t)
-      gl.uniform2f(U.pointer, lampX * cssW, lampY * cssH)
-      gl.uniform1f(U.pointerOn, lampOn)
-      gl.uniform2f(U.look, lookX, lookY)
-      gl.uniform1i(U.sparkCount, n)
-      gl.uniform4fv(U.spark, sparkA)
-      gl.uniform4fv(U.sparkB, sparkB)
-      gl.uniform4fv(U.ripple, ripples)
-      gl.uniform4f(U.planet, p.planetX * cssW, p.planetY * cssH, p.planetRadius * minSide, p.planet ? 1 : 0)
+      gl.activeTexture(gl.TEXTURE0)
+      gl.bindTexture(gl.TEXTURE_2D, fieldTex)
+      gl.uniform1i(U.field, 0)
       gl.drawArrays(gl.TRIANGLES, 0, 3)
     }
 
@@ -798,6 +871,9 @@ export default function HalftoneNebula({
       canvas.removeEventListener("webglcontextrestored", onRestored)
       gl.deleteVertexArray(vao)
       gl.deleteProgram(program)
+      gl.deleteProgram(fieldProgram)
+      gl.deleteFramebuffer(fieldFbo)
+      gl.deleteTexture(fieldTex)
     }
   }, [interactive, reduced, generation, maxDpr])
 

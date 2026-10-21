@@ -89,37 +89,61 @@ export default function SmoothCursor() {
       dot.style.transform = `translate3d(${dx}px, ${dy}px, 0) translate(-50%, -50%) scale(${hover ? 0 : 1})`;
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${scale})`;
       dot.style.opacity = ring.style.opacity = show.toFixed(3);
-      raf = requestAnimationFrame(tick);
-    };
 
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerdown", onDown);
-    window.addEventListener("pointerup", onUp);
-    document.addEventListener("pointerout", onOut);
-    raf = requestAnimationFrame(tick);
+      // Sleep once everything has caught up; the next pointer event wakes it.
+      const settled =
+        Math.abs(x - rx) + Math.abs(y - ry) < 0.1 &&
+        Math.abs(x - dx) + Math.abs(y - dy) < 0.1 &&
+        Math.abs(scaleGoal - scale) < 0.001 &&
+        Math.abs(showGoal - show) < 0.001;
+      raf = settled ? 0 : requestAnimationFrame(tick);
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(tick);
+    };
+    const withWake =
+      <E,>(fn: (e: E) => void) =>
+      (e: E) => {
+        fn(e);
+        wake();
+      };
+    const move = withWake(onMove);
+    const down = withWake(onDown);
+    const up = withWake(onUp);
+    const out = withWake(onOut);
+
+    window.addEventListener("pointermove", move, { passive: true });
+    window.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
+    document.addEventListener("pointerout", out);
+    wake();
 
     return () => {
       cancelAnimationFrame(raf);
       root.classList.remove("has-smooth-cursor");
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("pointerup", onUp);
-      document.removeEventListener("pointerout", onOut);
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointerup", up);
+      document.removeEventListener("pointerout", out);
     };
   }, [enabled]);
 
   if (!enabled) return null;
 
+  // Each piece blends on its own: a full-screen blended layer would make the
+  // browser re-blend the whole viewport every frame.
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[100] mix-blend-difference">
+    <>
       <div
         ref={ringRef}
-        className="absolute left-0 top-0 h-8 w-8 rounded-full border border-white/70 opacity-0 will-change-transform"
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-8 w-8 rounded-full border border-white/70 opacity-0 mix-blend-difference will-change-transform"
       />
       <div
         ref={dotRef}
-        className="absolute left-0 top-0 h-1.5 w-1.5 rounded-full bg-white opacity-0 will-change-transform"
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 rounded-full bg-white opacity-0 mix-blend-difference will-change-transform"
       />
-    </div>
+    </>
   );
 }
