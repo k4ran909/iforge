@@ -56,7 +56,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <div className="bg-background">
+    <div className="bg-background" data-rail-end>
       {/* CTA band */}
       <section className="border-t border-hairline">
         <div className="container-page grid gap-8 py-16 md:grid-cols-[1.4fr_1fr] md:items-end md:py-24">

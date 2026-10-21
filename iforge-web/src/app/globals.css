@@ -143,6 +143,17 @@ html.dark {
   border-width: 3px;
 }
 
+/* While the numbered section rail is showing (desktop, public pages), it is
+   the scroll indicator — hide the native bar. Scrolling itself is untouched. */
+html.has-scroll-rail {
+  scrollbar-width: none;
+}
+html.has-scroll-rail::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* Firefox has no ::-webkit-scrollbar; give it the closest thin equivalent.
    (Scoped so Chromium keeps the pill above — it drops the webkit styles
    whenever scrollbar-color is set.) */

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { PageTransition } from "@/components/ui/page-transition";
+import ScrollRail from "@/components/ScrollRail";
 
 /**
  * Renders the public site chrome (nav + footer + page transitions) around the
@@ -27,6 +28,7 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
+      <ScrollRail />
     </>
   );
 }
