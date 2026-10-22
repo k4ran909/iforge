@@ -1,159 +1,122 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { siteConfig, companyStats, valueProps, companyTimeline } from "@/data/siteData";
-import { 
-  ShieldCheck, 
-  ArrowRight, 
-  Target, 
-  CheckCircle2, 
-  Globe2, 
-  Users, 
-  Award, 
-  Building2,
-  Lock,
-  Zap
-} from "lucide-react";
+import { siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
+import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
+import { ArrowRight } from "reicon-react";
 
 export const metadata: Metadata = {
   title: `About Us | ${siteConfig.name}`,
-  description: "Learn about iForge Technologies — our engineering mission, certified cloud alliances, leadership principles, and a decade of enterprise excellence.",
+  description:
+    "Learn about iForge Technologies — our engineering mission, the principles we work by, and the people building resilient systems for enterprises.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { valueProps, timeline: companyTimeline } = await getContent();
   return (
-    <div className="w-full bg-white dark:bg-black transition-colors duration-250">
-      {/* About Hero Header */}
-      <section className="relative overflow-hidden pt-12 pb-16 lg:pt-18 lg:pb-24 bg-gradient-to-b from-neutral-50 via-white to-white dark:from-neutral-950 dark:via-black dark:to-black border-b border-neutral-100 dark:border-neutral-800 transition-colors duration-250">
-        <div 
-          aria-hidden="true" 
-          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#E61E32]/8 dark:bg-[#E61E32]/12 blur-3xl rounded-full" 
-        />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center max-w-3xl mx-auto space-y-5">
-            <div className="inline-flex items-center px-3.5 py-1 rounded-full bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white text-xs font-bold uppercase tracking-wider">
-              Enterprise IT Consultancy & Engineering
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black dark:text-white tracking-tight leading-tight">
-              Engineering Digital Foundations For Tomorrow&apos;s Market Leaders
+    <div className="w-full bg-background">
+      {/* Hero */}
+      <section className="border-b border-hairline">
+        <div className="container-page pt-20 pb-16 sm:pt-28 sm:pb-24">
+          <Reveal>
+            <p className="eyebrow mb-6">About iForge</p>
+            <h1 className="max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+              Engineering{" "}
+              <span className="text-[#E61E32]">resilient systems</span>
             </h1>
-
-            <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
-              Founded on principles of unyielding technical precision, iForge Technologies transforms legacy complexity into high-velocity, secure, and resilient cloud architectures.
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              We are a team of architects, engineers, and security specialists building
+              production-grade cloud, AI, and application systems for enterprises that demand
+              reliability at scale.
             </p>
-          </div>
-
-          {/* Stats Bar */}
-          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {companyStats.map((stat, i) => (
-              <div key={i} className="text-center p-6 bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xs transition-colors duration-250">
-                <div className="text-3xl sm:text-4xl font-extrabold text-black dark:text-white">{stat.value}</div>
-                <div className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Mission & Vision Cards */}
-      <section className="py-20 bg-white dark:bg-black transition-colors duration-250">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-neutral-50 dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 sm:p-12 space-y-4 transition-colors duration-250">
-              <div className="w-12 h-12 rounded-xl bg-[#FDE8EA] dark:bg-[#E61E32]/15 flex items-center justify-center text-[#E61E32]">
-                <Target className="w-6 h-6" />
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white">
-                Our Mission
-              </h2>
-              <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                To empower forward-thinking organizations with architectural clarity, multi-cloud mastery, and intelligent automation. We eliminate technical friction so enterprises can build, deploy, and scale without compromise.
-              </p>
-            </div>
-
-            <div className="bg-black dark:bg-[#080808] text-white border border-neutral-800 rounded-3xl p-8 sm:p-12 space-y-4 relative overflow-hidden transition-colors duration-250">
-              <div 
-                aria-hidden="true" 
-                className="pointer-events-none absolute -bottom-10 -right-10 w-48 h-48 bg-[#E61E32]/15 blur-2xl rounded-full" 
-              />
-              <div className="w-12 h-12 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-[#E61E32]">
-                <Globe2 className="w-6 h-6" />
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Our Vision
-              </h2>
-              <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
-                To become the world&apos;s most dependable engineering partner for mission-critical IT transformations, where cutting-edge technology directly translates into verifiable client market capitalization.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Decade of Excellence Timeline */}
-      <section className="py-20 bg-neutral-50 dark:bg-black/90 border-y border-neutral-200 dark:border-neutral-800 transition-colors duration-250">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#E61E32]">Our Evolution</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-black dark:text-white">A Decade of Technical Delivery</h2>
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">Milestones charting our growth from infrastructure advisory to global cloud architecture.</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto space-y-6">
-            {companyTimeline.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row items-start gap-6 shadow-xs hover:border-[#E61E32] dark:hover:border-[#E61E32] transition-all"
-              >
-                <div className="shrink-0 px-4 py-2 rounded-xl bg-[#FDE8EA] dark:bg-[#E61E32]/15 text-black dark:text-white font-extrabold text-lg">
-                  {item.year}
-                </div>
-                <div className="space-y-1.5">
-                  <h3 className="text-lg font-bold text-black dark:text-white">
-                    {item.title}
+      {/* Values */}
+      <section className="section border-b border-hairline">
+        <div className="container-page">
+          <Reveal>
+            <p className="eyebrow mb-5">What we stand for</p>
+            <h2 className="max-w-2xl text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              Principles over promises
+            </h2>
+          </Reveal>
+          <Stagger
+            className={`mt-14 grid gap-px overflow-hidden border border-hairline bg-hairline ${
+              valueProps.length % 3 === 0 ? "sm:grid-cols-3" : "sm:grid-cols-2"
+            }`}
+          >
+            {valueProps.map((v, i) => (
+              <RevealItem key={v.title}>
+                <div className="h-full bg-background p-8 sm:p-10">
+                  <span className="font-mono text-sm text-[#E61E32]">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
+                    {v.title}
                   </h3>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                    {item.description}
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {v.description}
                   </p>
                 </div>
-              </div>
+              </RevealItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
 
+      {/* Timeline — only once real milestones are added in Admin → Content → About */}
+      {companyTimeline.length > 0 && (
+      <section className="section border-b border-hairline bg-muted">
+        <div className="container-page">
+          <Reveal>
+            <p className="eyebrow mb-5">Trajectory</p>
+            <h2 className="max-w-2xl text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+              From infrastructure advisory to AI engineering
+            </h2>
+          </Reveal>
+          <Stagger className="mt-14 border-t border-hairline">
+            {companyTimeline.map((t) => (
+              <RevealItem key={t.year}>
+                <div className="grid gap-4 border-b border-hairline py-8 md:grid-cols-[160px_1fr] md:gap-10">
+                  <div className="font-mono text-2xl font-bold tabular-nums text-[#E61E32]">
+                    {t.year}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground">
+                      {t.title}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                      {t.description}
+                    </p>
+                  </div>
+                </div>
+              </RevealItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+      )}
 
-
-      {/* Call to Action */}
-      <section className="py-16 bg-black text-white relative overflow-hidden">
-        <div 
-          aria-hidden="true" 
-          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#E61E32]/15 blur-3xl rounded-full" 
-        />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            Partner With Certified Enterprise Architects
-          </h2>
-          <p className="text-base text-neutral-300 max-w-2xl mx-auto">
-            Whether you require a comprehensive cloud audit, AI & ML implementation, zero-trust cybersecurity assessment, or custom application engineering, we are ready to assist.
-          </p>
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/quote"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-[#E61E32] hover:bg-[#C81426] shadow-lg shadow-[#E61E32]/25 transition-all cursor-pointer hover:scale-105 active:scale-95"
-            >
-              <span>Calculate Project Scope</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer"
-            >
-              <span>Contact Our Team</span>
-            </Link>
-          </div>
+      {/* CTA */}
+      <section className="section">
+        <div className="container-page">
+          <Reveal>
+            <div className="flex flex-col gap-6 border border-hairline p-10 sm:flex-row sm:items-center sm:justify-between sm:p-14">
+              <h2 className="max-w-lg text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                Let&apos;s architect your next system together.
+              </h2>
+              <Link
+                href="/contact"
+                className="group inline-flex shrink-0 items-center gap-2 bg-foreground px-6 py-3.5 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32]"
+              >
+                Contact the team
+                <ArrowRight className="h-4 w-4 arrow-nudge" />
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>

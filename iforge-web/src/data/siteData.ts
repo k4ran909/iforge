@@ -41,21 +41,6 @@ export const siteConfig = {
   founded: "2024",
 };
 
-export const partnerLogos = [
-  { name: "Amazon Web Services", src: "/images/png-transparent-aws-60small-1.png", alt: "AWS Partner" },
-  { name: "Google Cloud", src: "/images/logo_google_cloud-1-300x78.png", alt: "Google Cloud Partner" },
-  { name: "VMware", src: "/images/logo_vmware-1-300x90.png", alt: "VMware Partner" },
-  { name: "Palo Alto Networks", src: "/images/PaloAltoNetworks-300x55.png", alt: "Palo Alto Networks" },
-  { name: "Trend Micro", src: "/images/trend-micro-300x103.png", alt: "Trend Micro Partner" },
-];
-
-export const clientLogos = [
-  { name: "Bizrate", src: "/images/bizrate-1.png" },
-  { name: "Enpass", src: "/images/Enpass.png-300x150.webp" },
-  { name: "EazyDiner", src: "/images/eazydiner-client-logo.png" },
-  { name: "Everpure Blaze", src: "/images/everpure-blaze-logo-300x150.png" },
-  { name: "Siddha", src: "/images/logo-siddha.jpg" },
-];
 
 export const servicesData: ServiceItem[] = [
   {
@@ -80,11 +65,7 @@ export const servicesData: ServiceItem[] = [
       "Automated ML training and inference pipelines",
       "Model governance and safety evaluation framework"
     ],
-    metrics: [
-      { value: "3.5x", label: "Faster Insights Delivery" },
-      { value: "45%", label: "Manual Workflow Reduction" },
-      { value: "99.8%", label: "Pipeline Reliability" }
-    ],
+    metrics: [],
     offerings: [
       {
         title: "AI Advisory & Strategic Roadmap",
@@ -129,7 +110,7 @@ export const servicesData: ServiceItem[] = [
     title: "Cloud Services",
     subtitle: "Trust a managed public cloud partner delivering end-to-end multi-cloud excellence",
     shortDesc: "CloudSMART strategy delivering complete cloud consultancy, architecture, and multi-cloud management.",
-    longDesc: "Our CloudSMART strategy gives enterprises a complete cloud consultancy and delivery platform that adapts to your needs. Through strategic partnerships with leading providers (AWS, Google Cloud, Azure), we help you unlock the full potential of modern cloud technologies to build scalable, resilient environments.",
+    longDesc: "Our CloudSMART strategy gives enterprises a complete cloud consultancy and delivery platform that adapts to your needs. Working across leading providers (AWS, Google Cloud, Azure), we help you unlock the full potential of modern cloud technologies to build scalable, resilient environments.",
     iconName: "Cloud",
     features: [
       "Multi-Cloud Architecture & Zero-Downtime Migration",
@@ -145,11 +126,7 @@ export const servicesData: ServiceItem[] = [
       "Comprehensive FinOps cost reduction report",
       "24/7 automated cloud monitoring dashboard"
     ],
-    metrics: [
-      { value: "40%", label: "Average FinOps Savings" },
-      { value: "99.99%", label: "Uptime SLA Guarantee" },
-      { value: "Zero", label: "Downtime Migrations" }
-    ],
+    metrics: [],
     offerings: [
       {
         title: "Cloud Migration & Modernization",
@@ -168,15 +145,15 @@ export const servicesData: ServiceItem[] = [
       }
     ],
     benefits: [
-      "Up to 40% reduction in cloud infrastructure expenses through FinOps",
-      "99.99% high availability and automated disaster recovery across availability zones",
+      "Lower cloud infrastructure spend through FinOps practices",
+      "High availability and automated disaster recovery across availability zones",
       "Instant resource scalability during traffic spikes and peak enterprise loads",
       "Multi-cloud vendor lock-in prevention"
     ],
     faqs: [
       {
         question: "Which cloud providers does iForge officially support?",
-        answer: "We are certified partners for Amazon Web Services (AWS) and Google Cloud Platform (GCP), and also provide full enterprise architecture for Microsoft Azure."
+        answer: "We design, migrate and run workloads on Amazon Web Services (AWS), Google Cloud Platform (GCP) and Microsoft Azure."
       },
       {
         question: "How do you prevent downtime during database migrations?",
@@ -206,11 +183,7 @@ export const servicesData: ServiceItem[] = [
       "Comprehensive AMC service contract & SLA guide",
       "Disaster recovery runbook with RPO/RTO specifications"
     ],
-    metrics: [
-      { value: "15 min", label: "Critical Incident Response" },
-      { value: "99.9%", label: "Network Uptime" },
-      { value: "5+ Yrs", label: "Extended Hardware Lifespan" }
-    ],
+    metrics: [],
     offerings: [
       {
         title: "Network & Systems Engineering",
@@ -267,11 +240,7 @@ export const servicesData: ServiceItem[] = [
       "ISO 27001 / SOC 2 readiness gap assessment",
       "Incident response and breach containment protocol"
     ],
-    metrics: [
-      { value: "100%", label: "Audit Compliance Readiness" },
-      { value: "<5 min", label: "Threat Detection Latency" },
-      { value: "0", label: "Uncontained Breaches" }
-    ],
+    metrics: [],
     offerings: [
       {
         title: "VAPT & Penetration Testing",
@@ -280,7 +249,7 @@ export const servicesData: ServiceItem[] = [
       },
       {
         title: "Perimeter & Endpoint Fortification",
-        description: "Partnering with industry leaders like Palo Alto Networks and Trend Micro for automated threat quarantine.",
+        description: "Using industry-leading platforms such as Palo Alto Networks and Trend Micro for automated threat quarantine.",
         points: ["Next-Gen firewall policies", "Ransomware behavioral blocking", "Strict USB and endpoint lockouts"]
       },
       {
@@ -328,11 +297,7 @@ export const servicesData: ServiceItem[] = [
       "Modular TypeScript/Node/Go codebase with automated CI/CD",
       "Comprehensive OpenAPI / Swagger API architecture"
     ],
-    metrics: [
-      { value: "<0.8s", label: "Average App & Dashboard Load" },
-      { value: "99.9%", label: "Availability SLA Guarantee" },
-      { value: "100%", label: "Cross-Platform Responsive" }
-    ],
+    metrics: [],
     offerings: [
       {
         title: "Custom Web & Enterprise Applications",
@@ -373,23 +338,12 @@ export const servicesData: ServiceItem[] = [
   }
 ];
 
-export const companyStats = [
-  { value: "10+", label: "Years of Excellence" },
-  { value: "250+", label: "Delivered Solutions" },
-  { value: "98%", label: "Client Satisfaction" },
-  { value: "50+", label: "Enterprise Alliances" },
-];
 
 export const valueProps = [
   {
     title: "Outcome-Driven ROI",
     description: "We align technology architectures directly with concrete business metrics: revenue, operational velocity, and cloud efficiency.",
     icon: "Target"
-  },
-  {
-    title: "Certified Global Alliances",
-    description: "Official partnership certifications with cloud and security titans: AWS, Google Cloud, VMware, Trend Micro, and Palo Alto Networks.",
-    icon: "ShieldCheck"
   },
   {
     title: "Zero-Trust Engineering",
@@ -422,46 +376,5 @@ export const techCapabilities = [
   }
 ];
 
-export const testimonials = [
-  {
-    quote: "iForge transformed our cloud infrastructure and automated our deployment pipelines with zero downtime. Exceptional technical acumen, clear communication, and responsiveness.",
-    client: "Technology Director",
-    company: "Bizrate",
-    rating: 5
-  },
-  {
-    quote: "The cybersecurity audit and compliance roadmap delivered by iForge gave our enterprise leadership total confidence. A trusted strategic partner.",
-    client: "Head of Information Security",
-    company: "Enpass",
-    rating: 5
-  },
-  {
-    quote: "iForge delivered high-performance enterprise dashboards and modern application architecture with flawless execution and rapid turnaround. Truly elite engineering.",
-    client: "VP of Engineering",
-    company: "EazyDiner",
-    rating: 5
-  }
-];
-
-export const companyTimeline = [
-  {
-    year: "2014",
-    title: "Foundation & Infrastructure Advisory",
-    description: "Established core engineering practice specializing in enterprise networking, server virtualization, and IT systems support."
-  },
-  {
-    year: "2018",
-    title: "Cloud Migration & Managed SRE Expansion",
-    description: "Secured key enterprise alliances with AWS and VMware, guiding over 100+ organizations through cloud-first modernization."
-  },
-  {
-    year: "2021",
-    title: "Cybersecurity & SOC Operations Launch",
-    description: "Expanded into comprehensive security consulting, VAPT ethical hacking, and partnerships with Palo Alto Networks & Trend Micro."
-  },
-  {
-    year: "2024+",
-    title: "AI & ML Advisory and Next-Gen Engineering",
-    description: "Pioneering enterprise AI & ML adoption, next-gen application development and real-time dashboards, and scaling our 12,000+ member Builders Community."
-  }
-];
+// Removed until the real history is confirmed; add entries in Admin → Content → About.
+export const companyTimeline: { year: string; title: string; description: string }[] = [];

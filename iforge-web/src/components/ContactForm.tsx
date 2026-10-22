@@ -2,7 +2,12 @@
 
 import React, { useState } from "react";
 import { servicesData } from "@/data/siteData";
-import { Send, CheckCircle2, ShieldCheck, Clock } from "lucide-react";
+import { ArrowRight, Check } from "reicon-react";
+
+const INPUT =
+  "w-full border border-hairline bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-[#E61E32] focus:outline-none";
+const LABEL =
+  "mb-2 block font-mono text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -16,178 +21,207 @@ export default function ContactForm() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ticket, setTicket] = useState("");
+  const [error, setError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulated instant API submission
-    setTimeout(() => {
-      setLoading(false);
+    setError("");
+    try {
+      const service = servicesData.find((s) => s.slug === formData.service)?.title ?? "Custom Enterprise Architecture";
+      const res = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          service,
+          source: "contact",
+          page: window.location.pathname,
+          website: honeypot,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Something went wrong — please try again.");
+        return;
+      }
+      setTicket(data.ticket);
       setSubmitted(true);
-    }, 600);
+    } catch {
+      setError("Network error — please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
     return (
-      <div className="bg-white dark:bg-[#0D0D0D] border border-emerald-500/40 rounded-3xl p-8 sm:p-12 text-center shadow-lg animate-in fade-in duration-300 transition-colors duration-250">
-        <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-full flex items-center justify-center mx-auto mb-5">
-          <CheckCircle2 className="w-8 h-8 text-emerald-600" />
-        </div>
-        <h3 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white mb-3">
-          Inquiry Successfully Received
+      <div className="flex flex-col items-start border border-hairline p-8 sm:p-10">
+        <span className="flex h-12 w-12 items-center justify-center border border-[#E61E32]/40 bg-accent text-[#E61E32]">
+          <Check className="h-6 w-6" />
+        </span>
+        <h3 className="mt-6 text-2xl font-bold tracking-tight text-foreground">
+          Inquiry received
         </h3>
-        <p className="text-neutral-600 dark:text-neutral-300 text-sm sm:text-base max-w-lg mx-auto mb-6 leading-relaxed">
-          Thank you, <span className="font-bold text-black dark:text-white">{formData.name}</span>. An iForge Principal Architect will review your technical requirements and contact you within 2 business hours.
+        <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+          Thank you, <span className="font-semibold text-foreground">{formData.name}</span>. A
+          Principal Architect will review your requirements and respond within 2 business hours.
         </p>
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-6">
-          <Clock className="w-3.5 h-3.5 text-[#E61E32]" />
-          <span>Priority Dispatch Ticket #IF-{Math.floor(1000 + Math.random() * 9000)}</span>
-        </div>
-        <div>
-          <button
-            type="button"
-            onClick={() => {
-              setSubmitted(false);
-              setFormData({ name: "", email: "", phone: "", company: "", service: "cloud-services", budget: "$10k - $25k", message: "" });
-            }}
-            className="px-6 py-3 rounded-xl text-xs font-semibold text-black dark:text-white bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors cursor-pointer"
-          >
-            Submit Another Request
-          </button>
-        </div>
+        <p className="mt-5 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+          Ticket #{ticket}
+        </p>
+        <button
+          type="button"
+          onClick={() => {
+            setSubmitted(false);
+            setFormData({
+              name: "",
+              email: "",
+              phone: "",
+              company: "",
+              service: "cloud-services",
+              budget: "$10k - $25k",
+              message: "",
+            });
+          }}
+          className="mt-7 border border-hairline px-5 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-[#E61E32] hover:text-[#E61E32]"
+        >
+          Submit another request
+        </button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-[#0D0D0D] border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-10 space-y-6 shadow-sm transition-colors duration-250">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Hidden from people; bots that fill every field get politely ignored. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
+      <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-            Full Name *
-          </label>
+          <label className={LABEL}>Full name *</label>
           <input
             type="text"
             required
             placeholder="Sarah Jenkins"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
+            className={INPUT}
           />
         </div>
-
         <div>
-          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-            Work Email *
-          </label>
+          <label className={LABEL}>Work email *</label>
           <input
             type="email"
             required
             placeholder="sarah@enterprise.com"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
+            className={INPUT}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-            Phone / WhatsApp
-          </label>
+          <label className={LABEL}>Phone / WhatsApp</label>
           <input
             type="tel"
             placeholder="+91 99718 66720"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
+            className={INPUT}
           />
         </div>
-
         <div>
-          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-            Company / Organization
-          </label>
+          <label className={LABEL}>Company</label>
           <input
             type="text"
             placeholder="Acme Corporation"
             value={formData.company}
             onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
+            className={INPUT}
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-            Practice Interest *
-          </label>
+          <label className={LABEL}>Practice interest *</label>
           <select
             value={formData.service}
             onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
+            className={INPUT}
           >
             {servicesData.map((s) => (
-              <option key={s.id} value={s.slug} className="bg-white dark:bg-[#141414] text-black dark:text-white">
+              <option key={s.id} value={s.slug}>
                 {s.title}
               </option>
             ))}
-            <option value="custom" className="bg-white dark:bg-[#141414] text-black dark:text-white">Custom Enterprise Architecture</option>
+            <option value="custom">Custom Enterprise Architecture</option>
           </select>
         </div>
-
         <div>
-          <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-            Anticipated Investment
-          </label>
+          <label className={LABEL}>Anticipated investment</label>
           <select
             value={formData.budget}
             onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-            className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all"
+            className={INPUT}
           >
-            <option value="< $10k" className="bg-white dark:bg-[#141414] text-black dark:text-white">&lt; $10,000 (Sprint Audit)</option>
-            <option value="$10k - $25k" className="bg-white dark:bg-[#141414] text-black dark:text-white">$10,000 – $25,000 (Core Module)</option>
-            <option value="$25k - $50k" className="bg-white dark:bg-[#141414] text-black dark:text-white">$25,000 – $50,000 (Full Architecture)</option>
-            <option value="$50k+" className="bg-white dark:bg-[#141414] text-black dark:text-white">$50,000+ (Multi-Cloud / Large Enterprise)</option>
+            <option value="< $10k">&lt; $10,000 (Sprint Audit)</option>
+            <option value="$10k - $25k">$10,000 – $25,000 (Core Module)</option>
+            <option value="$25k - $50k">$25,000 – $50,000 (Full Architecture)</option>
+            <option value="$50k+">$50,000+ (Large Enterprise)</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-bold text-black dark:text-white uppercase tracking-wider mb-2">
-          Project Goals & Scope Details *
-        </label>
+        <label className={LABEL}>Project goals &amp; scope *</label>
         <textarea
           required
           rows={4}
-          placeholder="Outline your current infrastructure stack, timelines, key challenges, or specific deliverables required..."
+          placeholder="Outline your current stack, timelines, key challenges, or specific deliverables required…"
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-sm text-black dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:border-[#E61E32] focus:bg-white dark:focus:bg-[#1A1A1A] transition-all resize-y"
+          className={`${INPUT} resize-y`}
         />
       </div>
+
+      {error && (
+        <p role="alert" className="border border-[#E61E32]/40 bg-accent px-4 py-3 text-sm text-foreground">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full inline-flex items-center justify-center gap-2 py-4 px-8 rounded-xl text-sm font-semibold text-white bg-[#E61E32] hover:bg-[#C81426] disabled:opacity-50 shadow-md shadow-[#E61E32]/25 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+        className="group inline-flex w-full items-center justify-center gap-2 bg-foreground px-8 py-4 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32] disabled:opacity-50"
       >
         {loading ? (
-          <span>Securing Dispatch Pipeline...</span>
+          "Sending…"
         ) : (
           <>
-            <span>Submit Architectural Discovery Request</span>
-            <Send className="w-4 h-4" />
+            Submit discovery request
+            <ArrowRight className="h-4 w-4 arrow-nudge" />
           </>
         )}
       </button>
 
-      <div className="flex items-center justify-center gap-2 text-xs text-neutral-500 dark:text-neutral-400 pt-1">
-        <ShieldCheck className="w-4 h-4 text-emerald-600" />
-        <span>Strict Non-Disclosure Protocol • 100% IP Protection</span>
-      </div>
+      <p className="text-center font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+        Strict NDA • 100% IP protection
+      </p>
     </form>
   );
 }

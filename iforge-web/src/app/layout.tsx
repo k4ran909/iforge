@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import SiteChrome from "@/components/SiteChrome";
 import { siteConfig } from "@/data/siteData";
 
 const inter = Inter({
@@ -30,8 +29,8 @@ export const metadata: Metadata = {
     "iForge Technologies",
     "IT Services",
     "Cloud Architecture",
-    "AWS Partner",
-    "Google Cloud Partner",
+    "AWS Consulting",
+    "Google Cloud Consulting",
     "Cybersecurity Services",
     "VAPT",
     "AI & ML Consulting",
@@ -105,11 +104,7 @@ export default function RootLayout({
         className="min-h-screen bg-background text-foreground font-sans antialiased flex flex-col justify-between selection:bg-[#E61E32] selection:text-white transition-colors duration-250"
       >
         <ThemeProvider>
-          <Navbar />
-          <main className="flex-1 w-full bg-background text-foreground transition-colors duration-250">
-            {children}
-          </main>
-          <Footer />
+          <SiteChrome>{children}</SiteChrome>
         </ThemeProvider>
       </body>
     </html>
