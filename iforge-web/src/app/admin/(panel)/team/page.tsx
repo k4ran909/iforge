@@ -7,6 +7,6 @@ export const metadata = { title: "Team · Admin · iForge", robots: { index: fal
 
 export default async function TeamAdminPage() {
   if (!(await isAuthenticated())) redirect("/admin/login");
-  const { team } = await getContent();
-  return <TeamEditor initialTeam={team} />;
+  const { team, teamPage } = await getContent();
+  return <TeamEditor initialTeam={team} initialPage={teamPage} />;
 }

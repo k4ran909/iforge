@@ -1,10 +1,11 @@
 import { revalidatePath } from "next/cache";
 import { isAuthenticated } from "@/lib/auth";
-import { getContent, saveContent, type TeamMember } from "@/lib/content";
+import { getContent, saveContent, type TeamMember, type TeamPageContent } from "@/lib/content";
 
 const s = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
 
-// Save the whole team list (order included) from the admin team editor.
+// Save the Team page from the admin editor: the member list (order included)
+// and, when sent, the page around it (intro, highlights, founder quote).
 export async function PUT(request: Request) {
   if (!(await isAuthenticated())) {
     return Response.json({ ok: false, error: "Unauthorized" }, { status: 401 });
@@ -28,8 +29,28 @@ export async function PUT(request: Request) {
     .filter((m) => m.name);
 
   const content = await getContent();
-  const result = await saveContent({ ...content, team });
+
+  let teamPage: TeamPageContent = content.teamPage;
+  const p = body.teamPage as Record<string, unknown> | undefined;
+  if (p && typeof p === "object") {
+    teamPage = {
+      introHeading: s(p.introHeading, 120),
+      introBody: s(p.introBody, 2000),
+      introImage: s(p.introImage, 1000),
+      stats: (Array.isArray(p.stats) ? (p.stats as Record<string, unknown>[]) : [])
+        .map((x) => ({ value: s(x.value, 20), label: s(x.label, 60) }))
+        .filter((x) => x.value && x.label)
+        .slice(0, 4),
+      quoteLead: s(p.quoteLead, 400),
+      quoteRest: s(p.quoteRest, 400),
+      quoteName: s(p.quoteName, 120),
+      quoteRole: s(p.quoteRole, 120),
+      quotePhoto: s(p.quotePhoto, 1000),
+    };
+  }
+
+  const result = await saveContent({ ...content, team, teamPage });
   if (!result.ok) return Response.json({ ok: false, error: result.error }, { status: 500 });
   revalidatePath("/team");
-  return Response.json({ ok: true, team });
+  return Response.json({ ok: true, team, teamPage });
 }

@@ -72,6 +72,27 @@ export interface TeamMember {
   x?: string;
 }
 
+export interface TeamStat {
+  value: string;
+  label: string;
+}
+
+/** The Team page around the member grid. Empty parts are simply not shown. */
+export interface TeamPageContent {
+  introHeading: string;
+  introBody: string;
+  introImage: string;
+  /** Real figures only — empty by default, so the row stays hidden. */
+  stats: TeamStat[];
+  /** First part of the quote, set in full colour. */
+  quoteLead: string;
+  /** The rest of the quote, set in muted grey. */
+  quoteRest: string;
+  quoteName: string;
+  quoteRole: string;
+  quotePhoto: string;
+}
+
 export interface SiteContent {
   siteConfig: SiteConfig;
   services: ServiceItem[];
@@ -81,6 +102,7 @@ export interface SiteContent {
   community: CommunityContent;
   /** Real people only — starts empty and is filled from the admin panel. */
   team: TeamMember[];
+  teamPage: TeamPageContent;
 }
 
 // ---- Defaults, built from the code so the site works with no DB ----
@@ -116,6 +138,18 @@ export const defaultContent: SiteContent = {
     ],
   },
   team: [],
+  teamPage: {
+    introHeading: "Who we are",
+    introBody:
+      "We are a team of certified architects, engineers, and security specialists building production-grade cloud, AI, and application systems for enterprises that demand reliability at scale.",
+    introImage: "",
+    stats: [],
+    quoteLead: "",
+    quoteRest: "",
+    quoteName: "",
+    quoteRole: "",
+    quotePhoto: "",
+  },
 };
 
 /** Deep-merge a stored partial over the defaults so missing fields never break a page. */
@@ -132,6 +166,7 @@ function mergeContent(stored: Partial<SiteContent> | null | undefined): SiteCont
     community: { ...defaultContent.community, ...(stored.community || {}) },
     // An empty team is a real state (nobody added yet), so no default swap.
     team: Array.isArray(stored.team) ? stored.team : [],
+    teamPage: { ...defaultContent.teamPage, ...(stored.teamPage || {}) },
   };
 }
 
