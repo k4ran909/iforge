@@ -1,10 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 import { Menu, X, ArrowUpRight, ArrowRight } from "reicon-react";
 import { siteConfig, servicesData } from "@/data/siteData";
 import ThemeToggle from "./ThemeToggle";
@@ -13,26 +20,47 @@ import { getLenis } from "@/lib/lenis";
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/community", label: "Community" },
+  { href: "/team", label: "Team" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
+
+const EASE = "ease-[cubic-bezier(0.22,1,0.36,1)]";
+const SCROLLED_AT = 24; // px before the bar becomes the floating pill
+const HIDE_AFTER = 260; // px before scrolling down tucks the pill away
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [hovered, setHovered] = useState<string | null>(null);
   const pathname = usePathname();
+  const reduce = useReducedMotion();
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 12);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Read inside the scroll handler, which would otherwise see stale state.
+  const menusOpen = useRef(false);
+  menusOpen.current = isOpen || servicesOpen;
+
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 220, damping: 32, restDelta: 0.001 });
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? y;
+    setScrolled(y > SCROLLED_AT);
+    if (menusOpen.current) {
+      setHidden(false);
+      return;
+    }
+    // Down past the hero tucks it away; any upward nudge brings it back.
+    if (y > prev + 2 && y > HIDE_AFTER) setHidden(true);
+    else if (y < prev - 2 || y <= HIDE_AFTER) setHidden(false);
+  });
 
   useEffect(() => {
     setIsOpen(false);
     setServicesOpen(false);
+    setHidden(false);
   }, [pathname]);
 
   // Lock body scroll while the mobile drawer is open (and pause Lenis, which
@@ -51,17 +79,48 @@ export default function Navbar() {
   const isActive = (path: string) =>
     path === "/" ? pathname === "/" : pathname.startsWith(path);
 
+  const linkClass = (active: boolean) =>
+    `relative z-10 px-3 py-1.5 tracking-wide transition-colors hover:text-foreground ${
+      active ? "text-foreground" : "text-muted-foreground"
+    }`;
+
+  // The glass highlight that glides between links on hover.
+  const HoverPill = ({ id }: { id: string }) =>
+    hovered === id ? (
+      <motion.span
+        layoutId="nav-hover"
+        className="absolute inset-0 -z-10 rounded-full bg-foreground/[0.07]"
+        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+      />
+    ) : null;
+
+  const ActiveDot = () => (
+    <motion.span
+      layoutId="nav-active"
+      className="absolute -bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#E61E32]"
+      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+    />
+  );
+
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-          scrolled
-            ? "bg-background/80 backdrop-blur-xl border-b border-hairline"
-            : "bg-transparent border-b border-transparent"
-        }`}
+      <motion.header
+        className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 sm:px-4"
+        animate={{ y: hidden ? "-140%" : "0%" }}
+        transition={{ duration: reduce ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="container-page">
-          <div className="flex h-16 items-center justify-between gap-6">
+        <div
+          className={`pointer-events-auto relative w-full transition-[max-width,margin,border-radius,background-color,border-color,box-shadow] duration-500 ${EASE} ${
+            scrolled
+              ? "mt-3 max-w-[1040px] rounded-full border border-hairline bg-background/70 shadow-lg shadow-black/5 backdrop-blur-xl backdrop-saturate-150 dark:bg-[#0b0b0b]/70 dark:shadow-black/40"
+              : "mt-0 max-w-[1200px] rounded-none border border-transparent bg-transparent"
+          }`}
+        >
+          <div
+            className={`flex items-center justify-between gap-6 transition-[height,padding] duration-500 ${EASE} ${
+              scrolled ? "h-14 px-4 sm:px-5" : "h-16 px-[clamp(1.25rem,4vw,2.5rem)]"
+            }`}
+          >
             {/* Brand */}
             <Link href="/" className="group flex items-center gap-2.5 shrink-0">
               <div className="relative h-7 w-7">
@@ -80,62 +139,53 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-8 text-[0.8125rem] font-medium">
-              <Link
-                href="/"
-                className={`relative tracking-wide transition-colors hover:text-foreground ${
-                  isActive("/") ? "text-foreground" : "text-muted-foreground"
-                }`}
-              >
+            <nav
+              className="hidden lg:flex items-center gap-1 text-[0.8125rem] font-medium"
+              onMouseLeave={() => setHovered(null)}
+            >
+              <Link href="/" className={linkClass(isActive("/"))} onMouseEnter={() => setHovered("/")}>
+                <HoverPill id="/" />
                 Home
-                {isActive("/") && (
-                  <motion.span
-                    layoutId="nav-active"
-                    className="absolute -bottom-[22px] left-0 right-0 h-px bg-[#E61E32]"
-                  />
-                )}
+                {isActive("/") && <ActiveDot />}
               </Link>
 
               {/* Services dropdown */}
               <div
                 className="relative"
-                onMouseEnter={() => setServicesOpen(true)}
+                onMouseEnter={() => {
+                  setServicesOpen(true);
+                  setHovered("/services");
+                }}
                 onMouseLeave={() => setServicesOpen(false)}
               >
                 <button
                   type="button"
-                  className={`relative inline-flex items-center gap-1 tracking-wide transition-colors hover:text-foreground ${
-                    pathname.startsWith("/services") ? "text-foreground" : "text-muted-foreground"
-                  }`}
+                  className={`${linkClass(pathname.startsWith("/services"))} inline-flex items-center gap-1`}
                   aria-expanded={servicesOpen}
                 >
+                  <HoverPill id="/services" />
                   Services
                   <span className={`text-[0.6rem] transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}>
                     ▾
                   </span>
-                  {pathname.startsWith("/services") && (
-                    <motion.span
-                      layoutId="nav-active"
-                      className="absolute -bottom-[22px] left-0 right-0 h-px bg-[#E61E32]"
-                    />
-                  )}
+                  {pathname.startsWith("/services") && <ActiveDot />}
                 </button>
 
                 <AnimatePresence>
                   {servicesOpen && (
                     <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
+                      initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
                       transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                       className="absolute left-1/2 top-full -translate-x-1/2 pt-4"
                     >
-                      <div className="w-[460px] border border-hairline bg-card p-2 shadow-xl shadow-black/5 dark:shadow-black/40">
+                      <div className="w-[460px] overflow-hidden rounded-2xl border border-hairline bg-card/90 p-2 shadow-xl shadow-black/5 backdrop-blur-xl dark:shadow-black/40">
                         {servicesData.map((s, i) => (
                           <Link
                             key={s.id}
                             href={`/services/${s.slug}`}
-                            className="group flex items-start gap-4 p-3.5 transition-colors hover:bg-muted"
+                            className="group flex items-start gap-4 rounded-xl p-3.5 transition-colors hover:bg-muted"
                           >
                             <span className="mt-0.5 font-mono text-[0.65rem] tabular-nums text-[#E61E32]">
                               {String(i + 1).padStart(2, "0")}
@@ -170,27 +220,24 @@ export default function Navbar() {
                 <Link
                   key={l.href}
                   href={l.href}
-                  className={`relative tracking-wide transition-colors hover:text-foreground ${
-                    isActive(l.href) ? "text-foreground" : "text-muted-foreground"
-                  }`}
+                  className={linkClass(isActive(l.href))}
+                  onMouseEnter={() => setHovered(l.href)}
                 >
+                  <HoverPill id={l.href} />
                   {l.label}
-                  {isActive(l.href) && (
-                    <motion.span
-                      layoutId="nav-active"
-                      className="absolute -bottom-[22px] left-0 right-0 h-px bg-[#E61E32]"
-                    />
-                  )}
+                  {isActive(l.href) && <ActiveDot />}
                 </Link>
               ))}
             </nav>
 
             {/* Desktop actions */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
               <ThemeToggle />
               <Link
                 href="/quote"
-                className="group inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-[0.8125rem] font-semibold text-background transition-colors hover:bg-[#E61E32]"
+                className={`group inline-flex items-center gap-2 bg-foreground px-5 py-2.5 text-[0.8125rem] font-semibold text-background transition-[background-color,border-radius] duration-500 ${EASE} hover:bg-[#E61E32] ${
+                  scrolled ? "rounded-full" : "rounded-none"
+                }`}
               >
                 Get a Quote
                 <ArrowRight className="h-3.5 w-3.5 arrow-nudge" />
@@ -210,8 +257,17 @@ export default function Navbar() {
               </button>
             </div>
           </div>
+
+          {/* Reading progress along the pill's lower edge */}
+          <motion.span
+            aria-hidden
+            style={{ scaleX: progress }}
+            className={`pointer-events-none absolute inset-x-8 bottom-0 h-px origin-left bg-[#E61E32] transition-opacity duration-300 ${
+              scrolled ? "opacity-100" : "opacity-0"
+            }`}
+          />
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile drawer */}
       <AnimatePresence>

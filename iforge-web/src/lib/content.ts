@@ -9,7 +9,14 @@ import {
 } from "@/data/siteData";
 
 export type { ServiceItem };
-import { getSupabase, getSupabaseAdmin, CONTENT_TABLE, CONTENT_ID } from "@/lib/supabase";
+import {
+  getSupabase,
+  getSupabaseAdmin,
+  isSupabaseConfigured,
+  CONTENT_TABLE,
+  CONTENT_ID,
+} from "@/lib/supabase";
+import { readJson, writeJson, withLock } from "@/lib/local-store";
 
 // ---- The shape of everything the admin panel can edit ----
 
@@ -53,6 +60,18 @@ export interface CommunityContent {
   tracks: CommunityTrack[];
 }
 
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  /** Image URL — uploaded through the admin panel, or any public link. */
+  photo: string;
+  linkedin?: string;
+  github?: string;
+  x?: string;
+}
+
 export interface SiteContent {
   siteConfig: SiteConfig;
   services: ServiceItem[];
@@ -60,6 +79,8 @@ export interface SiteContent {
   techCapabilities: TechCapability[];
   timeline: TimelineEntry[];
   community: CommunityContent;
+  /** Real people only — starts empty and is filled from the admin panel. */
+  team: TeamMember[];
 }
 
 // ---- Defaults, built from the code so the site works with no DB ----
@@ -94,6 +115,7 @@ export const defaultContent: SiteContent = {
       },
     ],
   },
+  team: [],
 };
 
 /** Deep-merge a stored partial over the defaults so missing fields never break a page. */
@@ -108,17 +130,24 @@ function mergeContent(stored: Partial<SiteContent> | null | undefined): SiteCont
       : defaultContent.techCapabilities,
     timeline: stored.timeline?.length ? stored.timeline : defaultContent.timeline,
     community: { ...defaultContent.community, ...(stored.community || {}) },
+    // An empty team is a real state (nobody added yet), so no default swap.
+    team: Array.isArray(stored.team) ? stored.team : [],
   };
 }
 
+/** Where admin edits land: Supabase in production, a local file in dev. */
+export const storageMode: "supabase" | "local" = isSupabaseConfigured ? "supabase" : "local";
+
 /**
  * The site's content: the stored document from Supabase when configured, else
- * the code defaults. Cached per-request; pages call this instead of importing
- * siteData directly.
+ * the local `.data/content.json` written by the admin panel, else the code
+ * defaults. Pages call this instead of importing siteData directly.
  */
 export async function getContent(): Promise<SiteContent> {
   const supabase = getSupabase();
-  if (!supabase) return defaultContent;
+  if (!supabase) {
+    return mergeContent(await readJson<Partial<SiteContent> | null>("content", null));
+  }
   try {
     const { data, error } = await supabase
       .from(CONTENT_TABLE)
@@ -137,7 +166,14 @@ export async function saveContent(
   content: SiteContent,
 ): Promise<{ ok: boolean; error?: string }> {
   const admin = getSupabaseAdmin();
-  if (!admin) return { ok: false, error: "Supabase is not configured on the server." };
+  if (!admin) {
+    try {
+      await withLock("content", () => writeJson("content", content));
+      return { ok: true };
+    } catch (e) {
+      return { ok: false, error: e instanceof Error ? e.message : "Local save failed" };
+    }
+  }
   try {
     const { error } = await admin
       .from(CONTENT_TABLE)

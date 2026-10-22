@@ -307,22 +307,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================================
-   Motion: Lenis smooth scroll, smooth cursor, theme reveal
+   Motion: Lenis smooth scroll, theme reveal
    ============================================================ */
 
 /* Lenis eases the scroll itself; native smooth scrolling would fight it. */
 html.lenis,
 html.lenis body {
   scroll-behavior: auto !important;
-}
-
-/* The dot-and-ring cursor replaces the arrow; text fields keep their caret. */
-html.has-smooth-cursor,
-html.has-smooth-cursor * {
-  cursor: none !important;
-}
-html.has-smooth-cursor :is(input, textarea, [contenteditable="true"]) {
-  cursor: text !important;
 }
 
 /* Theme toggle: the new theme grows out of the button as a circle (clip-path

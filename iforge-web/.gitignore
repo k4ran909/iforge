@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local admin data (used when Supabase isn't configured) — never commit
+/.data/
+/public/uploads/

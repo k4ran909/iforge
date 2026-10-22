@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
 import type { SiteContent, ServiceItem } from "@/lib/content";
+import { PageHeader } from "./shell";
 import {
   Field,
   TextArea,
@@ -21,14 +21,7 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "community", label: "Community" },
 ];
 
-export default function AdminEditor({
-  initialContent,
-  supabaseReady,
-}: {
-  initialContent: SiteContent;
-  supabaseReady: boolean;
-}) {
-  const router = useRouter();
+export default function AdminEditor({ initialContent }: { initialContent: SiteContent }) {
   const [content, setContent] = React.useState<SiteContent>(initialContent);
   const [tab, setTab] = React.useState<Tab>("site");
   const [saving, setSaving] = React.useState(false);
@@ -65,51 +58,12 @@ export default function AdminEditor({
     }
   };
 
-  const logout = async () => {
-    await fetch("/api/admin/logout", { method: "POST" });
-    router.replace("/admin/login");
-    router.refresh();
-  };
-
   return (
-    <div className="mx-auto max-w-4xl px-5 py-10 sm:px-8">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-hairline pb-6">
-        <div>
-          <span className="text-xl font-black lowercase tracking-tight text-foreground">
-            iforge
-          </span>
-          <span className="ml-3 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-            Admin
-          </span>
-        </div>
-        <div className="flex items-center gap-3">
-          <a
-            href="/"
-            target="_blank"
-            className="text-sm text-muted-foreground hover:text-foreground"
-          >
-            View site ↗
-          </a>
-          <button
-            onClick={logout}
-            className="border border-hairline px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:border-[#E61E32] hover:text-[#E61E32]"
-          >
-            Sign out
-          </button>
-        </div>
-      </div>
-
-      {!supabaseReady && (
-        <p className="mt-6 border border-hairline bg-muted p-4 text-sm leading-relaxed text-muted-foreground">
-          <strong className="text-foreground">Preview mode.</strong> Supabase isn&apos;t configured,
-          so changes can&apos;t be saved yet. Add{" "}
-          <code className="font-mono text-foreground">NEXT_PUBLIC_SUPABASE_URL</code>,{" "}
-          <code className="font-mono text-foreground">NEXT_PUBLIC_SUPABASE_ANON_KEY</code>, and{" "}
-          <code className="font-mono text-foreground">SUPABASE_SERVICE_ROLE_KEY</code> to persist
-          edits.
-        </p>
-      )}
+    <div className="mx-auto max-w-4xl">
+      <PageHeader
+        title="Content"
+        description="Edit the words on the public site. Saving updates the live pages straight away."
+      />
 
       {/* Tabs */}
       <div className="mt-8 flex flex-wrap gap-px overflow-hidden border border-hairline bg-hairline">

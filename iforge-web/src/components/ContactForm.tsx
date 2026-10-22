@@ -21,14 +21,39 @@ export default function ContactForm() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ticket, setTicket] = useState("");
+  const [error, setError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError("");
+    try {
+      const service = servicesData.find((s) => s.slug === formData.service)?.title ?? "Custom Enterprise Architecture";
+      const res = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          service,
+          source: "contact",
+          page: window.location.pathname,
+          website: honeypot,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Something went wrong — please try again.");
+        return;
+      }
+      setTicket(data.ticket);
       setSubmitted(true);
-    }, 600);
+    } catch {
+      setError("Network error — please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -45,7 +70,7 @@ export default function ContactForm() {
           Principal Architect will review your requirements and respond within 2 business hours.
         </p>
         <p className="mt-5 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-          Ticket #IF-{Math.floor(1000 + Math.random() * 9000)}
+          Ticket #{ticket}
         </p>
         <button
           type="button"
@@ -71,6 +96,17 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Hidden from people; bots that fill every field get politely ignored. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label className={LABEL}>Full name *</label>
@@ -162,13 +198,19 @@ export default function ContactForm() {
         />
       </div>
 
+      {error && (
+        <p role="alert" className="border border-[#E61E32]/40 bg-accent px-4 py-3 text-sm text-foreground">
+          {error}
+        </p>
+      )}
+
       <button
         type="submit"
         disabled={loading}
         className="group inline-flex w-full items-center justify-center gap-2 bg-foreground px-8 py-4 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32] disabled:opacity-50"
       >
         {loading ? (
-          "Securing dispatch…"
+          "Sending…"
         ) : (
           <>
             Submit discovery request

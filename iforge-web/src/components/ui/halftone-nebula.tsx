@@ -882,7 +882,6 @@ export default function HalftoneNebula({
       ref={rootRef}
       className={
         "relative w-full overflow-hidden bg-[#050309] " +
-        (interactive ? "cursor-crosshair " : "") +
         (touch === "draw" ? "touch-none " : "touch-pan-y ") +
         className
       }

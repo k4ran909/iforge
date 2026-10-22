@@ -19,6 +19,7 @@ const halftoneColumns: FooterColumn[] = [
     title: "Company",
     links: [
       { label: "About", href: "/about" },
+      { label: "Team", href: "/team" },
       { label: "Community", href: "/community" },
       { label: "Get a Quote", href: "/quote" },
     ],
@@ -123,6 +124,7 @@ export default function Footer() {
 
             {linkCol("Company", [
               { label: "About", href: "/about" },
+              { label: "Team", href: "/team" },
               { label: "Contact", href: "/contact" },
               { label: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}` },
               { label: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },

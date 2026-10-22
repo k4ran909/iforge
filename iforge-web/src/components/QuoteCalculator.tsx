@@ -17,6 +17,9 @@ export default function QuoteCalculator() {
   const [timeline, setTimeline] = useState("1-3months");
   const [clientInfo, setClientInfo] = useState({ name: "", email: "", phone: "", notes: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
   const scopeOptions = [
     { id: "startup", title: "Startup / Pilot", desc: "Targeted MVP, architectural review, or initial PoC prototype", budget: "$5k – $15k" },
@@ -30,13 +33,43 @@ export default function QuoteCalculator() {
     { id: "flexible", title: "Flexible / ongoing", desc: "Continuous retainer or long-term augmentation" },
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
   const currentServiceObj = servicesData.find((s) => s.slug === selectedService) || servicesData[0];
   const currentScopeObj = scopeOptions.find((s) => s.id === scope) || scopeOptions[1];
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "quote",
+          name: clientInfo.name,
+          email: clientInfo.email,
+          phone: clientInfo.phone,
+          service: currentServiceObj.title,
+          scope: currentScopeObj.title,
+          budget: currentScopeObj.budget,
+          timeline: timelineOptions.find((t) => t.id === timeline)?.title,
+          message: clientInfo.notes,
+          page: window.location.pathname,
+          website: honeypot,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Something went wrong — please try again.");
+        return;
+      }
+      setSubmitted(true);
+    } catch {
+      setError("Network error — please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   const stepAnim = {
     initial: { opacity: 0, x: 16 },
@@ -278,6 +311,24 @@ export default function QuoteCalculator() {
                   />
                 </div>
 
+                {/* Hidden from people; bots that fill every field get politely ignored. */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  className="absolute -left-[9999px] h-0 w-0 opacity-0"
+                />
+
+                {error && (
+                  <p role="alert" className="border border-[#E61E32]/40 bg-accent px-4 py-3 text-sm text-foreground">
+                    {error}
+                  </p>
+                )}
+
                 <div className="flex items-center justify-between border-t border-hairline pt-6">
                   <button
                     type="button"
@@ -288,9 +339,11 @@ export default function QuoteCalculator() {
                   </button>
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-2 bg-[#E61E32] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#C81426]"
+                    disabled={sending}
+                    className="group inline-flex items-center gap-2 bg-[#E61E32] px-7 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#C81426] disabled:opacity-60"
                   >
-                    Dispatch request <ArrowRight className="h-4 w-4 arrow-nudge" />
+                    {sending ? "Sending…" : "Dispatch request"}
+                    {!sending && <ArrowRight className="h-4 w-4 arrow-nudge" />}
                   </button>
                 </div>
               </motion.form>

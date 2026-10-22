@@ -1,12 +1,15 @@
-# Admin panel & live content
+# Admin panel, enquiry inbox & Hermes
 
-The site reads all editable content (services, site info, about, community,
-GitHub username) through `src/lib/content.ts`. When Supabase is configured, that
-content comes from the database and is editable at **`/admin`** with no code
-changes. When it isn't, the site serves the built-in defaults from
-`src/data/siteData.ts` and the admin panel runs in read-only preview.
+Everything editable on the site — content, the team, and enquiries from the
+website — is managed at **`/admin`**, with no code changes.
 
-## 1. Set an admin password
+| Section | What it does |
+| --- | --- |
+| **Inbox** | Every contact-form and quote-wizard submission, live. Change status, assign to Hermes or yourself, keep notes, draft a reply, and see an activity log of everything that happened. |
+| **Team** | The people on the public `/team` page: photo upload, name, role, bio, links, order. |
+| **Content** | Site & contact info, the five services, About (values + timeline), Community. |
+
+## 1. Sign in
 
 In `iforge-web/.env.local`:
 
@@ -14,45 +17,103 @@ In `iforge-web/.env.local`:
 ADMIN_PASSWORD=choose-a-strong-password
 ```
 
-Restart the dev server. You can now sign in at `/admin`.
+Restart the dev server and sign in at `/admin`.
 
-## 2. Connect Supabase (to actually save edits)
+## 2. Where data is saved
 
-1. Create a free project at <https://supabase.com>.
-2. In the project's **SQL Editor**, run the contents of
-   [`supabase/schema.sql`](supabase/schema.sql) once. It creates the
-   `site_content` table and a public read policy.
-3. In **Project Settings → API**, copy these into `.env.local`:
+- **Without Supabase (development):** edits, enquiries and team photos are
+  saved to local files — `.data/` and `public/uploads/` (both gitignored). The
+  sidebar shows **Local files (dev)**. Fine on your machine, but most hosts
+  don't keep files, so connect Supabase before going live.
+- **With Supabase (production):**
+  1. Create a free project at <https://supabase.com>.
+  2. In the **SQL Editor**, run [`supabase/schema.sql`](supabase/schema.sql)
+     once. It creates the `site_content` and `inquiries` tables and the public
+     `media` bucket for team photos.
+  3. From **Project Settings → API**, add to `.env.local`:
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...        # "anon" / public key
-   SUPABASE_SERVICE_ROLE_KEY=eyJ...            # "service_role" key — server only
-   ```
+     ```
+     NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+     NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...        # "anon" / public key
+     SUPABASE_SERVICE_ROLE_KEY=eyJ...            # "service_role" key — server only
+     ```
 
-4. Restart the dev server. The `/admin` "preview mode" banner disappears and
-   **Save changes** now persists to the database. Saving also refreshes the
-   public pages so edits appear immediately.
+  4. Restart. The sidebar shows **Supabase**.
 
-> The `service_role` key bypasses row-level security. Keep it on the server
-> only — it must never be sent to the browser. (`.env.local` is gitignored.)
+> The `service_role` key bypasses row-level security. Keep it on the server only.
 
-## 3. GitHub skyline (Community page)
+## 3. Notifications
 
-Set `GITHUB_USERNAME` and a `GITHUB_TOKEN` (classic token, `read:user` scope) in
-`.env.local`, or set the username from the admin panel's **Community** tab. The
-token must still be on the server. Without a token the skyline shows a
-"Connect GitHub" empty state — never demo data.
+While any admin page is open, it checks for new enquiries every 10 seconds
+(and whenever you come back to the tab). A new one raises:
 
-## What you can edit from `/admin`
+- a toast in the corner (click it to open the enquiry),
+- a red count on **Inbox** and in the browser tab title,
+- a desktop notification — click **Enable desktop alerts** in the Inbox once.
 
-- **Site & Contact** — company name, tagline, headline, email, phone, address.
-- **Services** — all 5 services: titles, descriptions, features, technologies,
-  deliverables, benefits, metrics, and FAQs.
-- **About** — value propositions and the company timeline.
-- **Community** — headline, intro, GitHub username, and community tracks.
+## 4. Hermes — letting your agent manage enquiries
+
+Hermes connects in two directions. Set both up for the full loop.
+
+### Push: new enquiries are sent to Hermes
+
+Set in `.env.local`:
+
+```
+HERMES_WEBHOOK_URL=https://your-hermes-endpoint/...   # where Hermes listens
+HERMES_WEBHOOK_SECRET=<long random string>             # shared with Hermes
+```
+
+The moment an enquiry is saved, the site sends:
+
+```http
+POST <HERMES_WEBHOOK_URL>
+Content-Type: application/json
+X-iForge-Event: inquiry.created
+X-iForge-Signature: sha256=<hex HMAC-SHA256 of the raw body, keyed with HERMES_WEBHOOK_SECRET>
+
+{ "event": "inquiry.created", "sentAt": "…", "inquiry": { …the full enquiry… } }
+```
+
+Hermes should recompute the HMAC over the raw body and compare it to the
+header before trusting the request. Delivery (or failure) is recorded in the
+enquiry's activity log, so you can see in the Inbox whether Hermes got it.
+
+### Pull: Hermes reads and updates enquiries
+
+Set `AGENT_API_KEY=<long random string>` and give Hermes the same key. Every
+request needs `Authorization: Bearer <AGENT_API_KEY>`.
+
+| Request | Does |
+| --- | --- |
+| `GET /api/agent/inquiries?status=new&since=<ISO>&limit=50` | List enquiries (filters optional; newest first) |
+| `GET /api/agent/inquiries/<id>` | Read one enquiry |
+| `PATCH /api/agent/inquiries/<id>` | Update it — body: `{ "status"?, "notes"?, "reply"?, "assignee"? }` |
+
+- `status`: `new` · `in_progress` · `resolved` · `archived`
+- `assignee`: `unassigned` · `hermes` · `admin`
+- Updating an unassigned enquiry automatically assigns it to Hermes.
+- Every change is logged on the enquiry as a **Hermes** action, and appears in
+  your Inbox within 10 seconds. Notes and the draft reply are shared — you can
+  edit them in the Inbox too.
+
+Example:
+
+```bash
+curl -X PATCH https://your-site/api/agent/inquiries/<id> \
+  -H "Authorization: Bearer $AGENT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"status":"in_progress","notes":"Qualified lead","reply":"Hi — could we book a call?"}'
+```
+
+## 5. GitHub skyline (Community page)
+
+Set `GITHUB_USERNAME` and a `GITHUB_TOKEN` (classic token, `read:user` scope),
+or set the username in **Content → Community**. Without a token the skyline
+shows a "Connect GitHub" empty state — never demo data.
 
 ## Deploying
 
-Add the same env vars in your host's environment settings (e.g. Vercel →
-Project → Settings → Environment Variables). Don't commit secrets to the repo.
+Add the same variables in your host's environment settings (e.g. Vercel →
+Project → Settings → Environment Variables), connect Supabase, and never
+commit secrets to the repo.
