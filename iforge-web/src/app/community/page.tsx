@@ -16,6 +16,10 @@ export const metadata: Metadata = {
 export default async function CommunityPage() {
   const { community } = await getContent();
   const TRACKS = community.tracks;
+  // Only show the live-activity section once GitHub is actually connected —
+  // visitors should never see setup instructions.
+  const githubUser = community.githubUsername || process.env.GITHUB_USERNAME;
+  const githubReady = Boolean(process.env.GITHUB_TOKEN && githubUser);
   return (
     <div className="w-full bg-background">
       {/* Hero */}
@@ -49,6 +53,7 @@ export default async function CommunityPage() {
       </section>
 
       {/* Live GitHub contribution skyline */}
+      {githubReady && (
       <section className="section border-b border-hairline bg-muted">
         <div className="container-page">
           <Reveal>
@@ -68,6 +73,7 @@ export default async function CommunityPage() {
           </Reveal>
         </div>
       </section>
+      )}
 
       {/* Tracks */}
       <section id="tracks" className="section">

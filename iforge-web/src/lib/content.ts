@@ -141,7 +141,7 @@ export const defaultContent: SiteContent = {
   teamPage: {
     introHeading: "Who we are",
     introBody:
-      "We are a team of certified architects, engineers, and security specialists building production-grade cloud, AI, and application systems for enterprises that demand reliability at scale.",
+      "We are a team of architects, engineers, and security specialists building production-grade cloud, AI, and application systems for enterprises that demand reliability at scale.",
     introImage: "",
     stats: [],
     quoteLead: "",

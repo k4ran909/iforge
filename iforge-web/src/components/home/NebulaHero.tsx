@@ -36,7 +36,7 @@ export default function NebulaHero() {
         {/* Headline block */}
         <div className="max-w-3xl">
           <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.32em] text-[#e61e32]">
-            ✦ Certified AWS &amp; Google Cloud Partner
+            ✦ IT services &amp; consulting
           </p>
           <h1 className="text-[2.8rem] font-bold leading-[0.98] tracking-tight text-[#f4e9ea] sm:text-6xl lg:text-7xl">
             Accelerating enterprise

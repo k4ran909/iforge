@@ -58,28 +58,14 @@ export default function GithubSkyline({ username, refreshMs = 300000 }: Props) {
 
   const hasData = res?.source === "github" && res.days.length > 0;
 
-  // No real data → empty state, never a generated year.
+  // While loading, hold the space quietly. With no real data (GitHub not set
+  // up, or unreachable) show nothing — never a generated year, and never setup
+  // instructions to visitors. The Community page also only renders this
+  // section when a token and username are configured.
   if (!hasData) {
-    return (
-      <div className="flex min-h-[220px] flex-col items-center justify-center gap-4 border border-dashed border-hairline bg-muted/40 px-6 py-16 text-center">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full border border-hairline text-muted-foreground">
-          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-            <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.5-2.69-.95-.09-.23-.48-.95-.82-1.14-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" />
-          </svg>
-        </span>
-        <div>
-          <p className="text-sm font-semibold text-foreground">
-            {loading ? "Loading activity…" : "Connect GitHub to see live activity"}
-          </p>
-          {!loading && (
-            <p className="mt-1.5 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Set a GitHub username and token on the server, and this becomes a live heat map and
-              3D skyline of real contributions.
-            </p>
-          )}
-        </div>
-      </div>
-    );
+    return loading ? (
+      <div aria-hidden className="min-h-[220px] animate-pulse rounded-xl border border-hairline bg-muted/40" />
+    ) : null;
   }
 
   const isLive = res?.source === "github";

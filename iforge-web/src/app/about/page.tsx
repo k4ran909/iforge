@@ -9,7 +9,7 @@ import { ArrowRight } from "reicon-react";
 export const metadata: Metadata = {
   title: `About Us | ${siteConfig.name}`,
   description:
-    "Learn about iForge Technologies — our engineering mission, certified cloud alliances, leadership principles, and a decade of enterprise excellence.",
+    "Learn about iForge Technologies — our engineering mission, the principles we work by, and the people building resilient systems for enterprises.",
 };
 
 export default async function AboutPage() {
@@ -22,11 +22,11 @@ export default async function AboutPage() {
           <Reveal>
             <p className="eyebrow mb-6">About iForge</p>
             <h1 className="max-w-4xl text-4xl font-bold leading-[1.04] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-              A decade of engineering{" "}
+              Engineering{" "}
               <span className="text-[#E61E32]">resilient systems</span>
             </h1>
             <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              We are a team of certified architects, engineers, and security specialists building
+              We are a team of architects, engineers, and security specialists building
               production-grade cloud, AI, and application systems for enterprises that demand
               reliability at scale.
             </p>
@@ -43,7 +43,11 @@ export default async function AboutPage() {
               Principles over promises
             </h2>
           </Reveal>
-          <Stagger className="mt-14 grid gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-2">
+          <Stagger
+            className={`mt-14 grid gap-px overflow-hidden border border-hairline bg-hairline ${
+              valueProps.length % 3 === 0 ? "sm:grid-cols-3" : "sm:grid-cols-2"
+            }`}
+          >
             {valueProps.map((v, i) => (
               <RevealItem key={v.title}>
                 <div className="h-full bg-background p-8 sm:p-10">
@@ -63,7 +67,8 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Timeline */}
+      {/* Timeline — only once real milestones are added in Admin → Content → About */}
+      {companyTimeline.length > 0 && (
       <section className="section border-b border-hairline bg-muted">
         <div className="container-page">
           <Reveal>
@@ -93,6 +98,7 @@ export default async function AboutPage() {
           </Stagger>
         </div>
       </section>
+      )}
 
       {/* CTA */}
       <section className="section">

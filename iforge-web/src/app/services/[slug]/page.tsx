@@ -49,7 +49,7 @@ export default async function ServicePage({ params }: Props) {
             </nav>
           </Reveal>
 
-          <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+          <div className={`grid gap-12 lg:items-end ${service.metrics.length ? "lg:grid-cols-[1.4fr_1fr]" : ""}`}>
             <div>
               <Reveal>
                 <p className="eyebrow mb-6">Enterprise practice</p>
@@ -80,19 +80,21 @@ export default async function ServicePage({ params }: Props) {
               </Reveal>
             </div>
 
-            {/* Metrics */}
-            <Reveal direction="left">
-              <div className="grid gap-px overflow-hidden border border-hairline bg-hairline">
-                {service.metrics.map((m) => (
-                  <div key={m.label} className="bg-background p-6">
-                    <div className="text-3xl font-bold tracking-tight text-foreground">{m.value}</div>
-                    <div className="mt-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-                      {m.label}
+            {/* Metrics — only real figures, added in Admin → Content → Services */}
+            {service.metrics.length > 0 && (
+              <Reveal direction="left">
+                <div className="grid gap-px overflow-hidden border border-hairline bg-hairline">
+                  {service.metrics.map((m) => (
+                    <div key={m.label} className="bg-background p-6">
+                      <div className="text-3xl font-bold tracking-tight text-foreground">{m.value}</div>
+                      <div className="mt-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
+                        {m.label}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
+                  ))}
+                </div>
+              </Reveal>
+            )}
           </div>
         </div>
       </section>
@@ -152,7 +154,7 @@ export default async function ServicePage({ params }: Props) {
 
           <Reveal direction="left">
             <p className="eyebrow mb-5">Toolchain &amp; standards</p>
-            <h3 className="text-2xl font-bold tracking-tight text-foreground">Certified frameworks</h3>
+            <h3 className="text-2xl font-bold tracking-tight text-foreground">Frameworks we use</h3>
             <div className="mt-8 flex flex-wrap gap-2">
               {service.technologies.map((t) => (
                 <span

@@ -11,7 +11,7 @@ import { getContent } from "@/lib/content";
 export const metadata: Metadata = {
   title: `${siteConfig.name} | Enterprise IT Services, Cloud Architecture & AI Consulting`,
   description:
-    "Accelerating enterprise success with certified cloud architecture (AWS & GCP), proactive cybersecurity, generative AI advisory, and bespoke web engineering.",
+    "Enterprise IT services and consulting: cloud architecture on AWS and Google Cloud, cybersecurity, AI & ML advisory, and custom application engineering.",
 };
 
 export default async function HomePage() {

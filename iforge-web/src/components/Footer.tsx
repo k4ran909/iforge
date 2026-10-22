@@ -98,16 +98,6 @@ export default function Footer() {
                 End-to-end enterprise IT consultancy, multi-cloud architecture, AI &amp; ML
                 engineering, cybersecurity, and bespoke application development.
               </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {["Zero-Trust", "SOC 2 Type II", "ISO 27001", "24/7 SLA"].map((item) => (
-                  <span
-                    key={item}
-                    className="border border-hairline px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
             </div>
 
             {linkCol(
@@ -137,14 +127,11 @@ export default function Footer() {
               © {year} {siteConfig.name}. Noida, India — serving global clients.
             </p>
             <div className="flex flex-wrap gap-6">
-              <Link href="/contact" className="hover:text-foreground">
+              <Link href="/privacy" className="hover:text-foreground">
                 Privacy
               </Link>
-              <Link href="/contact" className="hover:text-foreground">
+              <Link href="/terms" className="hover:text-foreground">
                 Terms
-              </Link>
-              <Link href="/contact" className="hover:text-foreground">
-                Security
               </Link>
               <a
                 href={`mailto:${siteConfig.contactEmail}`}

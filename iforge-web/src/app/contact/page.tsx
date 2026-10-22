@@ -8,7 +8,7 @@ import { ArrowUpRight } from "reicon-react";
 export const metadata: Metadata = {
   title: `Contact Us | ${siteConfig.name}`,
   description:
-    "Connect with certified iForge technical consultants. Rapid 2-hour response time guarantee for enterprise IT and cloud inquiries.",
+    "Talk to iForge's architects and engineers about your enterprise IT, cloud, AI and security projects.",
 };
 
 const CHANNELS = [
