@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
     "@supabase/supabase-js": "^2.118.0",
     "clsx": "^2.1.1",
     "framer-motion": "^13.4.3",
@@ -19,7 +20,8 @@
     "react-dom": "19.2.8",
     "reicon-react": "^1.2.6",
     "server-only": "^0.0.1",
-    "tailwind-merge": "^3.7.0"
+    "tailwind-merge": "^3.7.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

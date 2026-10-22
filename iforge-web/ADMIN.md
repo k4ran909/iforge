@@ -51,60 +51,100 @@ While any admin page is open, it checks for new enquiries every 10 seconds
 - a red count on **Inbox** and in the browser tab title,
 - a desktop notification — click **Enable desktop alerts** in the Inbox once.
 
-## 4. Hermes — letting your agent manage enquiries
+## 4. Hermes — your agent triages every enquiry
 
-Hermes connects in two directions. Set both up for the full loop.
+Hermes (Nous Research Hermes Agent, running on your VPS) is connected two ways:
 
-### Push: new enquiries are sent to Hermes
+- **Webhook (site → Hermes):** each new enquiry is POSTed to a Hermes webhook
+  route, signed in Hermes's V2 format.
+- **MCP (Hermes → site):** Hermes reads and updates enquiries through the
+  site's MCP endpoint, `https://<your-site>/api/mcp`.
 
-Set in `.env.local`:
+When an enquiry arrives, Hermes reads it, sets it to **In progress**, writes
+triage notes (area, priority, fit, what's missing, next step) and drafts a
+reply. Everything appears in the Inbox, credited to Hermes. **Replies are
+drafts** — nothing is emailed to the customer.
 
-```
-HERMES_WEBHOOK_URL=https://your-hermes-endpoint/...   # where Hermes listens
-HERMES_WEBHOOK_SECRET=<long random string>             # shared with Hermes
-```
+### Files
 
-The moment an enquiry is saved, the site sends:
+| File | Where it goes |
+| --- | --- |
+| [`hermes/config.snippet.yaml`](hermes/config.snippet.yaml) | Merge into `~/.hermes/config.yaml` on the VPS (webhook route + MCP server) |
+| `hermes/hermes.env` *(gitignored, generated with your keys)* | Copy its lines into `~/.hermes/.env` on the VPS |
+| [`hermes/hermes.env.example`](hermes/hermes.env.example) | Blank version, documenting each value |
+
+The site's matching keys are already in `.env.local`: `AGENT_API_KEY` (equals
+Hermes's `IFORGE_AGENT_KEY`) and `HERMES_WEBHOOK_SECRET` (equals Hermes's
+`WEBHOOK_SECRET`).
+
+### Setup on the VPS
+
+1. Copy the lines from `hermes/hermes.env` into `~/.hermes/.env`, and set
+   `IFORGE_SITE_URL` to your site's public address (e.g. `https://iforge.in`).
+2. Merge `hermes/config.snippet.yaml` into `~/.hermes/config.yaml`.
+3. Restart the Hermes gateway (`hermes gateway run` shows logs in the
+   foreground), then run `/reload-mcp`.
+4. Check the webhook receiver: `curl http://localhost:8644/health` on the VPS
+   should return `{"status": "ok", "platform": "webhook"}`.
+
+### Networking
+
+- **Site → Hermes:** the site must reach the VPS's webhook route. Put Hermes's
+  port `8644` behind HTTPS (e.g. a Caddy or Nginx reverse proxy for
+  `/webhooks/`), then set on the site:
+
+  ```
+  HERMES_WEBHOOK_URL=https://<your-vps-domain>/webhooks/iforge-enquiries
+  ```
+
+- **Hermes → site:** the VPS must reach `https://<your-site>/api/mcp`, so the
+  site needs a public address. While the site only runs on your PC, expose it
+  with a tunnel (e.g. `cloudflared tunnel --url http://localhost:3000`) and use
+  that URL as `IFORGE_SITE_URL`.
+- On your host (e.g. Vercel), set `AGENT_API_KEY`, `HERMES_WEBHOOK_SECRET` and
+  `HERMES_WEBHOOK_URL` in the environment settings.
+
+### What the site sends
 
 ```http
-POST <HERMES_WEBHOOK_URL>
+POST /webhooks/iforge-enquiries
 Content-Type: application/json
-X-iForge-Event: inquiry.created
-X-iForge-Signature: sha256=<hex HMAC-SHA256 of the raw body, keyed with HERMES_WEBHOOK_SECRET>
+X-Webhook-Timestamp: <unix seconds>
+X-Webhook-Signature-V2: <hex HMAC-SHA256 of "<timestamp>.<body>", keyed with the shared secret>
 
-{ "event": "inquiry.created", "sentAt": "…", "inquiry": { …the full enquiry… } }
+{ "event_type": "inquiry.created", "sentAt": "…", "inquiry": { …the full enquiry… } }
 ```
 
-Hermes should recompute the HMAC over the raw body and compare it to the
-header before trusting the request. Delivery (or failure) is recorded in the
-enquiry's activity log, so you can see in the Inbox whether Hermes got it.
+Delivery (or the reason it failed) is recorded in the enquiry's activity log,
+so the Inbox shows whether Hermes received it.
 
-### Pull: Hermes reads and updates enquiries
+### MCP tools Hermes gets
 
-Set `AGENT_API_KEY=<long random string>` and give Hermes the same key. Every
-request needs `Authorization: Bearer <AGENT_API_KEY>`.
-
-| Request | Does |
+| Tool (as Hermes sees it) | Does |
 | --- | --- |
-| `GET /api/agent/inquiries?status=new&since=<ISO>&limit=50` | List enquiries (filters optional; newest first) |
-| `GET /api/agent/inquiries/<id>` | Read one enquiry |
-| `PATCH /api/agent/inquiries/<id>` | Update it — body: `{ "status"?, "notes"?, "reply"?, "assignee"? }` |
+| `mcp__iforge__list_inquiries` | List enquiries, filter by `status` / `since` (read-only) |
+| `mcp__iforge__get_inquiry` | Read one enquiry in full (read-only) |
+| `mcp__iforge__update_inquiry` | Set `status`, `notes`, draft `reply`, `assignee` |
 
-- `status`: `new` · `in_progress` · `resolved` · `archived`
-- `assignee`: `unassigned` · `hermes` · `admin`
-- Updating an unassigned enquiry automatically assigns it to Hermes.
-- Every change is logged on the enquiry as a **Hermes** action, and appears in
-  your Inbox within 10 seconds. Notes and the draft reply are shared — you can
-  edit them in the Inbox too.
+Requests need `Authorization: Bearer <AGENT_API_KEY>`. Updating an unassigned
+enquiry assigns it to Hermes; every change is logged as a Hermes action. The
+same operations are also available as plain REST at `/api/agent/inquiries`
+(`GET`) and `/api/agent/inquiries/<id>` (`GET`, `PATCH`).
 
-Example:
+### Safety
 
-```bash
-curl -X PATCH https://your-site/api/agent/inquiries/<id> \
-  -H "Authorization: Bearer $AGENT_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"status":"in_progress","notes":"Qualified lead","reply":"Hi — could we book a call?"}'
-```
+Enquiry text comes from the public. The route's prompt only templates fields
+every enquiry has (ticket, name, id) and tells Hermes to treat the enquiry as
+untrusted data. Leave the route's `toolsets` unset: webhook runs then keep
+Hermes's restricted default (web search and reading, no terminal or file
+access).
+
+### If Hermes says it can't see the iforge tools
+
+The Hermes docs don't state whether MCP tools are available to webhook runs
+under the restricted default. If a run reports that `mcp__iforge__*` tools are
+missing, add the MCP toolset to the route's `toolsets` — check `hermes`'s
+config validation output for the exact toolset name, and add only that.
 
 ## 5. GitHub skyline (Community page)
 
