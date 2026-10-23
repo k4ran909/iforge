@@ -219,10 +219,13 @@ function EmptyInbox() {
 }
 
 function InquiryDetail({ inquiry, onSaved }: { inquiry: Inquiry; onSaved: (i: Inquiry) => void }) {
+  const { emailEnabled } = useInbox();
   const [notes, setNotes] = React.useState(inquiry.notes ?? "");
   const [reply, setReply] = React.useState(inquiry.reply ?? "");
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState("");
+  const [confirming, setConfirming] = React.useState(false);
+  const lastEmailed = [...inquiry.events].reverse().find((e) => e.type === "email.reply");
 
   // Hermes may edit the same enquiry while it's open; follow its changes
   // unless you're halfway through typing.
@@ -252,6 +255,26 @@ function InquiryDetail({ inquiry, onSaved }: { inquiry: Inquiry; onSaved: (i: In
       setError("Network error.");
     } finally {
       setBusy(false);
+    }
+  };
+
+  const sendReply = async () => {
+    setBusy(true);
+    setError("");
+    try {
+      const r = await fetch(`/api/admin/inquiries/${inquiry.id}/send`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reply }),
+      });
+      const data = await r.json();
+      if (data.inquiry) onSaved(data.inquiry);
+      if (!r.ok || !data.ok) setError(data.error || "Couldn't send.");
+    } catch {
+      setError("Network error.");
+    } finally {
+      setBusy(false);
+      setConfirming(false);
     }
   };
 
@@ -347,15 +370,55 @@ function InquiryDetail({ inquiry, onSaved }: { inquiry: Inquiry; onSaved: (i: In
             />
           </label>
         </div>
-        <div className="flex items-center justify-between gap-4">
-          <span className="text-xs text-[#E61E32]">{error}</span>
-          <button
-            onClick={() => patch({ notes, reply })}
-            disabled={busy || !dirty}
-            className="rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32] disabled:opacity-40"
-          >
-            {busy ? "Saving…" : "Save notes & reply"}
-          </button>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="space-y-1 text-xs">
+            {error && <div className="text-[#E61E32]">{error}</div>}
+            {lastEmailed && <div className="text-muted-foreground">Reply last emailed {when(lastEmailed.at)}</div>}
+            {!emailEnabled && (
+              <div className="text-muted-foreground">Email is off — add RESEND_API_KEY and EMAIL_FROM to send replies.</div>
+            )}
+          </div>
+          {confirming ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm text-foreground">
+                Email this reply to <span className="font-semibold">{inquiry.email}</span>?
+              </span>
+              <button
+                onClick={() => setConfirming(false)}
+                disabled={busy}
+                className="rounded-full border border-hairline px-4 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={sendReply}
+                disabled={busy}
+                className="rounded-full bg-[#E61E32] px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-40"
+              >
+                {busy ? "Sending…" : "Send now"}
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => patch({ notes, reply })}
+                disabled={busy || !dirty}
+                className="rounded-full border border-hairline px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:border-foreground/40 disabled:opacity-40"
+              >
+                {busy ? "Saving…" : "Save notes & reply"}
+              </button>
+              <button
+                onClick={() => {
+                  setError("");
+                  setConfirming(true);
+                }}
+                disabled={busy || !emailEnabled || !reply.trim()}
+                className="rounded-full bg-foreground px-5 py-2.5 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32] disabled:opacity-40"
+              >
+                Send reply
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Activity */}
@@ -366,7 +429,7 @@ function InquiryDetail({ inquiry, onSaved }: { inquiry: Inquiry; onSaved: (i: In
               <li key={idx} className="relative text-sm">
                 <span
                   className={`absolute -left-[1.3rem] top-1.5 h-2 w-2 rounded-full ${
-                    e.type === "webhook.failed"
+                    e.type === "webhook.failed" || e.type === "email.failed"
                       ? "bg-[#E61E32]"
                       : e.actor === "agent"
                         ? "bg-violet-500"
@@ -404,6 +467,12 @@ function describe(type: string): string {
       return "sent it to Hermes";
     case "webhook.failed":
       return "couldn't reach Hermes";
+    case "email.confirmation":
+      return "sent the confirmation email";
+    case "email.reply":
+      return "emailed the reply";
+    case "email.failed":
+      return "couldn't send an email";
     default:
       return type;
   }

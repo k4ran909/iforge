@@ -27,6 +27,8 @@ interface InboxContextValue {
   lastChecked: string | null;
   notifyPermission: NotificationPermission | "unsupported";
   enableNotifications: () => void;
+  /** Resend is configured, so replies can be emailed. */
+  emailEnabled: boolean;
 }
 
 const InboxContext = React.createContext<InboxContextValue | null>(null);
@@ -67,11 +69,13 @@ export default function AdminShell({
   initialInquiries,
   storageMode,
   hermes,
+  emailEnabled,
   children,
 }: {
   initialInquiries: Inquiry[];
   storageMode: "supabase" | "local";
   hermes: { webhook: boolean; agentApi: boolean };
+  emailEnabled: boolean;
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
@@ -181,7 +185,7 @@ export default function AdminShell({
 
   return (
     <InboxContext.Provider
-      value={{ inquiries, upsert, unread, lastChecked, notifyPermission, enableNotifications }}
+      value={{ inquiries, upsert, unread, lastChecked, notifyPermission, enableNotifications, emailEnabled }}
     >
       <div className="min-h-screen bg-background text-foreground lg:pl-60">
         {/* Sidebar */}
@@ -225,6 +229,7 @@ export default function AdminShell({
                 <StatusRow ok={storageMode === "supabase"} label={storageMode === "supabase" ? "Supabase" : "Local files (dev)"} />
                 <StatusRow ok={hermes.webhook} label={hermes.webhook ? "Hermes webhook on" : "Hermes webhook off"} />
                 <StatusRow ok={hermes.agentApi} label={hermes.agentApi ? "Agent API on" : "Agent API off"} />
+                <StatusRow ok={emailEnabled} label={emailEnabled ? "Email on" : "Email off"} />
               </div>
               <div className="flex items-center justify-between">
                 <a href="/" target="_blank" className="hover:text-foreground">

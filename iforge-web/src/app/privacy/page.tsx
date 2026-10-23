@@ -16,7 +16,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Legal"
       title="Privacy Policy"
-      updated="22 October 2026"
+      updated="23 October 2026"
       intro={
         <p>
           This policy explains what information {siteConfig.name} (&ldquo;iForge&rdquo;, &ldquo;we&rdquo;,
@@ -59,6 +59,7 @@ export default function PrivacyPage() {
           heading: "How we use your information",
           body: (
             <ul>
+              <li>to send you an automatic email confirming we received your enquiry;</li>
               <li>to read, respond to and follow up on your enquiry or quote request;</li>
               <li>to prepare proposals and manage any engagement that follows;</li>
               <li>to keep this website secure and prevent abuse.</li>
@@ -96,6 +97,7 @@ export default function PrivacyPage() {
               <ul>
                 <li>our website hosting provider;</li>
                 <li>our database provider, which stores enquiries;</li>
+                <li>our email delivery provider, which sends confirmation emails and our replies;</li>
                 <li>the AI model provider used by our enquiry assistant.</li>
               </ul>
               <p>We may also disclose information where required by law.</p>

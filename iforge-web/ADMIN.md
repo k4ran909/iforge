@@ -63,7 +63,23 @@ Hermes (Nous Research Hermes Agent, running on your VPS) is connected two ways:
 When an enquiry arrives, Hermes reads it, sets it to **In progress**, writes
 triage notes (area, priority, fit, what's missing, next step) and drafts a
 reply. Everything appears in the Inbox, credited to Hermes. **Replies are
-drafts** — nothing is emailed to the customer.
+drafts** — Hermes never emails the customer. You review the draft, edit it,
+and press **Send reply** (see Email below).
+
+### Email
+
+With `RESEND_API_KEY` and `EMAIL_FROM` set:
+
+- Whoever sends an enquiry gets an automatic confirmation with their ticket
+  number and a copy of what they sent.
+- Each enquiry in the Inbox gets a **Send reply** button. It saves the reply
+  text and emails it to the customer after you confirm. Customers' answers go
+  to the contact email in `siteData.ts`.
+- Every email sent, or failed, shows in the enquiry's Activity.
+
+Setup: create a free account at resend.com, add `iforge.in` under **Domains**
+and add the DNS records it shows, create an API key, then set both variables
+on your host and redeploy.
 
 ### Files
 
