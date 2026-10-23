@@ -42,7 +42,6 @@ export default function HomeQuoteTeaser({
           </p>
           <ul className="mt-8 space-y-3 border-t border-hairline pt-6 text-sm text-muted-foreground">
             {[
-              "NDA protected — complete IP security",
               "Zero obligation — scoping session included",
               "Flexible — fixed-scope deliverables or dedicated pods",
             ].map((p) => (

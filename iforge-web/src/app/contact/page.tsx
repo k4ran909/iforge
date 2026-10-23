@@ -19,7 +19,6 @@ const CHANNELS = [
     href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}`,
   },
   { label: "Studio", value: "Noida, India — serving global clients", href: null },
-  { label: "Response", value: "< 2 hours, business days", href: null },
 ];
 
 export default function ContactPage() {
