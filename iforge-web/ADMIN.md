@@ -62,7 +62,10 @@ Hermes (Nous Research Hermes Agent, running on your VPS) is connected two ways:
 
 When an enquiry arrives, Hermes reads it, sets it to **In progress**, writes
 triage notes (area, priority, fit, what's missing, next step) and drafts a
-reply. Everything appears in the Inbox, credited to Hermes. **Replies are
+reply. Everything appears in the Inbox, credited to Hermes. It then sends you
+a short **WhatsApp alert** (ticket, contact details, priority, summary and a
+link to open it in the Inbox) — set `chat_id` under `deliver_extra` in the
+route to your own WhatsApp chat. **Replies are
 drafts** — Hermes never emails the customer. You review the draft, edit it,
 and press **Send reply** (see Email below).
 
