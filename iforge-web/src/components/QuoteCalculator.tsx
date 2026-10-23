@@ -15,6 +15,7 @@ export default function QuoteCalculator() {
   const [selectedService, setSelectedService] = useState(servicesData[0].slug);
   const [scope, setScope] = useState("mid");
   const [timeline, setTimeline] = useState("1-3months");
+  const [budget, setBudget] = useState("");
   const [clientInfo, setClientInfo] = useState({ name: "", email: "", phone: "", notes: "" });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -22,9 +23,9 @@ export default function QuoteCalculator() {
   const [honeypot, setHoneypot] = useState("");
 
   const scopeOptions = [
-    { id: "startup", title: "Startup / Pilot", desc: "Targeted MVP, architectural review, or initial PoC prototype", budget: "$5k – $15k" },
-    { id: "mid", title: "Mid-Market Growth", desc: "Production rollout, cloud migration, or dedicated team scaling", budget: "$15k – $40k" },
-    { id: "enterprise", title: "Enterprise Overhaul", desc: "Multi-system overhaul, 24/7 managed support, and compliance", budget: "$40k – $100k+" },
+    { id: "startup", title: "Startup / Pilot", desc: "Targeted MVP, architectural review, or initial PoC prototype" },
+    { id: "mid", title: "Mid-Market Growth", desc: "Production rollout, cloud migration, or dedicated team scaling" },
+    { id: "enterprise", title: "Enterprise Overhaul", desc: "Multi-system overhaul, 24/7 managed support, and compliance" },
   ];
 
   const timelineOptions = [
@@ -51,7 +52,7 @@ export default function QuoteCalculator() {
           phone: clientInfo.phone,
           service: currentServiceObj.title,
           scope: currentScopeObj.title,
-          budget: currentScopeObj.budget,
+          budget,
           timeline: timelineOptions.find((t) => t.id === timeline)?.title,
           message: clientInfo.notes,
           page: window.location.pathname,
@@ -182,18 +183,29 @@ export default function QuoteCalculator() {
                 </div>
 
                 <div>
-                  <label className={LABEL}>Target scope &amp; budget</label>
+                  <label className={LABEL}>Target scope</label>
                   <div className="grid gap-3 sm:grid-cols-3">
                     {scopeOptions.map((opt) => (
                       <Tile key={opt.id} active={scope === opt.id} onClick={() => setScope(opt.id)}>
                         <div className="text-sm font-semibold text-foreground">{opt.title}</div>
-                        <div className="mt-1 font-mono text-xs text-[#E61E32]">{opt.budget}</div>
                         <div className="mt-2 text-[0.7rem] leading-snug text-muted-foreground">
                           {opt.desc}
                         </div>
                       </Tile>
                     ))}
                   </div>
+                </div>
+
+                <div>
+                  <label className={LABEL}>Budget (any currency, optional)</label>
+                  <input
+                    type="text"
+                    maxLength={60}
+                    placeholder="e.g. ₹10 lakh, $25,000, €20k"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                    className={INPUT}
+                  />
                 </div>
 
                 <div>
@@ -247,14 +259,15 @@ export default function QuoteCalculator() {
                 <div className="border border-hairline">
                   {[
                     ["Discipline", currentServiceObj.title],
-                    ["Scope", `${currentScopeObj.title} (${currentScopeObj.budget})`],
+                    ["Scope", currentScopeObj.title],
+                    ["Budget", budget.trim()],
                     ["Timeline", timelineOptions.find((t) => t.id === timeline)?.title || ""],
-                  ].map(([k, v], i) => (
+                  ]
+                    .filter(([, v]) => v)
+                    .map(([k, v]) => (
                     <div
                       key={k}
-                      className={`flex items-center justify-between px-5 py-3 text-sm ${
-                        i < 2 ? "border-b border-hairline" : ""
-                      }`}
+                      className="flex items-center justify-between border-b border-hairline px-5 py-3 text-sm last:border-b-0"
                     >
                       <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
                         {k}
@@ -290,9 +303,10 @@ export default function QuoteCalculator() {
                 </div>
 
                 <div>
-                  <label className={LABEL}>Phone number</label>
+                  <label className={LABEL}>Phone / WhatsApp *</label>
                   <input
                     type="tel"
+                    required
                     placeholder="+91 99718 66720"
                     value={clientInfo.phone}
                     onChange={(e) => setClientInfo({ ...clientInfo, phone: e.target.value })}
@@ -358,16 +372,16 @@ export default function QuoteCalculator() {
               Proposal requested
             </h3>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-              Thank you, <span className="font-semibold text-foreground">{clientInfo.name}</span>. We
-              generated preliminary parameters for your{" "}
-              <strong className="text-foreground">{currentServiceObj.title}</strong> initiative. A
-              Principal Consultant will email your structured proposal within 2 hours.
+              Thank you, <span className="font-semibold text-foreground">{clientInfo.name}</span>. We&apos;ll
+              review your <strong className="text-foreground">{currentServiceObj.title}</strong> request
+              and reply by email.
             </p>
             <button
               type="button"
               onClick={() => {
                 setSubmitted(false);
                 setStep(1);
+                setBudget("");
                 setClientInfo({ name: "", email: "", phone: "", notes: "" });
               }}
               className="mt-7 border border-hairline px-5 py-2.5 text-xs font-semibold text-foreground transition-colors hover:border-[#E61E32] hover:text-[#E61E32]"

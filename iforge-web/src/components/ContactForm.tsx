@@ -16,7 +16,7 @@ export default function ContactForm() {
     phone: "",
     company: "",
     service: "cloud-services",
-    budget: "$10k - $25k",
+    budget: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -66,8 +66,8 @@ export default function ContactForm() {
           Inquiry received
         </h3>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-          Thank you, <span className="font-semibold text-foreground">{formData.name}</span>. A
-          Principal Architect will review your requirements and respond within 2 business hours.
+          Thank you, <span className="font-semibold text-foreground">{formData.name}</span>. We&apos;ll
+          review your requirements and reply by email.
         </p>
         <p className="mt-5 font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
           Ticket #{ticket}
@@ -82,7 +82,7 @@ export default function ContactForm() {
               phone: "",
               company: "",
               service: "cloud-services",
-              budget: "$10k - $25k",
+              budget: "",
               message: "",
             });
           }}
@@ -134,9 +134,10 @@ export default function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className={LABEL}>Phone / WhatsApp</label>
+          <label className={LABEL}>Phone / WhatsApp *</label>
           <input
             type="tel"
+            required
             placeholder="+91 99718 66720"
             value={formData.phone}
             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -172,17 +173,15 @@ export default function ContactForm() {
           </select>
         </div>
         <div>
-          <label className={LABEL}>Anticipated investment</label>
-          <select
+          <label className={LABEL}>Budget (any currency)</label>
+          <input
+            type="text"
+            maxLength={60}
+            placeholder="e.g. ₹10 lakh, $25,000, €20k"
             value={formData.budget}
             onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
             className={INPUT}
-          >
-            <option value="< $10k">&lt; $10,000 (Sprint Audit)</option>
-            <option value="$10k - $25k">$10,000 – $25,000 (Core Module)</option>
-            <option value="$25k - $50k">$25,000 – $50,000 (Full Architecture)</option>
-            <option value="$50k+">$50,000+ (Large Enterprise)</option>
-          </select>
+          />
         </div>
       </div>
 
@@ -218,10 +217,6 @@ export default function ContactForm() {
           </>
         )}
       </button>
-
-      <p className="text-center font-mono text-[0.65rem] uppercase tracking-wider text-muted-foreground">
-        Strict NDA • 100% IP protection
-      </p>
     </form>
   );
 }

@@ -60,6 +60,9 @@ export async function POST(request: Request) {
   if (!EMAIL.test(input.email)) {
     return Response.json({ ok: false, error: "Please add a valid email." }, { status: 400 });
   }
+  if ((input.phone?.replace(/\D/g, "").length ?? 0) < 7) {
+    return Response.json({ ok: false, error: "Please add a valid phone number." }, { status: 400 });
+  }
   if (source === "contact" && !input.message) {
     return Response.json({ ok: false, error: "Please tell us about your project." }, { status: 400 });
   }

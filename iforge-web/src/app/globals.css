@@ -95,12 +95,19 @@ html {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   letter-spacing: -0.02em;
-  color: #000000;
   transition: color 0.25s ease;
 }
 
-html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
-  color: #FFFFFF;
+/* In the base layer so a heading's own text-* class (e.g. light type on the
+   always-dark hero) wins over this default. */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    color: #000000;
+  }
+
+  html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+    color: #FFFFFF;
+  }
 }
 
 /* Scrollbar — a slim floating pill on an invisible track. The transparent
