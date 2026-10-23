@@ -9,7 +9,11 @@ import path from "path";
  * production should use Supabase — see ADMIN.md.
  */
 
-const DATA_DIR = path.join(process.cwd(), ".data");
+const DATA_DIR =
+  process.env.DATA_DIR ||
+  (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME
+    ? path.join("/tmp", ".data")
+    : path.join(process.cwd(), ".data"));
 
 export async function readJson<T>(name: string, fallback: T): Promise<T> {
   try {
