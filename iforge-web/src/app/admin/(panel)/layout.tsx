@@ -3,6 +3,7 @@ import { isAuthenticated } from "@/lib/auth";
 import { listInquiries } from "@/lib/inquiries";
 import { storageMode } from "@/lib/content";
 import { isAgentApiConfigured, isHermesWebhookConfigured } from "@/lib/hermes";
+import { isEmailConfigured } from "@/lib/email";
 import AdminShell from "../shell";
 
 // Signed-in admin pages: one auth check and the live inbox feed for all of them.
@@ -16,6 +17,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
       initialInquiries={inquiries}
       storageMode={storageMode}
       hermes={{ webhook: isHermesWebhookConfigured, agentApi: isAgentApiConfigured }}
+      emailEnabled={isEmailConfigured}
     >
       {children}
     </AdminShell>

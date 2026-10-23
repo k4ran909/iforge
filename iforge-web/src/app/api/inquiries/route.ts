@@ -1,6 +1,7 @@
 import { after } from "next/server";
 import { createInquiry, type NewInquiry } from "@/lib/inquiries";
 import { notifyHermes } from "@/lib/hermes";
+import { sendConfirmation } from "@/lib/email";
 
 // Public endpoint the contact and quote forms post to.
 
@@ -65,8 +66,12 @@ export async function POST(request: Request) {
 
   try {
     const inquiry = await createInquiry(input);
-    // Hand it to Hermes once the visitor already has their answer.
-    after(() => notifyHermes(inquiry));
+    // After responding: confirm to the sender, then hand it to Hermes. Run in
+    // sequence — both append to the same enquiry's activity log.
+    after(async () => {
+      await sendConfirmation(inquiry);
+      await notifyHermes(inquiry);
+    });
     return Response.json({ ok: true, ticket: inquiry.ticket });
   } catch (e) {
     console.error("inquiry save failed:", e);
