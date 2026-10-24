@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { SiteContent, ServiceItem } from "@/lib/content";
-import { PageHeader } from "./shell";
+import { Notice, PageHeader } from "./shell";
 import {
   Field,
   TextArea,
@@ -21,7 +21,14 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "community", label: "Community" },
 ];
 
-export default function AdminEditor({ initialContent }: { initialContent: SiteContent }) {
+export default function AdminEditor({
+  initialContent,
+  loadError,
+}: {
+  initialContent: SiteContent;
+  /** The stored content couldn't be read; the form shows defaults and mustn't save them. */
+  loadError?: string;
+}) {
   const [content, setContent] = React.useState<SiteContent>(initialContent);
   const [tab, setTab] = React.useState<Tab>("site");
   const [saving, setSaving] = React.useState(false);
@@ -64,6 +71,12 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
         title="Content"
         description="Edit the words on the public site. Saving updates the live pages straight away."
       />
+      {loadError && (
+        <Notice>
+          Couldn&apos;t read the saved content ({loadError}). These are the default texts, so saving is off
+          until it loads — check the Supabase settings and reload.
+        </Notice>
+      )}
 
       {/* Tabs */}
       <div className="mt-8 flex flex-wrap gap-px overflow-hidden border border-hairline bg-hairline">
@@ -105,7 +118,7 @@ export default function AdminEditor({ initialContent }: { initialContent: SiteCo
         </span>
         <button
           onClick={save}
-          disabled={saving || !dirty}
+          disabled={saving || !dirty || Boolean(loadError)}
           className="bg-foreground px-6 py-3 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32] disabled:opacity-50"
         >
           {saving ? "Saving…" : "Save changes"}

@@ -2,7 +2,7 @@
 
 import React from "react";
 import type { TeamMember, TeamPageContent } from "@/lib/content";
-import { PageHeader } from "./shell";
+import { Notice, PageHeader } from "./shell";
 
 const INPUT =
   "w-full rounded-lg border border-hairline bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:border-[#E61E32] focus:outline-none";
@@ -13,9 +13,12 @@ const blank = (): TeamMember => ({ id: crypto.randomUUID(), name: "", role: "", 
 export default function TeamEditor({
   initialTeam,
   initialPage,
+  loadError,
 }: {
   initialTeam: TeamMember[];
   initialPage: TeamPageContent;
+  /** The stored content couldn't be read; saving is off so defaults can't overwrite it. */
+  loadError?: string;
 }) {
   const [team, setTeam] = React.useState<TeamMember[]>(initialTeam);
   const [page, setPage] = React.useState<TeamPageContent>(initialPage);
@@ -85,6 +88,12 @@ export default function TeamEditor({
           </a>
         }
       />
+      {loadError && (
+        <Notice>
+          Couldn&apos;t read the saved content ({loadError}). These are the default texts, so saving is off
+          until it loads — check the Supabase settings and reload.
+        </Notice>
+      )}
 
       <div className="space-y-6">
         {/* Who we are */}
@@ -206,7 +215,10 @@ export default function TeamEditor({
         </Panel>
 
         {/* Members */}
-        <Panel title="Members" hint="Shown in this order. The page shows a friendly placeholder until you add someone.">
+        <Panel
+          title="Members"
+          hint="Shown in this order. Featured members get a large profile above the grid; everyone else is a card in it. The page shows a friendly placeholder until you add someone."
+        >
           <div className="space-y-4">
             {team.map((m, i) => (
               <div key={m.id} className="grid gap-5 rounded-xl border border-hairline p-4 sm:grid-cols-[9rem_1fr]">
@@ -256,6 +268,16 @@ export default function TeamEditor({
                       onChange={(e) => setAt(i, { bio: e.target.value })}
                     />
                   </label>
+                  <label className="flex items-center gap-2.5 text-sm text-foreground">
+                    <input
+                      type="checkbox"
+                      checked={Boolean(m.featured)}
+                      onChange={(e) => setAt(i, { featured: e.target.checked })}
+                      className="h-4 w-4 accent-[#E61E32]"
+                    />
+                    Featured profile
+                    <span className="text-xs text-muted-foreground">— large layout above the team grid (e.g. the founder)</span>
+                  </label>
                   <div className="grid gap-4 sm:grid-cols-3">
                     {(["linkedin", "github", "x"] as const).map((k) => (
                       <label key={k}>
@@ -293,7 +315,7 @@ export default function TeamEditor({
         </span>
         <button
           onClick={save}
-          disabled={saving || !dirty}
+          disabled={saving || !dirty || Boolean(loadError)}
           className="rounded-full bg-foreground px-6 py-3 text-sm font-semibold text-background transition-colors hover:bg-[#E61E32] disabled:opacity-40"
         >
           {saving ? "Saving…" : "Save Team page"}

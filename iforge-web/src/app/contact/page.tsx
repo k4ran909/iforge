@@ -1,27 +1,28 @@
 import React from "react";
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
-import { siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
 import { Reveal } from "@/components/ui/reveal";
 import { ArrowUpRight } from "reicon-react";
 
 export const metadata: Metadata = {
-  title: `Contact Us | ${siteConfig.name}`,
+  title: "Contact Us",
   description:
     "Talk to iForge's architects and engineers about your enterprise IT, cloud, AI and security projects.",
 };
 
-const CHANNELS = [
-  { label: "Email", value: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
-  {
-    label: "Phone",
-    value: siteConfig.phone,
-    href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}`,
-  },
-  { label: "Studio", value: "Noida, India — serving global clients", href: null },
-];
+export default async function ContactPage() {
+  const { siteConfig } = await getContent();
+  const CHANNELS = [
+    { label: "Email", value: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
+    {
+      label: "Phone",
+      value: siteConfig.phone,
+      href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}`,
+    },
+    { label: "Studio", value: "Noida, India — serving global clients", href: null },
+  ];
 
-export default function ContactPage() {
   return (
     <div className="w-full bg-background">
       <section className="border-b border-hairline">

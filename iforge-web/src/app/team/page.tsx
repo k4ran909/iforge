@@ -3,12 +3,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Allura } from "next/font/google";
 import { ArrowRight } from "reicon-react";
-import { siteConfig } from "@/data/siteData";
 import { getContent, type TeamMember, type TeamStat } from "@/lib/content";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
 
 export const metadata: Metadata = {
-  title: `Team | ${siteConfig.name}`,
+  title: "Team",
   description: "Meet the architects, engineers and specialists behind iForge Technologies.",
 };
 
@@ -57,12 +56,68 @@ function Stats({ stats }: { stats: TeamStat[] }) {
   );
 }
 
-function MemberCard({ m }: { m: TeamMember }) {
-  const links = [
+function memberLinks(m: TeamMember) {
+  return [
     ["LinkedIn", m.linkedin],
     ["GitHub", m.github],
     ["X", m.x],
   ].filter(([, href]) => href) as [string, string][];
+}
+
+function MemberLinks({ links }: { links: [string, string][] }) {
+  return (
+    <div className="mt-4 flex flex-wrap gap-1.5">
+      {links.map(([label, href]) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="rounded-full border border-hairline px-2.5 py-1 text-[0.7rem] font-semibold text-foreground transition-colors hover:border-[#E61E32]/50 hover:text-[#E61E32]"
+        >
+          {label} ↗
+        </a>
+      ))}
+    </div>
+  );
+}
+
+/** A large profile above the grid — for members marked "Featured" in the admin (e.g. the founder). */
+function FeaturedMember({ m }: { m: TeamMember }) {
+  const links = memberLinks(m);
+  return (
+    <article className="group grid gap-8 rounded-2xl border border-hairline p-5 sm:p-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:items-center md:gap-12">
+      <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-hairline bg-muted">
+        {m.photo ? (
+          <Photo
+            src={m.photo}
+            alt={m.name}
+            className="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          />
+        ) : (
+          <span className="flex h-full w-full items-center justify-center text-7xl font-bold tracking-tight text-foreground/25">
+            {initials(m.name)}
+          </span>
+        )}
+      </div>
+      <div>
+        {m.role && <p className="eyebrow mb-5">{m.role}</p>}
+        <h3 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
+          <span className="text-[#E61E32]">/</span> {m.name}
+        </h3>
+        {m.bio && (
+          <p className="mt-6 max-w-xl whitespace-pre-line text-base leading-relaxed text-muted-foreground sm:text-lg">
+            {m.bio}
+          </p>
+        )}
+        {links.length > 0 && <MemberLinks links={links} />}
+      </div>
+    </article>
+  );
+}
+
+function MemberCard({ m }: { m: TeamMember }) {
+  const links = memberLinks(m);
 
   return (
     <article className="group">
@@ -82,27 +137,15 @@ function MemberCard({ m }: { m: TeamMember }) {
       <h3 className="mt-5 text-lg font-semibold tracking-tight text-foreground">{m.name}</h3>
       {m.role && <p className="mt-0.5 text-sm text-muted-foreground">{m.role}</p>}
       {m.bio && <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground/90">{m.bio}</p>}
-      {links.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {links.map(([label, href]) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-hairline px-2.5 py-1 text-[0.7rem] font-semibold text-foreground transition-colors hover:border-[#E61E32]/50 hover:text-[#E61E32]"
-            >
-              {label} ↗
-            </a>
-          ))}
-        </div>
-      )}
+      {links.length > 0 && <MemberLinks links={links} />}
     </article>
   );
 }
 
 export default async function TeamPage() {
   const { team, teamPage: p } = await getContent();
+  const featured = team.filter((m) => m.featured);
+  const members = team.filter((m) => !m.featured);
   const hasQuote = Boolean(p.quoteLead || p.quoteRest);
   const firstName = p.quoteName.split(/\s+/)[0] ?? "";
 
@@ -211,13 +254,26 @@ export default async function TeamPage() {
               </div>
             </Reveal>
           ) : (
-            <Stagger className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              {team.map((m) => (
-                <RevealItem key={m.id}>
-                  <MemberCard m={m} />
-                </RevealItem>
-              ))}
-            </Stagger>
+            <>
+              {featured.length > 0 && (
+                <div className="mt-12 space-y-6">
+                  {featured.map((m) => (
+                    <Reveal key={m.id}>
+                      <FeaturedMember m={m} />
+                    </Reveal>
+                  ))}
+                </div>
+              )}
+              {members.length > 0 && (
+                <Stagger className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                  {members.map((m) => (
+                    <RevealItem key={m.id}>
+                      <MemberCard m={m} />
+                    </RevealItem>
+                  ))}
+                </Stagger>
+              )}
+            </>
           )}
         </div>
       </section>

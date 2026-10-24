@@ -1,13 +1,15 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import { servicesData, siteConfig } from "@/data/siteData";
+import { useSiteContent, type SiteContentValue } from "@/components/SiteContentProvider";
 import { ArrowRight, ArrowUpRight } from "reicon-react";
 import HalftoneWordmarkFooter, {
   type FooterColumn,
 } from "@/components/ui/halftone-wordmark-footer";
 
 // Columns for the halftone wordmark band, built from the real site navigation.
-const halftoneColumns: FooterColumn[] = [
+const halftoneColumns = ({ siteConfig, services: servicesData }: SiteContentValue): FooterColumn[] => [
   {
     title: "Practices",
     links: servicesData.slice(0, 3).map((s) => ({
@@ -54,6 +56,8 @@ const linkCol = (title: string, links: { label: string; href: string }[]) => (
 );
 
 export default function Footer() {
+  const content = useSiteContent();
+  const { siteConfig, services: servicesData } = content;
   const year = new Date().getFullYear();
 
   return (
@@ -149,7 +153,7 @@ export default function Footer() {
         wordmark="iforge"
         label={siteConfig.name}
         meta={`© ${year} · Noida, India`}
-        columns={halftoneColumns}
+        columns={halftoneColumns(content)}
         preset="night"
         palette={{ background: "#050505", ink: "#e9e4da", warm: "#E61E32" }}
         height="clamp(420px, 34vw, 600px)"

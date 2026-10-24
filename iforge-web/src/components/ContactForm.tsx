@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { servicesData } from "@/data/siteData";
+import { useSiteContent } from "@/components/SiteContentProvider";
 import { ArrowRight, Check } from "reicon-react";
 
 const INPUT =
@@ -10,12 +10,13 @@ const LABEL =
   "mb-2 block font-mono text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground";
 
 export default function ContactForm() {
+  const { services: servicesData } = useSiteContent();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     company: "",
-    service: "cloud-services",
+    service: servicesData.some((s) => s.slug === "cloud-services") ? "cloud-services" : servicesData[0]?.slug ?? "custom",
     budget: "",
     message: "",
   });

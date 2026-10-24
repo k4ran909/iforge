@@ -1,12 +1,12 @@
 import "server-only";
-import { siteConfig } from "@/data/siteData";
+import { getContent } from "@/lib/content";
 import { logEvent, type Inquiry } from "@/lib/inquiries";
 
 /**
  * Outgoing email through Resend (https://resend.com), called over its REST API.
  * Needs RESEND_API_KEY and EMAIL_FROM (an address on a domain verified in
  * Resend, e.g. "iForge Technologies <hello@iforge.in>"). Replies from the
- * customer go to siteConfig.contactEmail.
+ * customer go to the contact email set in the admin panel.
  */
 
 const apiKey = process.env.RESEND_API_KEY;
@@ -28,6 +28,7 @@ function toHtml(text: string): string {
 
 async function send(to: string, subject: string, text: string): Promise<void> {
   if (!apiKey || !from) throw new Error("Email isn't set up — add RESEND_API_KEY and EMAIL_FROM.");
+  const { siteConfig } = await getContent();
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
@@ -45,6 +46,7 @@ const firstName = (name: string) => name.trim().split(/\s+/)[0] || "there";
 /** Automatic "we got it" email to whoever sent the enquiry. */
 export async function sendConfirmation(inq: Inquiry): Promise<void> {
   if (!isEmailConfigured) return;
+  const { siteConfig } = await getContent();
   const summary = [
     ["Service", inq.service],
     ["Budget", inq.budget],
@@ -80,6 +82,7 @@ export async function sendConfirmation(inq: Inquiry): Promise<void> {
 export async function sendReply(inq: Inquiry): Promise<void> {
   const reply = inq.reply?.trim();
   if (!reply) throw new Error("Write a reply first.");
+  const { siteConfig } = await getContent();
   try {
     await send(inq.email, `Re: your enquiry (${inq.ticket}) — ${siteConfig.name}`, reply);
   } catch (e) {
