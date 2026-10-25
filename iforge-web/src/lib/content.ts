@@ -124,6 +124,13 @@ const ORIGINAL_DEFAULT_SERVICES = [
   "application-development",
 ];
 
+// Default services merged into another. Documents saved before the merge get
+// the merged service in their place, once (until it's in knownDefaultServices).
+const MERGED_SERVICES: Record<string, string> = {
+  "cloud-services": "it-cloud",
+  "it-infrastructure": "it-cloud",
+};
+
 // ---- Defaults, built from the code so the site works with no DB ----
 
 export const defaultContent: SiteContent = {
@@ -176,9 +183,20 @@ export const defaultContent: SiteContent = {
 function mergeServices(stored: Partial<SiteContent>): ServiceItem[] {
   if (!stored.services?.length) return defaultContent.services;
   const known = new Set(stored.knownDefaultServices ?? ORIGINAL_DEFAULT_SERVICES);
-  const have = new Set(stored.services.map((s) => s.slug));
+  const storedSlugs = new Set(stored.services.map((s) => s.slug));
+  const services: ServiceItem[] = [];
+  for (const s of stored.services) {
+    const into = MERGED_SERVICES[s.slug];
+    if (into && !known.has(into)) {
+      const merged = defaultContent.services.find((d) => d.slug === into);
+      if (merged && !storedSlugs.has(into) && !services.some((x) => x.slug === into)) services.push(merged);
+      continue;
+    }
+    services.push(s);
+  }
+  const have = new Set(services.map((s) => s.slug));
   const added = defaultContent.services.filter((s) => !known.has(s.slug) && !have.has(s.slug));
-  return [...stored.services, ...added];
+  return [...services, ...added];
 }
 
 /** Deep-merge a stored partial over the defaults so missing fields never break a page. */

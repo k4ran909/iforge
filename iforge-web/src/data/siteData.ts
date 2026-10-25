@@ -105,29 +105,47 @@ export const servicesData: ServiceItem[] = [
     ]
   },
   {
-    id: "cloud-services",
-    slug: "cloud-services",
-    title: "Cloud Services",
-    subtitle: "Trust a managed public cloud partner delivering end-to-end multi-cloud excellence",
-    shortDesc: "CloudSMART strategy delivering complete cloud consultancy, architecture, and multi-cloud management.",
-    longDesc: "Our CloudSMART strategy gives enterprises a complete cloud consultancy and delivery platform that adapts to your needs. Working across leading providers (AWS, Google Cloud, Azure), we help you unlock the full potential of modern cloud technologies to build scalable, resilient environments.",
+    id: "it-cloud",
+    slug: "it-cloud",
+    title: "IT & Cloud",
+    subtitle: "Resilient IT infrastructure and multi-cloud platforms, engineered and run as one",
+    shortDesc: "Enterprise networking, servers and AMC support, plus multi-cloud architecture, migration, and management.",
+    longDesc: "iForge brings your on-premise IT and your cloud under one team. We design and maintain the networks, servers, storage, and data centers your business runs on, and we architect, migrate, and manage workloads across AWS, Google Cloud, and Azure — so hybrid environments stay secure, scalable, and running without interruption.",
     iconName: "Cloud",
     features: [
+      "Enterprise Network Architecture & SD-WAN",
+      "Server Virtualization & High-Throughput Storage",
+      "Annual Maintenance Contracts (AMC Services)",
       "Multi-Cloud Architecture & Zero-Downtime Migration",
       "Cloud Cost Optimization (FinOps & Waste Reduction)",
       "DevOps, CI/CD & Kubernetes Orchestration",
-      "Serverless & Microservices Modernization",
-      "Cloud Security & Compliance Hardening"
+      "Disaster Recovery & Business Continuity"
     ],
-    technologies: ["AWS", "Google Cloud", "Microsoft Azure", "Kubernetes", "Docker", "Terraform", "ArgoCD", "Prometheus"],
+    technologies: ["AWS", "Google Cloud", "Microsoft Azure", "Kubernetes", "Docker", "Terraform", "VMware vSphere", "Hyper-V", "Cisco", "Fortinet", "HPE", "Dell EMC", "SAN/NAS"],
     deliverables: [
-      "Production multi-region cloud architecture",
+      "High-availability network and hybrid cloud architecture blueprint",
       "Automated Infrastructure as Code (IaC) repository",
-      "Comprehensive FinOps cost reduction report",
-      "24/7 automated cloud monitoring dashboard"
+      "Hardware health diagnostics, capacity plan & AMC service guide",
+      "FinOps cost reduction report",
+      "Disaster recovery runbook with RPO/RTO specifications"
     ],
     metrics: [],
     offerings: [
+      {
+        title: "Network & Systems Engineering",
+        description: "High-throughput, redundant routing and switching setups with strict zero-trust boundary segmentation.",
+        points: ["SD-WAN deployment", "VLAN & firewall zoning", "Bandwidth traffic shaping"]
+      },
+      {
+        title: "Virtualization & Storage Clustering",
+        description: "VMware, Hyper-V, and enterprise SAN/NAS configurations optimized for latency-critical workloads.",
+        points: ["Live VM migration setups", "Deduplication & tiered caching", "Automated off-site tape/cloud backups"]
+      },
+      {
+        title: "Comprehensive AMC Support",
+        description: "Proactive annual maintenance, scheduled hardware diagnostics, and priority on-site technician dispatch.",
+        points: ["Preventive hardware maintenance", "Firmware updates & thermal tuning", "Spare parts replacement reserve"]
+      },
       {
         title: "Cloud Migration & Modernization",
         description: "Zero-downtime workload migration from legacy on-premise infrastructure to high-performance cloud environments.",
@@ -145,76 +163,28 @@ export const servicesData: ServiceItem[] = [
       }
     ],
     benefits: [
-      "Lower cloud infrastructure spend through FinOps practices",
+      "One team accountable for on-premise IT and cloud alike",
+      "Elimination of single points of failure across critical systems",
       "High availability and automated disaster recovery across availability zones",
-      "Instant resource scalability during traffic spikes and peak enterprise loads",
-      "Multi-cloud vendor lock-in prevention"
+      "Lower infrastructure spend through FinOps practices and predictable AMC budgeting",
+      "Instant scalability during traffic spikes, with no multi-cloud vendor lock-in"
     ],
     faqs: [
+      {
+        question: "Can iForge manage hybrid infrastructure (on-premise + cloud)?",
+        answer: "Yes, our team specializes in interconnecting on-premise server rooms and data centers with public clouds using VPNs and direct cloud interconnects."
+      },
       {
         question: "Which cloud providers does iForge officially support?",
         answer: "We design, migrate and run workloads on Amazon Web Services (AWS), Google Cloud Platform (GCP) and Microsoft Azure."
       },
       {
-        question: "How do you prevent downtime during database migrations?",
-        answer: "We utilize continuous replication tools (e.g. AWS DMS, Google Datastream) with parallel dry-run validations until the final sub-minute cutover window."
-      }
-    ]
-  },
-  {
-    id: "it-infrastructure",
-    slug: "it-infrastructure",
-    title: "IT Infrastructure",
-    subtitle: "Deliver resilient experiences with agile infrastructure ensuring business continuity",
-    shortDesc: "Robust enterprise networking, system architecture, AMC services, and hardware engineering.",
-    longDesc: "iForge Technologies delivers secure, scalable, and reliable IT infrastructure services designed to support evolving enterprise demands. We ensure your foundational hardware, network architecture, and operational systems run without interruption.",
-    iconName: "Server",
-    features: [
-      "Enterprise Network Architecture & SD-WAN",
-      "Server Virtualization & High-Throughput Storage",
-      "Annual Maintenance Contracts (AMC Services)",
-      "Disaster Recovery & Redundant Power Architecture",
-      "Data Center Setup & Remote Hands Operations"
-    ],
-    technologies: ["VMware vSphere", "Cisco", "Fortinet", "HPE", "Dell EMC", "Hyper-V", "Ubiquiti", "SAN/NAS"],
-    deliverables: [
-      "High-availability network topology blueprint",
-      "Hardware health diagnostics & capacity plan",
-      "Comprehensive AMC service contract & SLA guide",
-      "Disaster recovery runbook with RPO/RTO specifications"
-    ],
-    metrics: [],
-    offerings: [
-      {
-        title: "Network & Systems Engineering",
-        description: "High-throughput, redundant routing and switching setups with strict zero-trust boundary segmentation.",
-        points: ["SD-WAN deployment", "VLAN & firewall zoning", "Bandwidth traffic shaping"]
-      },
-      {
-        title: "Comprehensive AMC Support",
-        description: "Proactive annual maintenance, scheduled hardware diagnostics, and priority on-site technician dispatch.",
-        points: ["Preventive hardware maintenance", "Firmware updates & thermal tuning", "Spare parts replacement reserve"]
-      },
-      {
-        title: "Virtualization & Storage Clustering",
-        description: "VMware, Hyper-V, and enterprise SAN/NAS configurations optimized for latency-critical workloads.",
-        points: ["Live VM migration setups", "Deduplication & tiered caching", "Automated off-site tape/cloud backups"]
-      }
-    ],
-    benefits: [
-      "Elimination of single points of hardware failure across critical nodes",
-      "24/7 uptime monitoring with fast SLA response commitments",
-      "Prolonged hardware lifecycle and predictable operational budgeting",
-      "Complete physical and logical network security"
-    ],
-    faqs: [
-      {
         question: "What is covered in an iForge IT AMC (Annual Maintenance Contract)?",
         answer: "Our AMC covers quarterly preventive maintenance, emergency on-site engineer visits, hardware repairs, OS/firmware patching, network health checks, and 24/7 helpdesk support."
       },
       {
-        question: "Can iForge manage hybrid infrastructure (on-premise + cloud)?",
-        answer: "Yes, our team specializes in interconnecting on-premise server rooms and data centers with public clouds using VPNs and direct cloud interconnects."
+        question: "How do you prevent downtime during database migrations?",
+        answer: "We utilize continuous replication tools (e.g. AWS DMS, Google Datastream) with parallel dry-run validations until the final sub-minute cutover window."
       }
     ]
   },

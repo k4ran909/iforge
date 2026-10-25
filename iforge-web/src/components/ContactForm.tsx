@@ -16,7 +16,7 @@ export default function ContactForm() {
     email: "",
     phone: "",
     company: "",
-    service: servicesData.some((s) => s.slug === "cloud-services") ? "cloud-services" : servicesData[0]?.slug ?? "custom",
+    service: servicesData.some((s) => s.slug === "it-cloud") ? "it-cloud" : servicesData[0]?.slug ?? "custom",
     budget: "",
     message: "",
   });
@@ -82,7 +82,7 @@ export default function ContactForm() {
               email: "",
               phone: "",
               company: "",
-              service: "cloud-services",
+              service: "it-cloud",
               budget: "",
               message: "",
             });

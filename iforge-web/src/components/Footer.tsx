@@ -112,7 +112,7 @@ export default function Footer() {
             {linkCol("Platform", [
               { label: "Builders Community", href: "/community" },
               { label: "Project Calculator", href: "/quote" },
-              { label: "Cloud Migration", href: "/services/cloud-services" },
+              { label: "Cloud Migration", href: "/services/it-cloud" },
               { label: "Enterprise Apps", href: "/services/application-development" },
             ])}
 
