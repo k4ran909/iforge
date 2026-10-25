@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "Cloud Architecture",
       "AWS Consulting",
       "Google Cloud Consulting",
-      "Cybersecurity Services",
+      "Cybersecurity",
       "VAPT",
       "AI & ML Consulting",
       "Application Development",
