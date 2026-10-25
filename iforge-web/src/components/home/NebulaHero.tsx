@@ -24,7 +24,7 @@ const SKY: Partial<NebulaParams> = {
 // Short labels for the practice strip; other services show their full title.
 const SHORT_LABELS: Record<string, string> = {
   "ai-ml": "AI & ML",
-  "it-cloud": "IT & Cloud",
+  "it-cloud": "Cloud & IT",
   "cybersecurity-services": "Cybersecurity",
   "application-development": "App Development",
 };

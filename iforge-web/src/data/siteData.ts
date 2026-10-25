@@ -126,18 +126,18 @@ export const servicesData: ServiceItem[] = [
   {
     id: "it-cloud",
     slug: "it-cloud",
-    title: "IT & Cloud",
-    subtitle: "Resilient IT infrastructure and multi-cloud platforms, engineered and run as one",
-    shortDesc: "Enterprise networking, servers and AMC support, plus multi-cloud architecture, migration, and management.",
-    longDesc: "iForge brings your on-premise IT and your cloud under one team. We design and maintain the networks, servers, storage, and data centers your business runs on, and we architect, migrate, and manage workloads across AWS, Google Cloud, and Azure — so hybrid environments stay secure, scalable, and running without interruption.",
+    title: "Cloud & IT Infrastructure",
+    subtitle: "Multi-cloud platforms and resilient on-premise infrastructure, designed and managed by one team",
+    shortDesc: "Cloud architecture, migration and management, plus enterprise networking, servers, storage, and AMC support.",
+    longDesc: "iForge brings your cloud and your on-premise IT under one accountable team. We architect, migrate, and manage workloads across AWS, Google Cloud, and Azure, and we design and maintain the networks, servers, storage, and data centers your business depends on. The result is a hybrid environment that is secure, scalable, cost-efficient, and built to run without interruption.",
     iconName: "Cloud",
     features: [
-      "Enterprise Network Architecture & SD-WAN",
-      "Server Virtualization & High-Throughput Storage",
-      "Annual Maintenance Contracts (AMC Services)",
       "Multi-Cloud Architecture & Zero-Downtime Migration",
       "Cloud Cost Optimization (FinOps & Waste Reduction)",
       "DevOps, CI/CD & Kubernetes Orchestration",
+      "Enterprise Network Architecture & SD-WAN",
+      "Server Virtualization & High-Throughput Storage",
+      "Annual Maintenance Contracts (AMC Services)",
       "Disaster Recovery & Business Continuity"
     ],
     technologies: ["AWS", "Google Cloud", "Microsoft Azure", "Kubernetes", "Docker", "Terraform", "VMware vSphere", "Hyper-V", "Cisco", "Fortinet", "HPE", "Dell EMC", "SAN/NAS"],
@@ -150,21 +150,6 @@ export const servicesData: ServiceItem[] = [
     ],
     metrics: [],
     offerings: [
-      {
-        title: "Network & Systems Engineering",
-        description: "High-throughput, redundant routing and switching setups with strict zero-trust boundary segmentation.",
-        points: ["SD-WAN deployment", "VLAN & firewall zoning", "Bandwidth traffic shaping"]
-      },
-      {
-        title: "Virtualization & Storage Clustering",
-        description: "VMware, Hyper-V, and enterprise SAN/NAS configurations optimized for latency-critical workloads.",
-        points: ["Live VM migration setups", "Deduplication & tiered caching", "Automated off-site tape/cloud backups"]
-      },
-      {
-        title: "Comprehensive AMC Support",
-        description: "Proactive annual maintenance, scheduled hardware diagnostics, and priority on-site technician dispatch.",
-        points: ["Preventive hardware maintenance", "Firmware updates & thermal tuning", "Spare parts replacement reserve"]
-      },
       {
         title: "Cloud Migration & Modernization",
         description: "Zero-downtime workload migration from legacy on-premise infrastructure to high-performance cloud environments.",
@@ -179,6 +164,21 @@ export const servicesData: ServiceItem[] = [
         title: "DevOps & Cloud Automation",
         description: "Infrastructure as Code (Terraform), continuous integration pipelines, and containerized deployments with Kubernetes.",
         points: ["GitOps deployment workflows", "Self-healing Kubernetes clusters", "Multi-stage automated testing"]
+      },
+      {
+        title: "Network & Systems Engineering",
+        description: "High-throughput, redundant routing and switching setups with strict zero-trust boundary segmentation.",
+        points: ["SD-WAN deployment", "VLAN & firewall zoning", "Bandwidth traffic shaping"]
+      },
+      {
+        title: "Virtualization & Storage Clustering",
+        description: "VMware, Hyper-V, and enterprise SAN/NAS configurations optimized for latency-critical workloads.",
+        points: ["Live VM migration setups", "Deduplication & tiered caching", "Automated off-site tape/cloud backups"]
+      },
+      {
+        title: "Comprehensive AMC Support",
+        description: "Proactive annual maintenance, scheduled hardware diagnostics, and priority on-site technician dispatch.",
+        points: ["Preventive hardware maintenance", "Firmware updates & thermal tuning", "Spare parts replacement reserve"]
       }
     ],
     benefits: [

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Cloud Services and IT Infrastructure became one service, IT & Cloud.
+  // Cloud Services and IT Infrastructure became one service, Cloud & IT Infrastructure.
   async redirects() {
     return [
       { source: "/services/cloud-services", destination: "/services/it-cloud", permanent: true },
