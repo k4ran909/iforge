@@ -65,7 +65,7 @@ export default function Footer() {
 
       {/* Directory */}
       <footer className="border-t border-hairline">
-        <div className="container-page pt-12 pb-6 md:pt-16 md:pb-8">
+        <div className="container-page py-12 md:py-16">
           {/* Phones: brand on top, link columns two across. */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:gap-12 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
             {/* Brand */}
@@ -132,9 +132,8 @@ export default function Footer() {
         columns={[]}
         preset="night"
         palette={{ background: "#050505", ink: "#e9e4da", warm: "#E61E32" }}
-        // The word's height is ~22% of the width; the fixed part leaves room for
-        // "Back to top" plus a small gap, so there's no empty band at any size.
-        height="calc(22vw + 80px)"
+        // Scales with the screen so phones don't get a tall empty band above the word.
+        height="clamp(220px, 34vw, 600px)"
       />
     </div>
   );
