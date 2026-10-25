@@ -6,7 +6,7 @@ website — is managed at **`/admin`**, with no code changes.
 | Section | What it does |
 | --- | --- |
 | **Inbox** | Every contact-form and quote-wizard submission, live. Change status, assign to Hermes or yourself, keep notes, draft a reply, and see an activity log of everything that happened. |
-| **Team** | The people on the public `/team` page: photo upload, name, role, bio, links, order. Tick **Featured profile** for a large profile above the grid (e.g. the founder). |
+| **Team** | The people on the public `/team` page: photo upload, name, role, bio, links, order. Turn on **Core member** to list someone in the Core team section; everyone else appears under Our team. Photos are optional. |
 | **Content** | Site & contact info (also used by the nav, footer, page titles and emails), the services, About (values + timeline), Community. |
 
 ## 1. Sign in

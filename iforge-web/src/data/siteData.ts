@@ -210,57 +210,85 @@ export const servicesData: ServiceItem[] = [
   {
     id: "cybersecurity-services",
     slug: "cybersecurity-services",
-    title: "Cybersecurity Services",
-    subtitle: "End-to-end cybersecurity services ensuring safety, compliance, and continuous resilience",
-    shortDesc: "Vulnerability assessment, penetration testing, endpoint protection, and proactive defense.",
-    longDesc: "Today's threat landscape is highly dynamic, driven by the rapid adoption of disruptive technologies. iForge brings deep expertise in Defense, Protection, and Risk Management to ensure your mission-critical digital assets remain fortified.",
+    title: "Cybersecurity",
+    subtitle: "Find and fix weaknesses before attackers do, and stay compliant as you grow",
+    shortDesc: "Penetration testing, vulnerability management, cloud security, threat protection, and compliance readiness.",
+    longDesc: "Attackers look for the one gap you missed — in an application, an API, a misconfigured cloud account, or a phishing email. iForge tests your systems the way a real adversary would, prioritizes what actually matters, and works alongside your team until every finding is fixed and verified. From one-off penetration tests to ongoing vulnerability management and audit readiness, we help you reduce risk, protect data, and prove it to customers and regulators.",
     iconName: "ShieldCheck",
     features: [
-      "Vulnerability Assessment & Pen Testing (VAPT)",
-      "Next-Gen Firewall & Endpoint Detection (EDR/XDR)",
-      "Security Operations Center (SOC) 24/7 Monitoring",
-      "Compliance Audits (ISO 27001, SOC 2, HIPAA, GDPR)",
-      "Zero Trust Identity & Access Management (IAM)"
+      "Penetration Testing: Web, API, Mobile, Network & Cloud",
+      "Vulnerability Assessment & Continuous Vulnerability Management",
+      "Cloud Security Posture Review (AWS, Azure, Google Cloud)",
+      "Red Teaming, Phishing Simulation & Social Engineering",
+      "Endpoint, Firewall & Email Threat Protection",
+      "Compliance Readiness (ISO 27001, SOC 2, GDPR, DPDP Act)",
+      "Incident Response Planning & Security Awareness Training"
     ],
-    technologies: ["Palo Alto Networks", "Trend Micro", "CrowdStrike", "Splunk", "Wireshark", "Burp Suite", "Tenable Nessus", "Okta"],
+    technologies: ["Burp Suite", "OWASP ZAP", "Metasploit", "Nmap", "Tenable Nessus", "Kali Linux", "Wireshark", "CrowdStrike", "Palo Alto Networks", "Splunk", "Okta"],
     deliverables: [
-      "Executive VAPT Audit Report with CVSS scoring",
-      "Step-by-step remediation guide for developer teams",
-      "ISO 27001 / SOC 2 readiness gap assessment",
-      "Incident response and breach containment protocol"
+      "Executive summary with business-level risk ratings",
+      "Detailed technical report with CVSS-scored findings and proof of concept",
+      "Prioritized, step-by-step remediation guide for developers and IT",
+      "Re-test report confirming each fix",
+      "Compliance gap assessment and security policy pack",
+      "Incident response playbook with roles and escalation paths"
     ],
     metrics: [],
     offerings: [
       {
-        title: "VAPT & Penetration Testing",
-        description: "Rigorous ethical hacking targeting web apps, cloud accounts, APIs, mobile apps, and internal network perimeters.",
-        points: ["OWASP Top 10 vulnerabilities", "Privilege escalation simulations", "Social engineering & phishing assessments"]
+        title: "Penetration Testing",
+        description: "Manual, expert-led ethical hacking of your web apps, APIs, mobile apps, and internal and external networks — going well beyond automated scanners.",
+        points: ["OWASP Top 10 & API Security Top 10", "Authentication, session & business-logic flaws", "Privilege escalation & lateral movement"]
       },
       {
-        title: "Perimeter & Endpoint Fortification",
-        description: "Using industry-leading platforms such as Palo Alto Networks and Trend Micro for automated threat quarantine.",
-        points: ["Next-Gen firewall policies", "Ransomware behavioral blocking", "Strict USB and endpoint lockouts"]
+        title: "Vulnerability Assessment & Management",
+        description: "Scheduled scanning and expert triage across servers, endpoints, and applications, so the riskiest issues are fixed first.",
+        points: ["Asset discovery & attack-surface mapping", "Risk-based prioritization", "Patch tracking & verification"]
       },
       {
-        title: "Regulatory Compliance & Audit Preparation",
-        description: "Comprehensive security policy authoring and gap remediation to achieve ISO 27001, SOC 2 Type II, and GDPR compliance.",
-        points: ["Audit defense representation", "Data classification protocols", "Mandatory staff security training"]
+        title: "Cloud Security Assessment",
+        description: "A configuration and access review of your AWS, Azure, or Google Cloud accounts against industry benchmarks.",
+        points: ["IAM & least-privilege review", "Exposed storage & network misconfigurations", "CIS benchmark alignment"]
+      },
+      {
+        title: "Red Teaming & Social Engineering",
+        description: "Realistic attack simulations, including phishing campaigns, that test your people and processes as well as your technology.",
+        points: ["Phishing & vishing simulations", "Objective-based attack scenarios", "Detection & response evaluation"]
+      },
+      {
+        title: "Endpoint & Network Protection",
+        description: "Design and hardening of firewalls, endpoint detection, and email security to block ransomware and data theft.",
+        points: ["Next-gen firewall policies", "EDR/XDR deployment & tuning", "Email filtering & anti-phishing controls"]
+      },
+      {
+        title: "Compliance & Audit Readiness",
+        description: "Policy writing, gap remediation, and evidence preparation for ISO 27001, SOC 2, GDPR, and India's DPDP Act.",
+        points: ["Gap assessment & remediation roadmap", "Security policies & data classification", "Staff security awareness training"]
       }
     ],
     benefits: [
-      "Complete proactive protection against ransomware and data exfiltration",
-      "Guaranteed compliance with regulatory and enterprise client security mandates",
-      "Minimization of security incident impact, loss, and operational downtime",
-      "Strengthened client trust through verifiable security certifications"
+      "Find and fix vulnerabilities before attackers can exploit them",
+      "Clear, prioritized findings your developers can act on immediately",
+      "Lower risk of ransomware, data breaches, and costly downtime",
+      "Evidence to satisfy auditors, enterprise customers, and regulators",
+      "A security program that keeps pace with new releases and infrastructure changes"
     ],
     faqs: [
       {
-        question: "How frequently should an enterprise conduct VAPT?",
-        answer: "We recommend comprehensive VAPT testing bi-annually, as well as immediately following any major production feature release or infrastructure change."
+        question: "What is the difference between a vulnerability assessment and a penetration test?",
+        answer: "A vulnerability assessment uses scanning and expert review to list known weaknesses across your systems. A penetration test goes further: our testers actively exploit weaknesses, as a real attacker would, to show what could actually be accessed and how to stop it."
       },
       {
-        question: "Do you assist our developers with fixing the vulnerabilities discovered?",
-        answer: "Yes, our security engineers provide exact code snippets, configuration patches, and re-test all remediated issues free of charge."
+        question: "How often should we run a penetration test?",
+        answer: "We recommend at least once a year, and after any major release, infrastructure change, or cloud migration. Many teams pair this with continuous vulnerability scanning between tests."
+      },
+      {
+        question: "Will testing disrupt our live systems?",
+        answer: "Testing is scoped and scheduled with you in advance. We avoid destructive techniques on production, can test against staging environments, and stay in contact throughout so any concern is handled immediately."
+      },
+      {
+        question: "Do you help our team fix the issues you find?",
+        answer: "Yes. Every finding comes with clear remediation steps, our engineers can work directly with your developers and IT team, and we re-test to confirm each fix."
       }
     ]
   },

@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Allura } from "next/font/google";
 import { ArrowRight } from "reicon-react";
 import { getContent, type TeamMember, type TeamStat } from "@/lib/content";
 import { Reveal, Stagger, RevealItem } from "@/components/ui/reveal";
@@ -10,9 +9,6 @@ export const metadata: Metadata = {
   title: "Team",
   description: "Meet the architects, engineers and specialists behind iForge Technologies.",
 };
-
-// Handwritten face for the founder's signature line.
-const signature = Allura({ weight: "400", subsets: ["latin"], display: "swap" });
 
 /** "120+" → "120" in full colour, "+" in crimson. */
 function Figure({ value }: { value: string }) {
@@ -82,45 +78,15 @@ function MemberLinks({ links }: { links: [string, string][] }) {
   );
 }
 
-/** A large profile above the grid — for members marked "Featured" in the admin (e.g. the founder). */
-function FeaturedMember({ m }: { m: TeamMember }) {
-  const links = memberLinks(m);
-  return (
-    <article className="group grid gap-8 rounded-2xl border border-hairline p-5 sm:p-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:items-center md:gap-12">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-xl border border-hairline bg-muted">
-        {m.photo ? (
-          <Photo
-            src={m.photo}
-            alt={m.name}
-            className="transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-          />
-        ) : (
-          <span className="flex h-full w-full items-center justify-center text-7xl font-bold tracking-tight text-foreground/25">
-            {initials(m.name)}
-          </span>
-        )}
-      </div>
-      <div>
-        {m.role && <p className="eyebrow mb-5">{m.role}</p>}
-        <h3 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl">
-          <span className="text-[#E61E32]">/</span> {m.name}
-        </h3>
-        {m.bio && (
-          <p className="mt-6 max-w-xl whitespace-pre-line text-base leading-relaxed text-muted-foreground sm:text-lg">
-            {m.bio}
-          </p>
-        )}
-        {links.length > 0 && <MemberLinks links={links} />}
-      </div>
-    </article>
-  );
-}
-
+/**
+ * One person. Everyone uses this card in the same frame; with no photo the
+ * frame shows their initials instead, so every card lines up.
+ */
 function MemberCard({ m }: { m: TeamMember }) {
   const links = memberLinks(m);
 
   return (
-    <article className="group">
+    <article className="group flex h-full flex-col">
       <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-hairline bg-muted">
         {m.photo ? (
           <Photo
@@ -129,9 +95,14 @@ function MemberCard({ m }: { m: TeamMember }) {
             className="grayscale-[40%] transition-[filter,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:grayscale-0"
           />
         ) : (
-          <span className="flex h-full w-full items-center justify-center text-5xl font-bold tracking-tight text-foreground/25">
-            {initials(m.name)}
-          </span>
+          <div
+            aria-hidden
+            className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-muted via-background to-muted"
+          >
+            <span className="flex h-24 w-24 items-center justify-center rounded-full border border-hairline bg-background text-3xl font-bold tracking-tight text-foreground/70 transition-colors group-hover:border-[#E61E32]/50 group-hover:text-[#E61E32]">
+              {initials(m.name)}
+            </span>
+          </div>
         )}
       </div>
       <h3 className="mt-5 text-lg font-semibold tracking-tight text-foreground">{m.name}</h3>
@@ -142,12 +113,23 @@ function MemberCard({ m }: { m: TeamMember }) {
   );
 }
 
+function MemberGrid({ members }: { members: TeamMember[] }) {
+  return (
+    <Stagger className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+      {members.map((m) => (
+        <RevealItem key={m.id}>
+          <MemberCard m={m} />
+        </RevealItem>
+      ))}
+    </Stagger>
+  );
+}
+
 export default async function TeamPage() {
   const { team, teamPage: p } = await getContent();
-  const featured = team.filter((m) => m.featured);
+  // "Core member" in the admin (stored as `featured`) puts someone in the first section.
+  const core = team.filter((m) => m.featured);
   const members = team.filter((m) => !m.featured);
-  const hasQuote = Boolean(p.quoteLead || p.quoteRest);
-  const firstName = p.quoteName.split(/\s+/)[0] ?? "";
 
   return (
     <div className="w-full bg-background">
@@ -188,42 +170,21 @@ export default async function TeamPage() {
         </div>
       </section>
 
-      {/* Founder quote */}
-      {hasQuote && (
+      {/* Core team */}
+      {core.length > 0 && (
         <section className="section border-t border-hairline">
-          <div className={`container-page grid gap-12 lg:items-center lg:gap-16 ${p.quotePhoto ? "lg:grid-cols-2" : ""}`}>
+          <div className="container-page">
             <Reveal>
-              <span aria-hidden className="block font-serif text-8xl leading-[0.6] text-[#E61E32]">
-                &ldquo;
-              </span>
-              <blockquote className="mt-6 text-2xl font-semibold leading-snug tracking-tight sm:text-3xl lg:text-[2.1rem]">
-                <span className="text-foreground">{p.quoteLead}</span>{" "}
-                <span className="text-muted-foreground">{p.quoteRest}</span>
-              </blockquote>
-              {(p.quoteName || p.quoteRole) && (
-                <div className="mt-8 flex items-center gap-5 border-t border-dashed border-hairline pt-6">
-                  <div>
-                    {p.quoteName && <div className="text-sm font-semibold text-foreground">{p.quoteName}</div>}
-                    {p.quoteRole && <div className="mt-0.5 text-xs text-muted-foreground">{p.quoteRole}</div>}
-                  </div>
-                  {firstName && (
-                    <>
-                      <span aria-hidden className="h-10 w-px bg-hairline" />
-                      <span aria-hidden className={`${signature.className} text-4xl leading-none text-foreground/80`}>
-                        {firstName}
-                      </span>
-                    </>
-                  )}
-                </div>
-              )}
+              <p className="eyebrow mb-5">Core team</p>
+              <h2 className="max-w-2xl text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl">
+                The people who lead the work
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+                Our core team sets technical direction, owns delivery, and stays accountable for every
+                engagement — from the first scoping call to long-term support.
+              </p>
             </Reveal>
-            {p.quotePhoto && (
-              <Reveal direction="left">
-                <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border border-hairline bg-muted">
-                  <Photo src={p.quotePhoto} alt={p.quoteName || "Founder"} />
-                </div>
-              </Reveal>
-            )}
+            <MemberGrid members={core} />
           </div>
         </section>
       )}
@@ -232,13 +193,21 @@ export default async function TeamPage() {
       <section className="section border-t border-hairline">
         <div className="container-page">
           <Reveal>
-            <p className="eyebrow mb-5">The team</p>
+            <p className="eyebrow mb-5">{core.length > 0 ? "Our team" : "The team"}</p>
             <h2 className="max-w-2xl text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl">
               Meet the people you&apos;ll work with
             </h2>
+            {core.length > 0 && (
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
+                The engineers, architects, and specialists who design, build, and support your systems
+                day to day.
+              </p>
+            )}
           </Reveal>
 
-          {team.length === 0 ? (
+          {members.length > 0 ? (
+            <MemberGrid members={members} />
+          ) : core.length > 0 ? null : (
             <Reveal>
               <div className="mt-12 flex flex-col items-center rounded-2xl border border-dashed border-hairline px-6 py-16 text-center">
                 <h3 className="text-xl font-semibold tracking-tight text-foreground">Team profiles are on their way</h3>
@@ -253,27 +222,6 @@ export default async function TeamPage() {
                 </Link>
               </div>
             </Reveal>
-          ) : (
-            <>
-              {featured.length > 0 && (
-                <div className="mt-12 space-y-6">
-                  {featured.map((m) => (
-                    <Reveal key={m.id}>
-                      <FeaturedMember m={m} />
-                    </Reveal>
-                  ))}
-                </div>
-              )}
-              {members.length > 0 && (
-                <Stagger className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-                  {members.map((m) => (
-                    <RevealItem key={m.id}>
-                      <MemberCard m={m} />
-                    </RevealItem>
-                  ))}
-                </Stagger>
-              )}
-            </>
           )}
         </div>
       </section>

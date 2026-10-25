@@ -166,58 +166,10 @@ export default function TeamEditor({
           </div>
         </Panel>
 
-        {/* Founder quote */}
-        <Panel title="Founder quote" hint="A short quote with the speaker's photo. The second part is shown in grey. Leave the quote empty to hide this section.">
-          <div className="grid gap-5 sm:grid-cols-[9rem_1fr]">
-            <PhotoField
-              photo={page.quotePhoto}
-              name={page.quoteName}
-              onChange={(quotePhoto) => editPage({ quotePhoto })}
-              onError={onError}
-            />
-            <div className="space-y-4">
-              <label className="block">
-                <span className={LABEL}>Quote — first part</span>
-                <textarea
-                  rows={2}
-                  className={`${INPUT} resize-y`}
-                  value={page.quoteLead}
-                  placeholder="The part you want to stand out"
-                  onChange={(e) => editPage({ quoteLead: e.target.value })}
-                />
-              </label>
-              <label className="block">
-                <span className={LABEL}>Quote — continued (grey)</span>
-                <textarea
-                  rows={2}
-                  className={`${INPUT} resize-y`}
-                  value={page.quoteRest}
-                  onChange={(e) => editPage({ quoteRest: e.target.value })}
-                />
-              </label>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label>
-                  <span className={LABEL}>Name</span>
-                  <input className={INPUT} value={page.quoteName} onChange={(e) => editPage({ quoteName: e.target.value })} />
-                </label>
-                <label>
-                  <span className={LABEL}>Role</span>
-                  <input
-                    className={INPUT}
-                    value={page.quoteRole}
-                    placeholder="Founder"
-                    onChange={(e) => editPage({ quoteRole: e.target.value })}
-                  />
-                </label>
-              </div>
-            </div>
-          </div>
-        </Panel>
-
         {/* Members */}
         <Panel
           title="Members"
-          hint="Shown in this order. Featured members get a large profile above the grid; everyone else is a card in it. The page shows a friendly placeholder until you add someone."
+          hint="Everyone is added here and shown as the same card, in this order. Turn on Core member to list someone in the Core team section at the top; the rest appear under Our team. A photo is optional — without one, the card shows their initials."
         >
           <div className="space-y-4">
             {team.map((m, i) => (
@@ -275,8 +227,8 @@ export default function TeamEditor({
                       onChange={(e) => setAt(i, { featured: e.target.checked })}
                       className="h-4 w-4 accent-[#E61E32]"
                     />
-                    Featured profile
-                    <span className="text-xs text-muted-foreground">— large layout above the team grid (e.g. the founder)</span>
+                    Core member
+                    <span className="text-xs text-muted-foreground">— shown in the Core team section (e.g. founders and leads)</span>
                   </label>
                   <div className="grid gap-4 sm:grid-cols-3">
                     {(["linkedin", "github", "x"] as const).map((k) => (
