@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { SiteContent, ServiceItem } from "@/lib/content";
+import { MAX_CONTACTS } from "@/data/siteData";
 import { Notice, PageHeader } from "./shell";
 import {
   Field,
@@ -136,7 +137,7 @@ type TabProps = {
 // ---- Site & Contact ----
 function SiteTab({ content, update }: TabProps) {
   const c = content.siteConfig;
-  const set = (k: keyof typeof c, v: string) =>
+  const set = (k: keyof typeof c, v: string | string[]) =>
     update((d) => ({ ...d, siteConfig: { ...d.siteConfig, [k]: v } }));
   return (
     <Section title="Site & contact information">
@@ -144,11 +145,69 @@ function SiteTab({ content, update }: TabProps) {
       <Field label="Tagline" value={c.tagline} onChange={(v) => set("tagline", v)} />
       <Field label="Headline" value={c.headline} onChange={(v) => set("headline", v)} />
       <TextArea label="Subheadline" value={c.subheadline} onChange={(v) => set("subheadline", v)} />
-      <Field label="Contact email" value={c.contactEmail} onChange={(v) => set("contactEmail", v)} />
-      <Field label="Phone" value={c.phone} onChange={(v) => set("phone", v)} />
-      <Field label="Address" value={c.address} onChange={(v) => set("address", v)} />
-      <Field label="Founded" value={c.founded} onChange={(v) => set("founded", v)} />
+      <div className="grid gap-5 sm:grid-cols-2">
+        <ContactList
+          label="Contact email"
+          addLabel="+ Add email"
+          main={c.contactEmail}
+          extras={c.extraEmails ?? []}
+          onMain={(v) => set("contactEmail", v)}
+          onExtras={(v) => set("extraEmails", v)}
+        />
+        <ContactList
+          label="Phone"
+          addLabel="+ Add number"
+          main={c.phone}
+          extras={c.extraPhones ?? []}
+          onMain={(v) => set("phone", v)}
+          onExtras={(v) => set("extraPhones", v)}
+        />
+        <Field label="Address" value={c.address} onChange={(v) => set("address", v)} />
+        <Field label="Founded" value={c.founded} onChange={(v) => set("founded", v)} />
+      </div>
     </Section>
+  );
+}
+
+/**
+ * The main email or phone plus up to two more. The main one is used for
+ * replies and the mobile "Call" button; every one is listed on the site.
+ */
+function ContactList({
+  label,
+  addLabel,
+  main,
+  extras,
+  onMain,
+  onExtras,
+}: {
+  label: string;
+  addLabel: string;
+  main: string;
+  extras: string[];
+  onMain: (v: string) => void;
+  onExtras: (v: string[]) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <Field label={label} value={main} onChange={onMain} />
+      {extras.map((v, i) => (
+        <div key={i} className="flex gap-2">
+          <input
+            className="w-full border border-hairline bg-background px-3 py-2.5 text-sm text-foreground transition-colors focus:border-[#E61E32] focus:outline-none"
+            value={v}
+            aria-label={`${label} ${i + 2}`}
+            onChange={(e) => onExtras(extras.map((x, j) => (j === i ? e.target.value : x)))}
+          />
+          <SubtleButton tone="danger" onClick={() => onExtras(extras.filter((_, j) => j !== i))}>
+            Remove
+          </SubtleButton>
+        </div>
+      ))}
+      {extras.length < MAX_CONTACTS - 1 && (
+        <SubtleButton onClick={() => onExtras([...extras, ""])}>{addLabel}</SubtleButton>
+      )}
+    </div>
   );
 }
 

@@ -31,6 +31,8 @@ export interface SiteConfig {
   phone: string;
   address: string;
   founded: string;
+  extraEmails: string[];
+  extraPhones: string[];
 }
 
 export interface ValueProp {

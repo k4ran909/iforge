@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSiteContent, type SiteContentValue } from "@/components/SiteContentProvider";
+import { allEmails, allPhones, telHref } from "@/data/siteData";
 import { ArrowRight, ArrowUpRight } from "reicon-react";
 import HalftoneWordmarkFooter, {
   type FooterColumn,
@@ -29,8 +30,8 @@ const halftoneColumns = ({ siteConfig, services: servicesData }: SiteContentValu
   {
     title: "Contact",
     links: [
-      { label: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
-      { label: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}` },
+      ...allEmails(siteConfig).map((e) => ({ label: e, href: `mailto:${e}` })),
+      ...allPhones(siteConfig).map((p) => ({ label: p, href: telHref(p) })),
     ],
   },
 ];
@@ -120,8 +121,8 @@ export default function Footer() {
               { label: "About", href: "/about" },
               { label: "Team", href: "/team" },
               { label: "Contact", href: "/contact" },
-              { label: siteConfig.phone, href: `tel:${siteConfig.phone.replace(/[^0-9+]/g, "")}` },
-              { label: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
+              ...allPhones(siteConfig).map((p) => ({ label: p, href: telHref(p) })),
+              ...allEmails(siteConfig).map((e) => ({ label: e, href: `mailto:${e}` })),
             ])}
           </div>
 

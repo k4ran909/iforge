@@ -39,7 +39,26 @@ export const siteConfig = {
   phone: "+91 99718 66720",
   address: "Plot No. 12, Sector 62, Noida, Uttar Pradesh, India",
   founded: "2024",
+  /** Up to two more of each, added in Admin → Content → Site & Contact. */
+  extraEmails: [] as string[],
+  extraPhones: [] as string[],
 };
+
+/** Most numbers or addresses shown for each: the main one plus two extras. */
+export const MAX_CONTACTS = 3;
+
+type Contacts = { contactEmail: string; phone: string; extraEmails?: string[]; extraPhones?: string[] };
+
+/** The main email first, then any extras — blanks dropped. */
+export const allEmails = (c: Contacts) =>
+  [c.contactEmail, ...(c.extraEmails ?? [])].map((v) => v.trim()).filter(Boolean).slice(0, MAX_CONTACTS);
+
+/** The main phone first, then any extras — blanks dropped. */
+export const allPhones = (c: Contacts) =>
+  [c.phone, ...(c.extraPhones ?? [])].map((v) => v.trim()).filter(Boolean).slice(0, MAX_CONTACTS);
+
+/** A tel: link for a displayed number. */
+export const telHref = (phone: string) => `tel:${phone.replace(/[^0-9+]/g, "")}`;
 
 
 export const servicesData: ServiceItem[] = [
