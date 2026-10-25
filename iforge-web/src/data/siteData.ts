@@ -128,7 +128,7 @@ export const servicesData: ServiceItem[] = [
     slug: "it-cloud",
     title: "Cloud & IT Infrastructure",
     subtitle: "Multi-cloud platforms and resilient on-premise infrastructure, designed and managed by one team",
-    shortDesc: "Cloud architecture, migration and management, plus enterprise networking, servers, storage, and AMC support.",
+    shortDesc: "Cloud architecture, migration and management, plus enterprise networking, servers, storage, and data center services.",
     longDesc: "iForge brings your cloud and your on-premise IT under one accountable team. We architect, migrate, and manage workloads across AWS, Google Cloud, and Azure, and we design and maintain the networks, servers, storage, and data centers your business depends on. The result is a hybrid environment that is secure, scalable, cost-efficient, and built to run without interruption.",
     iconName: "Cloud",
     features: [
@@ -137,14 +137,14 @@ export const servicesData: ServiceItem[] = [
       "DevOps, CI/CD & Kubernetes Orchestration",
       "Enterprise Network Architecture & SD-WAN",
       "Server Virtualization & High-Throughput Storage",
-      "Annual Maintenance Contracts (AMC Services)",
+      "Data Center Design, Build-Out & Operations",
       "Disaster Recovery & Business Continuity"
     ],
     technologies: ["AWS", "Google Cloud", "Microsoft Azure", "Kubernetes", "Docker", "Terraform", "VMware vSphere", "Hyper-V", "Cisco", "Fortinet", "HPE", "Dell EMC", "SAN/NAS"],
     deliverables: [
       "High-availability network and hybrid cloud architecture blueprint",
       "Automated Infrastructure as Code (IaC) repository",
-      "Hardware health diagnostics, capacity plan & AMC service guide",
+      "Data center capacity, power & cooling plan",
       "FinOps cost reduction report",
       "Disaster recovery runbook with RPO/RTO specifications"
     ],
@@ -176,16 +176,16 @@ export const servicesData: ServiceItem[] = [
         points: ["Live VM migration setups", "Deduplication & tiered caching", "Automated off-site tape/cloud backups"]
       },
       {
-        title: "Comprehensive AMC Support",
-        description: "Proactive annual maintenance, scheduled hardware diagnostics, and priority on-site technician dispatch.",
-        points: ["Preventive hardware maintenance", "Firmware updates & thermal tuning", "Spare parts replacement reserve"]
+        title: "Data Center Services",
+        description: "Design, build-out, and operation of server rooms, on-premise data centers, and colocation footprints — built for uptime and room to grow.",
+        points: ["Rack, power & cooling design", "Structured cabling & physical security", "Colocation planning & data center migration"]
       }
     ],
     benefits: [
       "One team accountable for on-premise IT and cloud alike",
       "Elimination of single points of failure across critical systems",
       "High availability and automated disaster recovery across availability zones",
-      "Lower infrastructure spend through FinOps practices and predictable AMC budgeting",
+      "Lower infrastructure spend through FinOps practices and right-sized hardware",
       "Instant scalability during traffic spikes, with no multi-cloud vendor lock-in"
     ],
     faqs: [
@@ -198,8 +198,8 @@ export const servicesData: ServiceItem[] = [
         answer: "We design, migrate and run workloads on Amazon Web Services (AWS), Google Cloud Platform (GCP) and Microsoft Azure."
       },
       {
-        question: "What is covered in an iForge IT AMC (Annual Maintenance Contract)?",
-        answer: "Our AMC covers quarterly preventive maintenance, emergency on-site engineer visits, hardware repairs, OS/firmware patching, network health checks, and 24/7 helpdesk support."
+        question: "Can iForge design or modernize our data center?",
+        answer: "Yes. We plan and build server rooms and data centers — rack layout, power and cooling, cabling, virtualization, and storage — and can move workloads into colocation or the cloud when that is the better fit."
       },
       {
         question: "How do you prevent downtime during database migrations?",

@@ -1,5 +1,6 @@
 import "server-only";
 import { cache } from "react";
+import { createHash } from "crypto";
 import {
   siteConfig as defaultSiteConfig,
   servicesData as defaultServices,
@@ -181,6 +182,28 @@ export const defaultContent: SiteContent = {
   knownDefaultServices: defaultServices.map((s) => s.slug),
 };
 
+// Fingerprints of earlier default versions of services whose text has since
+// changed in the code. A saved copy that still matches one was never edited
+// in the admin, so it's upgraded to the current default (new name, new text).
+const OUTDATED_DEFAULTS: Record<string, string[]> = {
+  "it-cloud": ["490db527548e6ecd", "e19923a057e11000"],
+  "cybersecurity-services": ["87a93125480a757e"],
+};
+
+/** JSON with sorted keys, so a fingerprint doesn't depend on key order. */
+const stableJson = (v: unknown): string =>
+  Array.isArray(v)
+    ? `[${v.map(stableJson).join(",")}]`
+    : v && typeof v === "object"
+      ? `{${Object.keys(v)
+          .filter((k) => (v as Record<string, unknown>)[k] !== undefined)
+          .sort()
+          .map((k) => `${JSON.stringify(k)}:${stableJson((v as Record<string, unknown>)[k])}`)
+          .join(",")}}`
+      : JSON.stringify(v);
+
+const fingerprint = (v: unknown) => createHash("sha256").update(stableJson(v)).digest("hex").slice(0, 16);
+
 /** Stored services, plus any default service added to the code since this document was saved. */
 function mergeServices(stored: Partial<SiteContent>): ServiceItem[] {
   if (!stored.services?.length) return defaultContent.services;
@@ -193,6 +216,13 @@ function mergeServices(stored: Partial<SiteContent>): ServiceItem[] {
       const merged = defaultContent.services.find((d) => d.slug === into);
       if (merged && !storedSlugs.has(into) && !services.some((x) => x.slug === into)) services.push(merged);
       continue;
+    }
+    if (OUTDATED_DEFAULTS[s.slug]?.includes(fingerprint(s))) {
+      const current = defaultContent.services.find((d) => d.slug === s.slug);
+      if (current) {
+        services.push(current);
+        continue;
+      }
     }
     services.push(s);
   }

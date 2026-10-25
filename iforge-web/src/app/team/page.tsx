@@ -130,6 +130,7 @@ export default async function TeamPage() {
   // "Core member" in the admin (stored as `featured`) puts someone in the first section.
   const core = team.filter((m) => m.featured);
   const members = team.filter((m) => !m.featured);
+  const hasIntro = Boolean(p.introHeading.trim() || p.introBody.trim() || p.introImage || p.stats.length);
 
   return (
     <div className="w-full bg-background">
@@ -145,7 +146,8 @@ export default async function TeamPage() {
         </div>
       </section>
 
-      {/* Who we are + highlights */}
+      {/* Who we are + highlights — only the parts filled in the admin */}
+      {hasIntro && (
       <section className="section">
         <div className="container-page">
           <div className={`grid gap-10 lg:items-center lg:gap-16 ${p.introImage ? "lg:grid-cols-[1.1fr_1fr]" : ""}`}>
@@ -157,18 +159,23 @@ export default async function TeamPage() {
               </Reveal>
             )}
             <Reveal direction={p.introImage ? "left" : "up"}>
-              <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                <span className="text-[#E61E32]">/</span> {p.introHeading}
-              </h2>
-              <p className={`mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg ${p.introImage ? "" : "max-w-3xl"}`}>
-                {p.introBody}
-              </p>
+              {p.introHeading.trim() && (
+                <h2 className="mb-6 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+                  <span className="text-[#E61E32]">/</span> {p.introHeading}
+                </h2>
+              )}
+              {p.introBody.trim() && (
+                <p className={`text-base leading-relaxed text-muted-foreground sm:text-lg ${p.introImage ? "" : "max-w-3xl"}`}>
+                  {p.introBody}
+                </p>
+              )}
             </Reveal>
           </div>
 
           {p.stats.length > 0 && <Stats stats={p.stats} />}
         </div>
       </section>
+      )}
 
       {/* Core team */}
       {core.length > 0 && (
