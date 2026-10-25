@@ -2,39 +2,13 @@
 
 import React from "react";
 import Link from "next/link";
-import { useSiteContent, type SiteContentValue } from "@/components/SiteContentProvider";
+import { useSiteContent } from "@/components/SiteContentProvider";
 import { allEmails, allPhones, telHref } from "@/data/siteData";
 import { ArrowRight, ArrowUpRight } from "reicon-react";
-import HalftoneWordmarkFooter, {
-  type FooterColumn,
-} from "@/components/ui/halftone-wordmark-footer";
+import HalftoneWordmarkFooter from "@/components/ui/halftone-wordmark-footer";
 
-// Columns for the halftone wordmark band, built from the real site navigation.
-const halftoneColumns = ({ siteConfig, services: servicesData }: SiteContentValue): FooterColumn[] => [
-  {
-    title: "Practices",
-    links: servicesData.slice(0, 3).map((s) => ({
-      label: s.title,
-      href: `/services/${s.slug}`,
-    })),
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Team", href: "/team" },
-      { label: "Community", href: "/community" },
-      { label: "Get a Quote", href: "/quote" },
-    ],
-  },
-  {
-    title: "Contact",
-    links: [
-      ...allEmails(siteConfig).map((e) => ({ label: e, href: `mailto:${e}` })),
-      ...allPhones(siteConfig).map((p) => ({ label: p, href: telHref(p) })),
-    ],
-  },
-];
+// The registered company name for the sign-off at the very bottom.
+const LEGAL_NAME = "iForge Technologies LLP";
 
 const linkCol = (title: string, links: { label: string; href: string }[]) => (
   <div>
@@ -57,8 +31,7 @@ const linkCol = (title: string, links: { label: string; href: string }[]) => (
 );
 
 export default function Footer() {
-  const content = useSiteContent();
-  const { siteConfig, services: servicesData } = content;
+  const { siteConfig, services: servicesData } = useSiteContent();
   const year = new Date().getFullYear();
 
   return (
@@ -129,7 +102,7 @@ export default function Footer() {
           {/* Meta strip */}
           <div className="mt-14 flex flex-col gap-4 border-t border-hairline pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>
-              © {year} {siteConfig.name}. Noida, India — serving global clients.
+              © {year} {LEGAL_NAME}. Noida, India — serving global clients.
             </p>
             <div className="flex flex-wrap gap-6">
               <Link href="/privacy" className="hover:text-foreground">
@@ -152,9 +125,9 @@ export default function Footer() {
       {/* Giant halftone wordmark sign-off */}
       <HalftoneWordmarkFooter
         wordmark="iforge"
-        label={siteConfig.name}
+        label={LEGAL_NAME}
         meta={`© ${year} · Noida, India`}
-        columns={halftoneColumns(content)}
+        columns={[]}
         preset="night"
         palette={{ background: "#050505", ink: "#e9e4da", warm: "#E61E32" }}
         height="clamp(420px, 34vw, 600px)"
